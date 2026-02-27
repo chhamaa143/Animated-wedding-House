@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Simple test */
+.bg-test {
+  background-color: red;
+}
+/* Hero Section Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes particle {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+}
+
+@keyframes titleLetter {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes widthGrow {
+  0% { width: 0; opacity: 0; }
+  100% { width: 6rem; opacity: 1; }
+}
+
+@keyframes buttonsPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes badgeSlide {
+  0% { transform: translate(-60%, 20px); opacity: 0; }
+  100% { transform: translate(-60%, 0); opacity: 1; }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-particle {
+  animation: particle 8s linear infinite;
+}
+
+.animate-title span {
+  animation: titleLetter 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-width {
+  animation: widthGrow 1s ease-out forwards;
+}
+
+.animate-buttons {
+  animation: buttonsPop 0.5s ease-out 0.5s forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.animate-badge {
+  animation: badgeSlide 0.5s ease-out 1s forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Progress Bar Animation */
+.transition-all.duration-5000 {
+  transition-duration: 5000ms;
+}
+
+/* Hover Effects */
+.hover\:scale-110:hover {
+  transform: scale(1.1);
+}
+
+.hover\:rotate-12:hover {
+  transform: rotate(12deg);
+}
+/* Adjusted animations for 50vh */
+@media (max-width: 768px) {
+  .animate-title span {
+    animation-duration: 0.3s;
+  }
+  
+  .animate-badge {
+    animation: badgeSlideMobile 0.5s ease-out 0.8s forwards;
+  }
+}
+
+@keyframes badgeSlideMobile {
+  0% { transform: translate(-50%, 10px); opacity: 0; }
+  100% { transform: translate(-50%, 0); opacity: 1; }
+}
+/* Train Station Lighting Board Animations */
+
+@keyframes scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-scan {
+  animation: scan 8s linear infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.animate-flicker {
+  animation: flicker 0.3s ease-in-out infinite;
+}
+
+@keyframes flipIn {
+  0% {
+    transform: rotateX(-90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes flipOut {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+}
+
+/* Dot matrix effect */
+.bg-dot-matrix {
+  background-image: radial-gradient(circle, rgba(212, 175, 55, 0.2) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+/* Old TV screen effect */
+.crt-effect::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  animation: flicker 0.3s infinite;
+}
+
+/* Station board text effect */
+.station-text {
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 5px #D4AF37, 0 0 10px #D4AF37;
+  letter-spacing: 2px;
+}
+
+@keyframes blinkDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.animate-blink-dot {
+  animation: blinkDot 1s step-end infinite;
+}
+
+/* Flip card effect for train station boards */
+.perspective {
+  perspective: 800px;
+}
+
+.flip-enter {
+  transform: rotateX(-90deg);
+}
+
+.flip-enter-active {
+  transform: rotateX(0deg);
+  transition: transform 0.5s ease;
+}
+
+.flip-exit {
+  transform: rotateX(0deg);
+}
+
+.flip-exit-active {
+  transform: rotateX(90deg);
+  transition: transform 0.5s ease;
+}
+/* Hide scrollbar for navigation */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+/* Hide scrollbar for filter tabs */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* iPhone-optimized card grid */
+@media (max-width: 380px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Watermark animations */
+@keyframes watermarkPulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.15; }
+}
+
+.watermark-pulse {
+  animation: watermarkPulse 4s ease-in-out infinite;
+}
+
+/* Font for watermark */
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+/* Prevent watermark from interfering with clicks */
+.pointer-events-none {
+  pointer-events: none;
+}
