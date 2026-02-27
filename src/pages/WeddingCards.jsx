@@ -30,7 +30,7 @@ const WeddingCards = () => {
   // Product View State
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'detail'
-  
+
   // Quick View State
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -64,16 +64,16 @@ const WeddingCards = () => {
   const allCards = [
     {
       id: 1,
-      name: "Royal Gold Foil Card",
+      name: "Luxury Card",
       category: "Luxury Card",
-      price: 2499,
+      price: 255,
       image: "/images/products/luxury (1).webp",
-      rating: 4.8, 
+      rating: 4.8,
       reviews: 128,
       popular: true,
       new: false,
       description:
-        "Elegant gold foil printed wedding card with traditional Indian motifs. Features premium matte finish paper and comes with matching envelopes.",
+        "Elegant luxury printed wedding card with traditional Indian motifs. Features premium matte finish paper and comes with matching envelopes.",
       images: [
         "/images/products/luxury (1).webp",
         "/images/products/luxury (2).webp",
@@ -81,12 +81,12 @@ const WeddingCards = () => {
         "/images/products/luxury (4).webp",
       ],
       slabRates: [
-        { quantity: 20, price: 2000, perPiece: 100 },
-        { quantity: 50, price: 4000, perPiece: 80 },
-        { quantity: 100, price: 7000, perPiece: 70 },
-        { quantity: 200, price: 13000, perPiece: 65 },
-        { quantity: 300, price: 18000, perPiece: 60 },
-        { quantity: 500, price: 27500, perPiece: 55 },
+        { quantity: 11, price: 2805, perPiece: 255 },
+        { quantity: 21, price: 5355, perPiece: 255 },
+        { quantity: 51, price: 13005, perPiece: 255 },
+        { quantity: 101, price: 25755, perPiece: 255 },
+        { quantity: 151, price: 38505, perPiece: 255 },
+        { quantity: 201, price: 51255, perPiece: 255 },
       ],
       specifications: [
         { label: "Paper Type", value: "Premium Matte 350 GSM" },
@@ -101,7 +101,7 @@ const WeddingCards = () => {
       id: 2,
       name: "Traditional Farman",
       category: "Farman Card",
-      price: 1999,
+      price: 149,
       image: "/images/products/farman-wed-card (3).png",
       rating: 4.7,
       reviews: 95,
@@ -114,14 +114,18 @@ const WeddingCards = () => {
         "/images/products/farman-wed-card (4).png",
         "/images/products/farman-wed-card (6).png",
         "/images/products/farman-wed-card (7).png",
-      ],    
+      ],
       slabRates: [
-        { quantity: 20, price: 1600, perPiece: 80 },
-        { quantity: 50, price: 3500, perPiece: 70 },
-        { quantity: 100, price: 6000, perPiece: 60 },
-        { quantity: 200, price: 11000, perPiece: 55 },
-        { quantity: 300, price: 15000, perPiece: 50 }, 
-        { quantity: 500, price: 22500, perPiece: 45 },
+        { quantity: 50, price: 7450, perPiece: 149 },
+        { quantity: 100, price: 14400, perPiece: 149 },
+        { quantity: 150, price: 20850, perPiece: 149 },
+        { quantity: 200, price: 27000, perPiece: 149 },
+        { quantity: 250, price: 33000, perPiece: 149 },
+        { quantity: 300, price: 38400, perPiece: 149 },
+        { quantity: 400, price: 49200, perPiece: 149 },
+        { quantity: 500, price: 60000, perPiece: 149 },
+        { quantity: 700, price: 82600, perPiece: 149 },
+        { quantity: 1000, price: 115000, perPiece: 149 },
       ],
       specifications: [
         { label: "Paper Type", value: "Textured 300 GSM" },
@@ -136,8 +140,8 @@ const WeddingCards = () => {
       id: 3,
       name: "Anant Bandhan Special",
       category: "Anant Bandhan",
-      price: 3499,
-      image: "/images/products/anant-bandhan (1).png",
+      price: 280,
+      image: "/products/Anant-Bandhan (1).png",
       rating: 4.9,
       reviews: 156,
       popular: true,
@@ -145,18 +149,21 @@ const WeddingCards = () => {
       description:
         "Beautiful Anant Bandhan design symbolizing eternal love. Features intricate patterns and gold accents.",
       images: [
-        "/images/products/anant-bandhan (1).png",
-        "/images/products/anant-bandhan (2).png",
-        "/images/products/anant-bandhan (3).png",
-        "/images/products/anant-bandhan (4).png",
+        "/products/Anant-Bandhan (1).png",
+        "/products/Anant-Bandhan (2).png",
+        "/products/Anant-Bandhan (3).png",
       ],
       slabRates: [
-        { quantity: 20, price: 2800, perPiece: 140 },
-        { quantity: 50, price: 6000, perPiece: 120 },
-        { quantity: 100, price: 10500, perPiece: 105 },
-        { quantity: 200, price: 19000, perPiece: 95 },
-        { quantity: 300, price: 25500, perPiece: 85 },
-        { quantity: 500, price: 37500, perPiece: 75 },
+        { quantity: 50, price: 14000, perPiece: 280 },
+        { quantity: 100, price: 28000, perPiece: 280 },
+        { quantity: 150, price: 42000, perPiece: 280 },
+        { quantity: 200, price: 56000, perPiece: 280 },
+        { quantity: 250, price: 70000, perPiece: 280 },
+        { quantity: 300, price: 84000, perPiece: 280 },
+        { quantity: 400, price: 112000, perPiece: 280 },
+        { quantity: 500, price: 140000, perPiece: 280 },
+        { quantity: 700, price: 196000, perPiece: 280 },
+        { quantity: 1000, price: 280000, perPiece: 280 },
       ],
       specifications: [
         { label: "Paper Type", value: "Premium Silk 400 GSM" },
@@ -171,7 +178,7 @@ const WeddingCards = () => {
       id: 4,
       name: "Royal Vows Gold",
       category: "Royal Vows",
-      price: 2999,
+      price: 110,
       image: "/images/products/Royal Vows-631 (1).png",
       rating: 4.8,
       reviews: 112,
@@ -186,12 +193,16 @@ const WeddingCards = () => {
         "/images/products/Royal Vows-631 (4).png",
       ],
       slabRates: [
-        { quantity: 20, price: 2400, perPiece: 120 },
-        { quantity: 50, price: 5000, perPiece: 100 },
-        { quantity: 100, price: 9000, perPiece: 90 },
-        { quantity: 200, price: 16000, perPiece: 80 },
-        { quantity: 300, price: 21000, perPiece: 70 },
-        { quantity: 500, price: 30000, perPiece: 60 },
+        { quantity: 50, price: 5500, perPiece: 110 },
+        { quantity: 100, price: 11000, perPiece: 110 },
+        { quantity: 150, price: 16500, perPiece: 110 },
+        { quantity: 200, price: 22000, perPiece: 110 },
+        { quantity: 250, price: 27500, perPiece: 110 },
+        { quantity: 300, price: 33000, perPiece: 110 },
+        { quantity: 400, price: 44000, perPiece: 110 },
+        { quantity: 500, price: 55000, perPiece: 110 },
+        { quantity: 700, price: 77000, perPiece: 110 },
+        { quantity: 1000, price: 110000, perPiece: 110 },
       ],
       specifications: [
         { label: "Paper Type", value: "Premium Matte 350 GSM" },
@@ -206,7 +217,7 @@ const WeddingCards = () => {
       id: 5,
       name: "Sunehri Shaadi Deluxe",
       category: "Sunehri Shaadi",
-      price: 4499,
+      price: 120,
       image: "/images/products/Sunehri Shaad-L-09 (1).png",
       rating: 4.9,
       reviews: 203,
@@ -221,12 +232,16 @@ const WeddingCards = () => {
         "/images/products/Sunehri Shaad-L-09 (4).png",
       ],
       slabRates: [
-        { quantity: 20, price: 3600, perPiece: 180 },
-        { quantity: 50, price: 8000, perPiece: 160 },
-        { quantity: 100, price: 14000, perPiece: 140 },
-        { quantity: 200, price: 25000, perPiece: 125 },
-        { quantity: 300, price: 33000, perPiece: 110 },
-        { quantity: 500, price: 47500, perPiece: 95 },
+        { quantity: 50, price: 6000, perPiece: 120 },
+        { quantity: 100, price: 12000, perPiece: 120 },
+        { quantity: 150, price: 18000, perPiece: 120 },
+        { quantity: 200, price: 24000, perPiece: 120 },
+        { quantity: 250, price: 30000, perPiece: 120 },
+        { quantity: 300, price: 36000, perPiece: 120 },
+        { quantity: 400, price: 48000, perPiece: 120 },
+        { quantity: 500, price: 60000, perPiece: 120 },
+        { quantity: 700, price: 84000, perPiece: 120 },
+        { quantity: 1000, price: 120000, perPiece: 120 },
       ],
       specifications: [
         { label: "Paper Type", value: "Premium Silk 400 GSM" },
@@ -241,7 +256,7 @@ const WeddingCards = () => {
       id: 6,
       name: "Vivah Sutra Classic",
       category: "Vivah Sutra",
-      price: 2799,
+      price: 90,
       image: "/images/products/vivah-sutra (1).png",
       rating: 4.6,
       reviews: 87,
@@ -256,12 +271,16 @@ const WeddingCards = () => {
         "/images/products/vivah-sutra (4).png",
       ],
       slabRates: [
-        { quantity: 20, price: 2200, perPiece: 110 },
-        { quantity: 50, price: 4800, perPiece: 96 },
-        { quantity: 100, price: 8400, perPiece: 84 },
-        { quantity: 200, price: 15000, perPiece: 75 },
-        { quantity: 300, price: 19800, perPiece: 66 },
-        { quantity: 500, price: 28000, perPiece: 56 },
+        { quantity: 50, price: 4500, perPiece: 90 },
+        { quantity: 100, price: 9000, perPiece: 90 },
+        { quantity: 150, price: 13500, perPiece: 90 },
+        { quantity: 200, price: 18000, perPiece: 90 },
+        { quantity: 250, price: 22500, perPiece: 90 },
+        { quantity: 300, price: 27000, perPiece: 90 },
+        { quantity: 400, price: 36000, perPiece: 90 },
+        { quantity: 500, price: 45000, perPiece: 90 },
+        { quantity: 700, price: 63000, perPiece: 90 },
+        { quantity: 1000, price: 90000, perPiece: 90 },
       ],
       specifications: [
         { label: "Paper Type", value: "Matte 300 GSM" },
@@ -276,7 +295,7 @@ const WeddingCards = () => {
       id: 7,
       name: "Forever in Gold",
       category: "Forever in Gold",
-      price: 3999,
+      price: 80,
       image: "/images/products/legend (1).png",
       rating: 4.8,
       reviews: 145,
@@ -291,12 +310,16 @@ const WeddingCards = () => {
         "/images/products/legend (4).png",
       ],
       slabRates: [
-        { quantity: 20, price: 3200, perPiece: 160 },
-        { quantity: 50, price: 7000, perPiece: 140 },
-        { quantity: 100, price: 12000, perPiece: 120 },
-        { quantity: 200, price: 21000, perPiece: 105 },
-        { quantity: 300, price: 27000, perPiece: 90 },
-        { quantity: 500, price: 37500, perPiece: 75 },
+        { quantity: 50, price: 4000, perPiece: 80 },
+        { quantity: 100, price: 8000, perPiece: 80 },
+        { quantity: 150, price: 12000, perPiece: 80 },
+        { quantity: 200, price: 16000, perPiece: 80 },
+        { quantity: 250, price: 20000, perPiece: 80 },
+        { quantity: 300, price: 24000, perPiece: 80 },
+        { quantity: 400, price: 32000, perPiece: 80 },
+        { quantity: 500, price: 40000, perPiece: 80 },
+        { quantity: 700, price: 56000, perPiece: 80 },
+        { quantity: 1000, price: 80000, perPiece: 80 },
       ],
       specifications: [
         { label: "Paper Type", value: "Premium Silk 350 GSM" },
@@ -311,7 +334,7 @@ const WeddingCards = () => {
       id: 8,
       name: "Legend Wedding Card",
       category: "Legend Wedding Card",
-      price: 3299,
+      price: 450,
       image: "/images/products/legend (1).png",
       rating: 4.7,
       reviews: 78,
@@ -326,12 +349,16 @@ const WeddingCards = () => {
         "/images/products/legend (4).png",
       ],
       slabRates: [
-        { quantity: 20, price: 2600, perPiece: 130 },
-        { quantity: 50, price: 5800, perPiece: 116 },
-        { quantity: 100, price: 10000, perPiece: 100 },
-        { quantity: 200, price: 18000, perPiece: 90 },
-        { quantity: 300, price: 24000, perPiece: 80 },
-        { quantity: 500, price: 33000, perPiece: 66 },
+        { quantity: 50, price: 22500, perPiece: 450 },
+        { quantity: 100, price: 45000, perPiece: 450 },
+        { quantity: 150, price: 67500, perPiece: 450 },
+        { quantity: 200, price: 90000, perPiece: 450 },
+        { quantity: 250, price: 112500, perPiece: 450 },
+        { quantity: 300, price: 135000, perPiece: 450 },
+        { quantity: 400, price: 180000, perPiece: 450 },
+        { quantity: 500, price: 225000, perPiece: 450 },
+        { quantity: 700, price: 315000, perPiece: 450 },
+        { quantity: 1000, price: 450000, perPiece: 450 },
       ],
       specifications: [
         { label: "Paper Type", value: "Premium Matte 350 GSM" },
@@ -346,8 +373,8 @@ const WeddingCards = () => {
       id: 9,
       name: "Riwaaz Wed Card",
       category: "Riwaaz Wed Card",
-      price: 2199,
-      image: "/images/products/riwaaz (1).png",
+      price: 111,
+      image: "/products/riwaz (4).png",
       rating: 4.5,
       reviews: 92,
       popular: false,
@@ -355,18 +382,22 @@ const WeddingCards = () => {
       description:
         "Traditional Riwaaz design with cultural elements. Perfect for traditional weddings.",
       images: [
-        "/images/products/riwaaz (1).png",
-        "/images/products/riwaaz (2).png",
-        "/images/products/riwaaz (3).png",
-        "/images/products/riwaaz (4).png",
+        "/products/riwaz (1).png",
+        "/products/riwaz (2).png",
+        "/products/riwaz (3).png",
+        "/products/riwaz (4).png",
       ],
       slabRates: [
-        { quantity: 20, price: 1800, perPiece: 90 },
-        { quantity: 50, price: 4000, perPiece: 80 },
-        { quantity: 100, price: 7000, perPiece: 70 },
-        { quantity: 200, price: 13000, perPiece: 65 },
-        { quantity: 300, price: 17400, perPiece: 58 },
-        { quantity: 500, price: 25000, perPiece: 50 },
+        { quantity: 50, price: 5550, perPiece: 111 },
+        { quantity: 100, price: 11100, perPiece: 111 },
+        { quantity: 150, price: 16650, perPiece: 111 },
+        { quantity: 200, price: 22200, perPiece: 111 },
+        { quantity: 250, price: 27750, perPiece: 111 },
+        { quantity: 300, price: 33300, perPiece: 111 },
+        { quantity: 400, price: 44400, perPiece: 111 },
+        { quantity: 500, price: 5500, perPiece: 111 },
+        { quantity: 700, price: 77700, perPiece: 111 },
+        { quantity: 1000, price: 111000, perPiece: 111 },
       ],
       specifications: [
         { label: "Paper Type", value: "Matte 300 GSM" },
@@ -379,9 +410,9 @@ const WeddingCards = () => {
     },
     {
       id: 10,
-      name: "Emboss Card Premium",
-      category: "Emboss Card",
-      price: 3799,
+      name: "Emboss Card",
+      category: "Premium Card",
+      price: 445,
       image: "/images/products/emboss (1).webp",
       rating: 4.8,
       reviews: 134,
@@ -396,12 +427,12 @@ const WeddingCards = () => {
         "/images/products/emboss (4).webp",
       ],
       slabRates: [
-        { quantity: 20, price: 3000, perPiece: 150 },
-        { quantity: 50, price: 6500, perPiece: 130 },
-        { quantity: 100, price: 11500, perPiece: 115 },
-        { quantity: 200, price: 20000, perPiece: 100 },
-        { quantity: 300, price: 26400, perPiece: 88 },
-        { quantity: 500, price: 37500, perPiece: 75 },
+        { quantity: 11, price: 4895, perPiece: 445 },
+        { quantity: 21, price: 9345, perPiece: 445 },
+        { quantity: 51, price: 22695, perPiece: 445 },
+        { quantity: 101, price: 44945, perPiece: 445 },
+        { quantity: 151, price: 67195, perPiece: 445 },
+        { quantity: 201, price: 89445, perPiece: 445 },
       ],
       specifications: [
         { label: "Paper Type", value: "Premium Textured 350 GSM" },
@@ -423,27 +454,18 @@ const WeddingCards = () => {
     }
   }, [category]);
 
-  // Debug: Log current selected category and cards
-  useEffect(() => {
-    console.log("Selected Category:", selectedCategory);
-    console.log("All Cards:", allCards.map(c => ({ name: c.name, category: c.category })));
-  }, [selectedCategory]);
-
   // Filter cards based on selected category and price range
   const filteredCards = allCards.filter((card) => {
     // Convert both to lowercase slugs for comparison
     const cardCategorySlug = card.category.toLowerCase().replace(/ /g, "-");
     const selectedCategorySlug = selectedCategory.toLowerCase();
-    
-    const matchesCategory = selectedCategory === "all" || cardCategorySlug === selectedCategorySlug;
-    
-    const matchesPrice = card.price >= priceRange.min && card.price <= priceRange.max;
-    
-    // Debug log for first few cards
-    if (card.id <= 3) {
-      console.log(`Card: ${card.name}, Category: ${card.category}, Slug: ${cardCategorySlug}, Selected: ${selectedCategorySlug}, Match: ${matchesCategory}`);
-    }
-    
+
+    const matchesCategory =
+      selectedCategory === "all" || cardCategorySlug === selectedCategorySlug;
+
+    const matchesPrice =
+      card.price >= priceRange.min && card.price <= priceRange.max;
+
     return matchesCategory && matchesPrice;
   });
 
@@ -465,11 +487,10 @@ const WeddingCards = () => {
 
   const handleCategoryClick = (cat) => {
     const categorySlug = cat.toLowerCase().replace(/ /g, "-");
-    console.log("Clicking category:", cat, "Slug:", categorySlug);
     setSelectedCategory(categorySlug);
     navigate(`/weddingcards/${categorySlug}`);
     setFilterOpen(false);
-    setShowFilters(false); // Close mobile filters after selection
+    setShowFilters(false);
   };
 
   const clearFilters = () => {
@@ -491,7 +512,7 @@ const WeddingCards = () => {
     setSelectedSet("100");
     setQuantity(100);
     setActiveTab("description");
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const backToGrid = () => {
@@ -525,7 +546,7 @@ const WeddingCards = () => {
       setSelectedImage(
         (prev) =>
           (prev - 1 + quickViewProduct.images.length) %
-          quickViewProduct.images.length,
+          quickViewProduct.images.length
       );
     }
   };
@@ -542,9 +563,8 @@ const WeddingCards = () => {
     if (!quickViewProduct && !selectedProduct) return 0;
     const product = quickViewProduct || selectedProduct;
     const slab =
-      product.slabRates.find(
-        (s) => s.quantity === parseInt(selectedSet),
-      ) || product.slabRates[2];
+      product.slabRates.find((s) => s.quantity === parseInt(selectedSet)) ||
+      product.slabRates[2];
     return slab.price;
   };
 
@@ -552,9 +572,8 @@ const WeddingCards = () => {
     if (!quickViewProduct && !selectedProduct) return 0;
     const product = quickViewProduct || selectedProduct;
     const slab =
-      product.slabRates.find(
-        (s) => s.quantity === parseInt(selectedSet),
-      ) || product.slabRates[2];
+      product.slabRates.find((s) => s.quantity === parseInt(selectedSet)) ||
+      product.slabRates[2];
     return slab.perPiece;
   };
 
@@ -569,7 +588,7 @@ const WeddingCards = () => {
         `Quantity: ${selectedSet} pieces\n` +
         `Price: ₹${getCurrentPrice().toLocaleString()}\n` +
         `Per Piece: ₹${getPerPiecePrice()}\n` +
-        `Category: ${product.category}`,
+        `Category: ${product.category}`
     );
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
   };
@@ -703,21 +722,22 @@ const WeddingCards = () => {
                     onClick={() => {
                       const product = selectedProduct;
                       if (!product) return;
-                      
-                      const productImage = window.location.origin + product.image;
+
+                      const productImage =
+                        window.location.origin + product.image;
                       const productUrl = `${window.location.origin}/product/${product.id}`;
-                      
+
                       const shareText = encodeURIComponent(
                         `🖼️ *Check out this beautiful wedding card from Wedding House!*\n\n` +
-                        `✨ *${product.name}*\n` +
-                        `💰 Price: ₹${product.price.toLocaleString()}\n` +
-                        `⭐ Rating: ${product.rating}/5 (${product.reviews} reviews)\n` +
-                        `📸 View Image: ${productImage}\n\n` +
-                        `🔗 See full details: ${productUrl}\n\n` +
-                        `Visit Wedding House for more amazing designs! 🏠`
+                          `✨ *${product.name}*\n` +
+                          `💰 Price: ₹${product.price.toLocaleString()}\n` +
+                          `⭐ Rating: ${product.rating}/5 (${product.reviews} reviews)\n` +
+                          `📸 View Image: ${productImage}\n\n` +
+                          `🔗 See full details: ${productUrl}\n\n` +
+                          `Visit Wedding House for more amazing designs! 🏠`
                       );
-                      
-                      window.open(`https://wa.me/?text=${shareText}`, '_blank');
+
+                      window.open(`https://wa.me/?text=${shareText}`, "_blank");
                     }}
                     className="flex items-center gap-1 text-gray-500 hover:text-maroon transition-colors"
                   >
@@ -777,10 +797,7 @@ const WeddingCards = () => {
                   ) : (
                     <div className="grid grid-cols-2 gap-3">
                       {selectedProduct.specifications.map((spec, index) => (
-                        <div
-                          key={index}
-                          className="bg-gray-50 p-3 rounded-lg"
-                        >
+                        <div key={index} className="bg-gray-50 p-3 rounded-lg">
                           <span className="text-xs text-gray-500">
                             {spec.label}
                           </span>
@@ -849,9 +866,7 @@ const WeddingCards = () => {
                     {selectedProduct.slabRates.map((slab) => (
                       <button
                         key={slab.quantity}
-                        onClick={() =>
-                          setSelectedSet(slab.quantity.toString())
-                        }
+                        onClick={() => setSelectedSet(slab.quantity.toString())}
                         className={`px-4 py-2 rounded-full border transition-colors ${
                           selectedSet === slab.quantity.toString()
                             ? "bg-maroon text-white border-maroon"
@@ -912,10 +927,16 @@ const WeddingCards = () => {
 
           {/* Related Products */}
           <div className="mt-12">
-            <h2 className="text-2xl font-cinzel font-bold text-maroon mb-6">You May Also Like</h2>
+            <h2 className="text-2xl font-cinzel font-bold text-maroon mb-6">
+              You May Also Like
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {allCards
-                .filter(c => c.id !== selectedProduct.id && c.category === selectedProduct.category)
+                .filter(
+                  (c) =>
+                    c.id !== selectedProduct.id &&
+                    c.category === selectedProduct.category
+                )
                 .slice(0, 5)
                 .map((product) => (
                   <div
@@ -929,13 +950,18 @@ const WeddingCards = () => {
                         alt={product.name}
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          e.target.src = "https://via.placeholder.com/200x200?text=Product";
+                          e.target.src =
+                            "https://via.placeholder.com/200x200?text=Product";
                         }}
                       />
                     </div>
                     <div className="p-3">
-                      <h3 className="font-medium text-sm mb-1 line-clamp-1">{product.name}</h3>
-                      <p className="text-gold font-bold">{formatPrice(product.price)}</p>
+                      <h3 className="font-medium text-sm mb-1 line-clamp-1">
+                        {product.name}
+                      </h3>
+                      <p className="text-gold font-bold">
+                        {formatPrice(product.price)}
+                      </p>
                     </div>
                   </div>
                 ))}
