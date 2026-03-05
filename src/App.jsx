@@ -15,7 +15,6 @@ import WeddingCards from "./pages/WeddingCards";
 import WeddingStationery from "./pages/WeddingStationery";
 import ProductDetail from "./pages/ProductDetail";
 
-
 function App() {
   return (
     <Router>
@@ -26,14 +25,23 @@ function App() {
           <Route path="e-invite" element={<DigitalInvitation />} />
           <Route path="weddingcategory" element={<WeddingCardsCategory />} />
           <Route path="digitalpdf" element={<DigitalPDF />} />
-          <Route path="shagunenvelope" element={<ShagunEnvelopes />} />
+          <Route path="/shagunenvelopes" element={<ShagunEnvelopes />} />
+          <Route
+            path="/shagunenvelopes/:category"
+            element={<ShagunEnvelopes />}
+          />{" "}
           <Route path="gallery" element={<Gallery />} />
           <Route path="hamper" element={<WeddingHamper />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="weddingcards" element= {<WeddingCards/>}/>
-          <Route path="weddingstationory" element ={<WeddingStationery/>}/>
-          <Route path="product" element= {<ProductDetail/>}/>
+          <Route path="/weddingcards" element={<WeddingCards />} />
+          <Route path="/weddingcards/:category" element={<WeddingCards />} />
+          <Route path="/weddingstationery" element={<WeddingStationery />} />
+          <Route
+            path="/weddingstationery/:category"
+            element={<WeddingStationery />}
+          />
+          <Route path="product" element={<ProductDetail />} />
         </Routes>
         <Footer />
       </div>

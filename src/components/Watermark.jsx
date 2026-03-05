@@ -116,7 +116,7 @@ const Watermark = ({
           ctx.rotate(-0.3);
           ctx.font = 'bold 20px "Cinzel", serif';
           ctx.fillStyle = `rgba(212, 175, 55, ${watermarkOpacity * 0.7})`;
-          ctx.fillText("Wedding House", 0, 0);
+          // ctx.fillText("Wedding House", 0, 0);
           ctx.restore();
         }
       }
@@ -128,7 +128,7 @@ const Watermark = ({
       ctx.rotate(-0.2);
       ctx.font = 'bold 24px "Cinzel", serif';
       ctx.fillStyle = `rgba(212, 175, 55, ${watermarkOpacity})`;
-      ctx.fillText("Wedding House", 0, 0);
+      // ctx.fillText("Wedding House", 0, 0);
       ctx.restore();
 
       // Center
@@ -137,11 +137,11 @@ const Watermark = ({
       ctx.rotate(-0.2);
       ctx.font = 'bold 40px "Cinzel", serif';
       ctx.fillStyle = `rgba(212, 175, 55, ${watermarkOpacity * 0.8})`;
-      ctx.fillText("Wedding House", -150, 0);
+      // ctx.fillText("Wedding House", -150, 0);
 
       ctx.font = 'bold 20px "Cinzel", serif';
       ctx.fillStyle = `rgba(107, 15, 26, ${watermarkOpacity * 0.8})`;
-      ctx.fillText("UNION OF HEARTS", -100, 50);
+      // ctx.fillText("UNION OF HEARTS", -100, 50);
       ctx.restore();
 
       // Bottom right
@@ -159,7 +159,7 @@ const Watermark = ({
       ctx.rotate(0.3);
       ctx.font = 'bold 18px "Cinzel", serif';
       ctx.fillStyle = `rgba(212, 175, 55, ${watermarkOpacity * 0.6})`;
-      ctx.fillText("Wedding House", 0, 0);
+      // ctx.fillText("Wedding House", 0, 0);
       ctx.restore();
 
       ctx.save();
@@ -167,7 +167,7 @@ const Watermark = ({
       ctx.rotate(-0.4);
       ctx.font = 'bold 18px "Cinzel", serif';
       ctx.fillStyle = `rgba(107, 15, 26, ${watermarkOpacity * 0.6})`;
-      ctx.fillText("Wedding House", 0, 0);
+      // ctx.fillText("Wedding House", 0, 0);
       ctx.restore();
     }
 
@@ -268,12 +268,12 @@ const Watermark = ({
               className={`absolute inset-0 flex items-center justify-center opacity-${Math.round(watermarkOpacity * 100)}`}
             >
               <div className="text-center transform -rotate-12">
-                <div className="text-4xl font-cinzel font-bold text-gold">
+                {/* <div className="text-4xl font-cinzel font-bold text-gold">
                   WED
                 </div>
                 <div className="text-4xl font-cinzel font-bold text-maroon">
                   HOUSE
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

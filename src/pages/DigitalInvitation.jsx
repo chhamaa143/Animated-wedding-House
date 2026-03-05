@@ -132,7 +132,7 @@ const DigitalInvitation = () => {
       title: "Dhol-Tasha Beat",
       description: "Punjabi wedding vibes",
       price: "₹699",
-      videoPath: "/videos/Dig-Invitation (9).mp4",
+      videoPath: "/videos/Dig-Invitation11.mp4",
       thumbnail: "/images/thumbnail/9.png",
       category: "traditional",
       duration: "1:10",

@@ -157,7 +157,8 @@ const WeddingStationery = () => {
       name: "Wedding Itinerary Card",
       category: "itinerary",
       price: "₹199",
-      description: "Beautifully designed itinerary cards for your wedding schedule",
+        description:
+        "Beautifully designed itinerary cards for your wedding schedule",
       image: "/products/itnerary.png",
       tags: ["Schedule", "Elegant", "Custom"],
       delivery: "3-5 days",
@@ -282,7 +283,8 @@ const WeddingStationery = () => {
       name: "Personalized Bottle Tag",
       category: "bottle-tag",
       price: "₹8 per pc",
-      description: "Make your big day unforgettable with our exquisitely designed wedding Bottle Tags",
+      description:
+        "Make your big day unforgettable with our exquisitely designed wedding Bottle Tags",
       image: "/images/products/bottle-tag.webp",
       tags: ["Bar", "Drinks", "Modern"],
       delivery: "1-2 days",
@@ -308,7 +310,8 @@ const WeddingStationery = () => {
       name: "Wedding Luggage Tag",
       category: "luggage-tag",
       price: "₹8 Per PC",
-      description: "Add a unique and personal touch to your wedding with our beautifully crafted Wedding Luggage Tag Cards With Dori",
+      description:
+        "Add a unique and personal touch to your wedding with our beautifully crafted Wedding Luggage Tag Cards With Dori",
       image: "/images/products/card.png",
       tags: ["Seating", "Display", "Elegant"],
       delivery: "1-2 days",
@@ -362,7 +365,8 @@ const WeddingStationery = () => {
       name: "Copper Foil Envelope",
       category: "envelopes",
       price: "₹80",
-      description: "Celebrate special moments with beautifully designed Shagun envelopes. Perfect for weddings, festivals, ceremonies, and gifting, our custom envelopes add elegance and personal touch to your heartfelt blessings.",
+      description:
+        "Celebrate special moments with beautifully designed Shagun envelopes. Perfect for weddings, festivals, ceremonies, and gifting, our custom envelopes add elegance and personal touch to your heartfelt blessings.",
       image: "/images/products/copperfoil.png",
       tags: ["Copper", "Elegant", "Shagun"],
       delivery: "1-day",
@@ -373,7 +377,8 @@ const WeddingStationery = () => {
       name: "Silver Foil Envelope",
       category: "envelopes",
       price: "₹75",
-      description: "Celebrate special moments with beautifully designed Shagun envelopes. Perfect for weddings, festivals, ceremonies, and gifting, our custom envelopes add elegance and personal touch to your heartfelt blessings.",
+      description:
+        "Celebrate special moments with beautifully designed Shagun envelopes. Perfect for weddings, festivals, ceremonies, and gifting, our custom envelopes add elegance and personal touch to your heartfelt blessings.",
       image: "/images/products/silverfoil.png",
       tags: ["Silver", "Elegant", "Shagun"],
       delivery: "1-day",
@@ -386,7 +391,7 @@ const WeddingStationery = () => {
     selectedCategory === "all"
       ? stationeryProducts
       : stationeryProducts.filter(
-          (product) => product.category === selectedCategory
+          (product) => product.category === selectedCategory,
         );
 
   // Filter by price range
@@ -413,7 +418,7 @@ const WeddingStationery = () => {
     }, 0);
 
     const message = encodeURIComponent(
-      `Hello! I would like to order the following items:\n\n${itemsList}\n\n💰 Total: ₹${total}\n\nPlease create a custom package for me with these items.`
+      `Hello! I would like to order the following items:\n\n${itemsList}\n\n💰 Total: ₹${total}\n\nPlease create a custom package for me with these items.`,
     );
 
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
@@ -435,15 +440,16 @@ const WeddingStationery = () => {
           <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-white mb-6">
             Wedding Stationery Collection
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
-            Everything you need for your perfect wedding - from door hangers to thank you cards
+            Everything you need for your perfect wedding - from door hangers to
+            thank you cards
           </p>
-          
+
           {/* Quick Stats */}
           <div className="flex flex-wrap justify-center gap-6">
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
@@ -514,7 +520,7 @@ const WeddingStationery = () => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            
+
             {/* Price Range Filter */}
             <div className="mb-6">
               <h4 className="font-medium mb-3">Price Range</h4>
@@ -526,7 +532,10 @@ const WeddingStationery = () => {
                   step="100"
                   value={priceRange.max}
                   onChange={(e) =>
-                    setPriceRange({ ...priceRange, max: parseInt(e.target.value) })
+                    setPriceRange({
+                      ...priceRange,
+                      max: parseInt(e.target.value),
+                    })
                   }
                   className="w-full accent-maroon"
                 />
@@ -547,8 +556,6 @@ const WeddingStationery = () => {
         </div>
       )}
 
-
-
       {/* Products Grid */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Selected Items Bar */}
@@ -557,14 +564,17 @@ const WeddingStationery = () => {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <div className="font-bold text-lg">
-                  {selectedItems.length} item{selectedItems.length > 1 ? 's' : ''} selected
+                  {selectedItems.length} item
+                  {selectedItems.length > 1 ? "s" : ""} selected
                 </div>
                 <div className="text-gray-600">
                   Total: ₹
-                  {selectedItems.reduce((sum, item) => {
-                    const price = parseInt(item.price.replace(/[^0-9]/g, ""));
-                    return sum + price;
-                  }, 0).toLocaleString()}
+                  {selectedItems
+                    .reduce((sum, item) => {
+                      const price = parseInt(item.price.replace(/[^0-9]/g, ""));
+                      return sum + price;
+                    }, 0)
+                    .toLocaleString()}
                 </div>
               </div>
               <div className="flex gap-3">
@@ -604,10 +614,11 @@ const WeddingStationery = () => {
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     onError={(e) => {
-                      e.target.src = "https://via.placeholder.com/400x300?text=Product";
+                      e.target.src =
+                        "https://via.placeholder.com/400x300?text=Product";
                     }}
                   />
-                  
+
                   {/* Badges */}
                   <div className="absolute top-3 left-3 flex gap-2">
                     {product.bestseller && (
@@ -644,7 +655,8 @@ const WeddingStationery = () => {
                   {/* Category & Rating */}
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-xs font-medium px-3 py-1 bg-gold/20 text-maroon rounded-full">
-                      {categories.find((c) => c.id === product.category)?.name || product.category}
+                      {categories.find((c) => c.id === product.category)
+                        ?.name || product.category}
                     </span>
                     <div className="flex items-center gap-1">
                       <Star className="w-4 h-4 text-gold fill-current" />
@@ -658,7 +670,7 @@ const WeddingStationery = () => {
                   <h3 className="font-bold text-gray-800 mb-2 line-clamp-1 group-hover:text-maroon transition-colors">
                     {product.name}
                   </h3>
-                  
+
                   {/* Description */}
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                     {product.description}
@@ -737,11 +749,11 @@ const WeddingStationery = () => {
           <button
             onClick={() => {
               const message = encodeURIComponent(
-                "Hello! I need help creating a custom wedding stationery package. Can you help me with this?"
+                "Hello! I need help creating a custom wedding stationery package. Can you help me with this?",
               );
               window.open(
                 `https://wa.me/${whatsappNumber}?text=${message}`,
-                "_blank"
+                "_blank",
               );
             }}
             className="bg-white text-maroon px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors inline-flex items-center gap-3 shadow-xl hover:scale-105 transform transition-all"

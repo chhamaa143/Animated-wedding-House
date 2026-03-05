@@ -64,6 +64,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       price: "₹2,499",
+      slug: "anant-bandhan"
     },
     {
       name: "Farman Card",
@@ -72,6 +73,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       price: "₹1,999",
+      slug: "farman-card"
     },
     {
       name: "Forever in Gold",
@@ -81,6 +83,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       price: "₹3,499",
+      slug: "forever-in-gold"
     },
     {
       name: "Legend Wedding Card",
@@ -89,6 +92,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       price: "₹2,999",
+      slug: "legend-wedding-card"
     },
     {
       name: "Riwaaz Wed Card",
@@ -97,6 +101,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       price: "₹1,799",
+      slug: "riwaaz-wed-card"
     },
     {
       name: "Royal Vows",
@@ -105,6 +110,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       price: "₹3,999",
+      slug: "royal-vows"
     },
   ];
 
@@ -117,6 +123,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       price: "₹199",
+      slug: "itinerary"
     },
     {
       name: "Menu Cards",
@@ -125,6 +132,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       price: "₹149",
+      slug: "menu-cards"
     },
     {
       name: "Welcome Board",
@@ -134,6 +142,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       price: "₹799",
+      slug: "welcome-board"
     },
     {
       name: "Thank You Card",
@@ -142,6 +151,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       price: "₹149",
+      slug: "thank-you-card"
     },
   ];
 
@@ -153,6 +163,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       price: "₹499",
+      slug: "box-envelope"
     },
     {
       name: "Pocket Envelope",
@@ -161,6 +172,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       price: "₹299",
+      slug: "pocket-envelope"
     },
     {
       name: "Regular Envelope",
@@ -170,6 +182,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       price: "₹199",
+      slug: "regular-envelope"
     },
   ];
 
@@ -179,7 +192,7 @@ const Navbar = () => {
         scrolled ? "bg-white shadow-lg" : "bg-white"
       }`}
     >
-      {/* Top Bar - Keep exactly as is */}
+      {/* Top Bar */}
       <div className="bg-maroon text-white text-sm py-3 relative overflow-hidden border-b-2 border-gold/30">
         <div className="container-custom">
           <div className="flex justify-between items-center">
@@ -315,7 +328,7 @@ const Navbar = () => {
         ></div>
       </div>
 
-      {/* Main Header - All in one line with navigation */}
+      {/* Main Header */}
       <div className="border-b border-gray-200">
         <div className="container-custom">
           <div className="flex items-center justify-between py-2 px-4 lg:px-6">
@@ -328,14 +341,8 @@ const Navbar = () => {
               />
             </Link>
 
-            {/* Navigation Links - Moved here */}
+            {/* Navigation Links */}
             <div className="hidden lg:flex items-center space-x-3 mx-4">
-              <Link
-                to="/"
-                className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
-              >
-                
-              </Link>
               {/* Wedding Cards Dropdown */}
               <div className="relative group">
                 <button className="flex items-center space-x-1 text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap">
@@ -347,7 +354,7 @@ const Navbar = () => {
                     {weddingCardsCategories.slice(0, 6).map((cat, index) => (
                       <Link
                         key={index}
-                        to={`/weddingcards${cat.name.toLowerCase().replace(/ /g, "-")}`}
+                        to={`/weddingcards/${cat.slug}`}
                         className="group/item p-3 hover:bg-gray-50 rounded-lg"
                       >
                         <div className="flex items-start gap-2">
@@ -376,7 +383,8 @@ const Navbar = () => {
                     </Link>
                   </div>
                 </div>
-              </div>{" "}
+              </div>
+
               {/* Wedding Stationery Dropdown */}
               <div className="relative group">
                 <button className="flex items-center space-x-1 text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap">
@@ -388,7 +396,7 @@ const Navbar = () => {
                     {stationeryCategories.map((cat, index) => (
                       <Link
                         key={index}
-                        to={`/weddingstationory/${cat.name.toLowerCase().replace(/ /g, "-")}`}
+                        to={`/weddingstationery/${cat.slug}`}
                         className="group/item p-3 hover:bg-gray-50 rounded-lg"
                       >
                         <div className="flex items-start gap-2">
@@ -410,7 +418,7 @@ const Navbar = () => {
                   </div>
                   <div className="mt-4 pt-4 border-t border-gray-200 text-center">
                     <Link
-                      to="/weddingstationory"
+                      to="/weddingstationery"
                       className="text-maroon hover:text-gold font-medium text-sm"
                     >
                       View All Stationery →
@@ -418,6 +426,7 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
+
               <Link
                 to="/hamper"
                 className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
@@ -431,11 +440,12 @@ const Navbar = () => {
                 Digital Invitation
               </Link>
               <Link
-                to="/digitalpdf"
+                to="/digitalpdf"   
                 className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
               >
                 Digital PDF
               </Link>
+
               {/* Shagun Envelopes Dropdown */}
               <div className="relative group">
                 <button className="flex items-center space-x-1 text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap">
@@ -447,7 +457,7 @@ const Navbar = () => {
                     {envelopeCategories.map((cat, index) => (
                       <Link
                         key={index}
-                        to={`/shagunenvelope/${cat.name.toLowerCase().replace(/ /g, "-")}`}
+                        to={`/shagunenvelopes/${cat.slug}`}
                         className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg group/item"
                       >
                         <div className="text-maroon">{cat.icon}</div>
@@ -467,6 +477,7 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
+
               <Link
                 to="/gallery"
                 className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
@@ -487,39 +498,8 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {/* Search Bar - Made smaller */}
-            {/* <div className="flex-grow max-w-xs mx-2">
-              <div className="flex items-center">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  className="w-full px-3 py-1.5 border border-gray-200 rounded-l-lg focus:border-gold focus:outline-none text-sm"
-                  onFocus={() => setIsSearchFocused(true)}
-                  onBlur={() => setIsSearchFocused(false)}
-                />
-                <button className="bg-maroon text-white px-3 py-1.5 rounded-r-lg hover:bg-opacity-90">
-                  <Search className="w-4 h-4" />
-                </button>
-              </div>
-            </div> */}
-
             {/* Right Icons & Inquiry */}
             <div className="flex items-center space-x-3 flex-shrink-0">
-              {/* <button className="text-gray-700 hover:text-maroon">
-                <Heart className="w-5 h-5" />
-              </button> */}
-              {/* <button className="text-gray-700 hover:text-maroon relative">
-                <ShoppingCart className="w-5 h-5" />
-                <span className="absolute -top-2 -right-2 bg-gold text-maroon text-xs rounded-full w-4 h-4 flex items-center justify-center font-bold">
-                  0
-                </span>
-              </button> */}
-              {/* <button className="text-gray-700 hover:text-marono flex items-center space-x-1">
-                <User className="w-5 h-5" />
-                <span className="text-xs font-medium hidden lg:inline">
-                  Sign In
-                </span>
-              </button> */}
               <button
                 onClick={() => {
                   const phoneNumber = "918120461118";
@@ -585,7 +565,7 @@ const Navbar = () => {
                 {weddingCardsCategories.slice(0, 4).map((cat, index) => (
                   <Link
                     key={index}
-                    to={`/wedding-cards/${cat.name.toLowerCase().replace(/ /g, "-")}`}
+                    to={`/weddingcards/${cat.slug}`}
                     className="flex items-center gap-2 text-sm text-gray-600 hover:text-maroon"
                     onClick={() => setIsOpen(false)}
                   >
@@ -605,7 +585,7 @@ const Navbar = () => {
                 {stationeryCategories.slice(0, 4).map((cat, index) => (
                   <Link
                     key={index}
-                    to={`/wedding-stationery/${cat.name.toLowerCase().replace(/ /g, "-")}`}
+                    to={`/weddingstationery/${cat.slug}`}
                     className="flex items-center gap-2 text-sm text-gray-600 hover:text-maroon"
                     onClick={() => setIsOpen(false)}
                   >
@@ -617,21 +597,21 @@ const Navbar = () => {
             </div>
 
             <Link
-              to="/wedding-hamper"
+              to="/hamper"
               className="block py-2 text-gray-700 hover:text-maroon"
               onClick={() => setIsOpen(false)}
             >
               Wedding Hamper
-            </Link>
+            </Link>s
             <Link
-              to="/digital-invitation"
+              to="/e-invite"
               className="block py-2 text-gray-700 hover:text-maroon"
               onClick={() => setIsOpen(false)}
             >
               Digital Invitation
             </Link>
             <Link
-              to="/digital-pdf"
+              to="/digitalpdf"
               className="block py-2 text-gray-700 hover:text-maroon"
               onClick={() => setIsOpen(false)}
             >
@@ -647,7 +627,7 @@ const Navbar = () => {
                 {envelopeCategories.map((cat, index) => (
                   <Link
                     key={index}
-                    to={`/shagun-envelopes/${cat.name.toLowerCase().replace(/ /g, "-")}`}
+                    to={`/shagunenvelopes/${cat.slug}`}
                     className="flex items-center gap-2 text-sm text-gray-600 hover:text-maroon"
                     onClick={() => setIsOpen(false)}
                   >
