@@ -16,7 +16,12 @@ import {
   X,
   ChevronDown,
   Menu,
+  ChevronLeft,
+  Minus,
+  Plus,
+  Share2,
 } from "lucide-react";
+import Watermark from "../components/Watermark";
 
 const ShagunEnvelopes = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -26,6 +31,13 @@ const ShagunEnvelopes = () => {
   const [sortBy, setSortBy] = useState("popular");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Product Details Popup State
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [quantity, setQuantity] = useState(100);
+  const [selectedSet, setSelectedSet] = useState("100");
+  const [activeTab, setActiveTab] = useState("description");
 
   // WhatsApp Configuration
   const whatsappNumber = "918120461118";
@@ -75,19 +87,19 @@ const ShagunEnvelopes = () => {
     // Box Envelopes - Multiple Designs
     {
       id: 1,
-      name: "Premium Gold Foil Box Envelope",
+      name: "Premium Box Envelope",
       category: "box-envelope",
-      price: "₹599",
+      price: "₹150 each",
       originalPrice: "₹799",
-      discount: "25% OFF",
-      image: "/images/products/box-envelope-gold.jpg",
+      // discount: "25% OFF",
+      image: "/products/BoxEnv (1).webp",
       images: [
-        "/images/products/box-envelope-gold-1.jpg",
-        "/images/products/box-envelope-gold-2.jpg",
-        "/images/products/box-envelope-gold-3.jpg",
+        "/products/BoxEnv (3).webp",
+        "/products/BoxEnv (2).webp",
+        "/products/BoxEnv (4).webp",
       ],
       description:
-        "Luxurious box envelope with gold foil detailing. Perfect for wedding shagun and special occasions.",
+        "Luxurious box envelope with detailing. Perfect for wedding shagun and special occasions.",
       specifications: [
         { label: "Size", value: "6 x 4 x 1 inches" },
         { label: "Material", value: "Premium Rigid Cardboard" },
@@ -96,7 +108,7 @@ const ShagunEnvelopes = () => {
         { label: "Includes", value: "Matching inner sleeve" },
       ],
       tags: ["Premium", "Gold Foil", "Magnetic"],
-      delivery: "3-5 days",
+      delivery: "Same Day",
       rating: 4.9,
       reviews: 128,
       popular: true,
@@ -105,65 +117,93 @@ const ShagunEnvelopes = () => {
     },
     {
       id: 2,
-      name: "Silver Embossed Box Envelope",
-      category: "box-envelope",
-      price: "₹549",
-      image: "/images/products/box-envelope-silver.jpg",
-      description:
-        "Elegant silver embossed box envelope with traditional motifs.",
+      name: "Silver Foil Envelope",
+      category: "regular-envelope",
+      price: "₹75 each",
+      image: "/products/sil-foil-env1.webp",
+      images: [
+        "/products/sil-foil-env1.webp",
+        "/products/sil-foil-env2.webp",
+        "/products/sil-foil-env3.webp",
+      ],
+      description: "Elegant silver Foil envelope with traditional motifs.",
       tags: ["Silver", "Embossed", "Elegant"],
-      delivery: "3-5 days",
+      delivery: "1-2 days",
       rating: 4.8,
       reviews: 95,
       popular: true,
+      minOrder: 100,
     },
     {
       id: 3,
-      name: "Red Velvet Box Envelope",
-      category: "box-envelope",
-      price: "₹699",
-      image: "/images/products/box-envelope-velvet.jpg",
+      name: "Premium Pocket Envelope",
+      category: "pocket-envelope",
+      price: "₹35 each",
+      image: "/products/pocket-env1.webp",
+      images: [
+        "/products/pocket-env1.webp",
+        "/products/pocket-env2.webp",
+        "/products/pocket-env3.webp",
+      ],
       description: "Luxurious velvet finish box envelope for royal gifting.",
       tags: ["Velvet", "Luxury", "Premium"],
-      delivery: "4-6 days",
+      delivery: "1-2 days",
       rating: 4.9,
       reviews: 76,
       bestseller: true,
+      minOrder: 100,
     },
     {
       id: 4,
-      name: "Peach Blossom Box Envelope",
-      category: "box-envelope",
-      price: "₹499",
-      image: "/images/products/box-envelope-peach.jpg",
+      name: "Velvet Touch Envelope",
+      category: "regular-envelope",
+      price: "₹70 each",
+      image: "/products/velvet-env1.webp",
+      images: [
+        "/products/velvet-env1.webp",
+        "/products/velvet-env2.webp",
+        "/products/velvet-env3.webp",
+      ],
       description: "Beautiful peach-colored box envelope with floral patterns.",
       tags: ["Floral", "Colorful", "Festive"],
-      delivery: "3-5 days",
+      delivery: "1-3 days",
       rating: 4.7,
       reviews: 64,
+      minOrder: 100,
     },
     {
       id: 5,
-      name: "Royal Blue Box Envelope",
-      category: "box-envelope",
-      price: "₹549",
-      image: "/images/products/box-envelope-blue.jpg",
+      name: "Matt Finish Envelope",
+      category: "regular-envelope",
+      price: "₹45 each",
+      image: "/products/matt-env1.webp",
+      images: [
+        "/products/matt-env1.webp",
+        "/products/matt-env3.webp",
+        "/products/matt-evn2.webp",
+      ],
       description: "Deep blue box envelope with gold border.",
       tags: ["Royal", "Gold Border", "Elegant"],
-      delivery: "3-5 days",
+      delivery: "2-4 days",
       rating: 4.8,
       reviews: 82,
+      minOrder: 100,
     },
 
     // Pocket Envelopes
     {
       id: 6,
-      name: "Pocket Gold Foil Envelope",
-      category: "pocket-envelope",
-      price: "₹349",
+      name: "Copper Foil Envelope",
+      category: "regular-envelope",
+      price: "₹80 each",
       originalPrice: "₹499",
       discount: "30% OFF",
-      image: "/images/products/pocket-gold.jpg",
+      image: "/products/copper-env1.webp",
+      images: [
+        "/products/copper-env1.webp",
+        "/products/copper-env2.webp",
+        "/products/copper-env3.webp",
+      ],
       description:
         "Compact pocket envelope with gold foil accents. Perfect for gift cards and small shagun.",
       tags: ["Gold Foil", "Compact", "Elegant"],
@@ -171,122 +211,42 @@ const ShagunEnvelopes = () => {
       rating: 4.7,
       reviews: 112,
       popular: true,
+      minOrder: 100,
     },
     {
       id: 7,
-      name: "Pocket Silk Finish Envelope",
+      name: "Classic Pocket Envelope",
       category: "pocket-envelope",
-      price: "₹299",
-      image: "/images/products/pocket-silk.jpg",
+      price: "₹30 each",
+      image: "/products/cls-pocket-env1.webp",
+      images: [
+        "/products/cls-pocket-env1.webp",
+        "/products/cls-pocket-env2.webp",
+      ],
       description: "Smooth silk finish pocket envelope in assorted colors.",
       tags: ["Silk", "Colorful", "Smooth"],
       delivery: "2-4 days",
       rating: 4.6,
       reviews: 89,
+      minOrder: 100,
     },
     {
       id: 8,
-      name: "Pocket Floral Design Envelope",
+      name: "Special Pocket Envelope",
       category: "pocket-envelope",
-      price: "₹329",
-      image: "/images/products/pocket-floral.jpg",
+      price: "₹30 each",
+      image: "/products/spc-poc-env1.webp",
+      images: [
+        "/products/spc-poc-env1.webp",
+        "/products/spc-poc-env2.webp",
+        "/products/spc-poc-env3.webp",
+      ],
       description: "Beautiful floral printed pocket envelopes.",
       tags: ["Floral", "Printed", "Vibrant"],
-      delivery: "3-5 days",
+      delivery: "1-3 days",
       rating: 4.7,
       reviews: 56,
-    },
-    {
-      id: 9,
-      name: "Pocket Embossed Border Envelope",
-      category: "pocket-envelope",
-      price: "₹379",
-      image: "/images/products/pocket-embossed.jpg",
-      description: "Elegant embossed border design on premium paper.",
-      tags: ["Embossed", "Premium", "Elegant"],
-      delivery: "3-5 days",
-      rating: 4.8,
-      reviews: 43,
-    },
-    {
-      id: 10,
-      name: "Pocket Pearl Finish Envelope",
-      category: "pocket-envelope",
-      price: "₹399",
-      image: "/images/products/pocket-pearl.jpg",
-      description: "Lustrous pearl finish envelope for special occasions.",
-      tags: ["Pearl", "Lustrous", "Premium"],
-      delivery: "4-6 days",
-      rating: 4.9,
-      reviews: 38,
-      bestseller: true,
-    },
-
-    // Regular Envelopes
-    {
-      id: 11,
-      name: "Classic White Regular Envelope",
-      category: "regular-envelope",
-      price: "₹199",
-      originalPrice: "₹249",
-      discount: "20% OFF",
-      image: "/images/products/regular-white.jpg",
-      description: "Classic white envelopes for everyday use. Pack of 50.",
-      tags: ["Classic", "White", "Pack of 50"],
-      delivery: "1-2 days",
-      rating: 4.8,
-      reviews: 245,
-      popular: true,
-    },
-    {
-      id: 12,
-      name: "Premium Cream Envelope",
-      category: "regular-envelope",
-      price: "₹249",
-      image: "/images/products/regular-cream.jpg",
-      description: "Elegant cream-colored envelopes with subtle texture.",
-      tags: ["Cream", "Textured", "Premium"],
-      delivery: "2-3 days",
-      rating: 4.7,
-      reviews: 156,
-    },
-    {
-      id: 13,
-      name: "Gold Border Regular Envelope",
-      category: "regular-envelope",
-      price: "₹299",
-      image: "/images/products/regular-gold-border.jpg",
-      description: "Classic envelopes with elegant gold border.",
-      tags: ["Gold Border", "Elegant", "Formal"],
-      delivery: "2-3 days",
-      rating: 4.8,
-      reviews: 134,
-    },
-    {
-      id: 14,
-      name: "Pastel Color Envelope Set",
-      category: "regular-envelope",
-      price: "₹279",
-      image: "/images/products/regular-pastel.jpg",
-      description: "Assorted pastel colored envelopes. Set of 40.",
-      tags: ["Pastel", "Colorful", "Assorted"],
-      delivery: "3-4 days",
-      rating: 4.6,
-      reviews: 98,
-    },
-    {
-      id: 15,
-      name: "Handmade Paper Envelope",
-      category: "regular-envelope",
-      price: "₹329",
-      image: "/images/products/regular-handmade.jpg",
-      description:
-        "Eco-friendly handmade paper envelopes with natural texture.",
-      tags: ["Handmade", "Eco-friendly", "Natural"],
-      delivery: "4-5 days",
-      rating: 4.9,
-      reviews: 87,
-      bestseller: true,
+      minOrder: 100,
     },
   ];
 
@@ -366,9 +326,76 @@ const ShagunEnvelopes = () => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
+  // Product Details Popup Functions
+  const openProductDetails = (product) => {
+    setSelectedProduct(product);
+    setSelectedImage(0);
+    setSelectedSet("100");
+    setQuantity(100);
+    setActiveTab("description");
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeProductDetails = () => {
+    setSelectedProduct(null);
+    document.body.style.overflow = "auto";
+  };
+
+  const nextImage = () => {
+    if (selectedProduct) {
+      setSelectedImage((prev) => (prev + 1) % selectedProduct.images.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedProduct) {
+      setSelectedImage(
+        (prev) =>
+          (prev - 1 + selectedProduct.images.length) %
+          selectedProduct.images.length,
+      );
+    }
+  };
+
+  const handleQuantityChange = (type) => {
+    if (type === "increase") {
+      setQuantity((prev) => Math.min(prev + 50, 1000));
+    } else {
+      setQuantity((prev) => Math.max(prev - 50, 50));
+    }
+  };
+
+  const getCurrentPrice = () => {
+    if (!selectedProduct) return 0;
+    // For now, just return the base price
+    return parseInt(selectedProduct.price.replace(/[^0-9]/g, ""));
+  };
+
+  const getPerPiecePrice = () => {
+    if (!selectedProduct) return 0;
+    const price = parseInt(selectedProduct.price.replace(/[^0-9]/g, ""));
+    return price;
+  };
+
   // Get current category name
   const currentCategory =
     categories.find((c) => c.id === selectedCategory) || categories[0];
+
+  const features = [
+    {
+      icon: <Truck className="w-5 h-5" />,
+      text: "Free Shipping on orders above ₹5000",
+    },
+    {
+      icon: <Shield className="w-5 h-5" />,
+      text: "Premium Quality Guaranteed",
+    },
+    { icon: <Check className="w-5 h-5" />, text: "Customization Available" },
+    {
+      icon: <Heart className="w-5 h-5" />,
+      text: "100% Satisfaction Guarantee",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream to-white pt-20">
@@ -613,22 +640,23 @@ const ShagunEnvelopes = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: product.id * 0.02 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 group"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 group cursor-pointer"
+                onClick={() => openProductDetails(product)}
               >
-                {/* Product Image */}
+                {/* Product Image with Watermark */}
                 <div className="relative h-56 overflow-hidden">
-                  <img
+                  <Watermark
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    onError={(e) => {
-                      e.target.src =
-                        "https://via.placeholder.com/400x300?text=Envelope";
-                    }}
+                    watermarkSize={35}
+                    watermarkOpacity={0.15}
+                    watermarkPosition="bottom-right"
+                    watermarkGap={6}
                   />
 
                   {/* Badges */}
-                  <div className="absolute top-3 left-3 flex gap-2">
+                  <div className="absolute top-3 left-3 flex gap-2 z-10">
                     {product.bestseller && (
                       <span className="px-2 py-1 bg-gold text-maroon text-xs font-bold rounded-full">
                         BESTSELLER
@@ -648,8 +676,11 @@ const ShagunEnvelopes = () => {
 
                   {/* Select Button */}
                   <button
-                    onClick={() => toggleItemSelection(product)}
-                    className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-300 transform hover:scale-110 ${
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleItemSelection(product);
+                    }}
+                    className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-300 transform hover:scale-110 z-10 ${
                       selectedItems.find((item) => item.id === product.id)
                         ? "bg-gold text-maroon"
                         : "bg-white/90 text-gray-700 hover:bg-maroon hover:text-white"
@@ -663,7 +694,7 @@ const ShagunEnvelopes = () => {
                   </button>
 
                   {/* Category Indicator */}
-                  <div className="absolute bottom-3 left-3">
+                  <div className="absolute bottom-3 left-3 z-10">
                     <span className="px-2 py-1 bg-black/50 backdrop-blur-sm text-white text-xs rounded-full flex items-center gap-1">
                       {categories.find((c) => c.id === product.category)?.icon}
                       {categories.find((c) => c.id === product.category)?.name}
@@ -700,14 +731,9 @@ const ShagunEnvelopes = () => {
                     )}
                   </div>
 
-                  {/* Description */}
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                    {product.description}
-                  </p>
-
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1 mb-3">
-                    {product.tags.map((tag) => (
+                    {product.tags.slice(0, 2).map((tag) => (
                       <span
                         key={tag}
                         className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded"
@@ -715,6 +741,11 @@ const ShagunEnvelopes = () => {
                         {tag}
                       </span>
                     ))}
+                    {product.tags.length > 2 && (
+                      <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
+                        +{product.tags.length - 2}
+                      </span>
+                    )}
                   </div>
 
                   {/* Delivery & Reviews */}
@@ -726,37 +757,17 @@ const ShagunEnvelopes = () => {
                     <div>({product.reviews} reviews)</div>
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleWhatsAppOrder(product)}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-2.5 rounded-lg hover:shadow-lg transition-all hover:scale-105 text-sm font-medium flex items-center justify-center gap-2"
-                    >
-                      <MessageCircle className="w-4 h-4" />
-                      Order
-                    </button>
-                    <button
-                      onClick={() => toggleItemSelection(product)}
-                      className={`px-3 py-2.5 border rounded-lg transition-all text-sm ${
-                        selectedItems.find((item) => item.id === product.id)
-                          ? "bg-gold text-maroon border-gold"
-                          : "border-gray-300 hover:border-gold"
-                      }`}
-                    >
-                      {selectedItems.find((item) => item.id === product.id) ? (
-                        <Check className="w-4 h-4" />
-                      ) : (
-                        "Select"
-                      )}
-                    </button>
-                  </div>
-
-                  {/* Min Order Info */}
-                  {product.minOrder && (
-                    <p className="text-xs text-gray-500 mt-3">
-                      Min. Order: {product.minOrder} pieces
-                    </p>
-                  )}
+                  {/* Quick Order Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleWhatsAppOrder(product);
+                    }}
+                    className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-2.5 rounded-lg hover:shadow-lg transition-all hover:scale-105 text-sm font-medium flex items-center justify-center gap-2"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Quick Order
+                  </button>
                 </div>
               </motion.div>
             ))}
@@ -795,6 +806,296 @@ const ShagunEnvelopes = () => {
           </button>
         </div>
       </div>
+
+      {/* Product Details Popup */}
+      {selectedProduct && (
+        <div
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto"
+          onClick={closeProductDetails}
+        >
+          <div
+            className="relative bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeProductDetails}
+              className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-lg"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="p-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Left Column - Images */}
+                <div>
+                  {/* Main Image with Watermark */}
+                  <div className="relative aspect-square rounded-xl overflow-hidden mb-4 bg-gray-100">
+                    <Watermark
+                      src={selectedProduct.images[selectedImage]}
+                      alt={selectedProduct.name}
+                      className="w-full h-full object-cover"
+                      watermarkSize={45}
+                      watermarkOpacity={0.15}
+                      watermarkPosition="bottom-right"
+                      watermarkGap={8}
+                    />
+
+                    {/* Navigation Arrows */}
+                    {selectedProduct.images.length > 1 && (
+                      <>
+                        <button
+                          onClick={prevImage}
+                          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white shadow-lg"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={nextImage}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white shadow-lg"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Thumbnails with Watermark */}
+                  {selectedProduct.images.length > 1 && (
+                    <div className="grid grid-cols-4 gap-2">
+                      {selectedProduct.images.map((img, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setSelectedImage(index)}
+                          className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
+                            selectedImage === index
+                              ? "border-gold scale-105"
+                              : "border-transparent hover:border-gray-300"
+                          }`}
+                        >
+                          <Watermark
+                            src={img}
+                            alt={`Thumbnail ${index + 1}`}
+                            className="w-full h-full object-cover"
+                            watermarkSize={20}
+                            watermarkOpacity={0.1}
+                            watermarkPosition="bottom-right"
+                            watermarkGap={3}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Features */}
+                  <div className="mt-6 grid grid-cols-2 gap-3">
+                    {features.map((feature, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 p-2 rounded-lg"
+                      >
+                        <span className="text-maroon">{feature.icon}</span>
+                        <span>{feature.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right Column - Details */}
+                <div>
+                  {/* Title & Category */}
+                  <div className="flex items-start justify-between mb-2">
+                    <h2 className="text-2xl lg:text-3xl font-cinzel font-bold text-maroon">
+                      {selectedProduct.name}
+                    </h2>
+                  </div>
+
+                  {/* Category Badge */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="px-3 py-1 bg-gold/20 text-maroon rounded-full text-sm font-medium flex items-center gap-1">
+                      {
+                        categories.find(
+                          (c) => c.id === selectedProduct.category,
+                        )?.icon
+                      }
+                      {
+                        categories.find(
+                          (c) => c.id === selectedProduct.category,
+                        )?.name
+                      }
+                    </span>
+                    {selectedProduct.bestseller && (
+                      <span className="px-3 py-1 bg-gold text-maroon rounded-full text-sm font-medium">
+                        Bestseller
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Rating */}
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="flex items-center">
+                      <Star className="w-5 h-5 text-gold fill-current" />
+                      <span className="ml-1 font-bold text-lg">
+                        {selectedProduct.rating}
+                      </span>
+                      <span className="text-gray-500 ml-1">
+                        ({selectedProduct.reviews} reviews)
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        const shareText = encodeURIComponent(
+                          `Check out this beautiful envelope from Wedding House!\n\n${selectedProduct.name}\nPrice: ${selectedProduct.price}\nRating: ${selectedProduct.rating}/5`,
+                        );
+                        window.open(
+                          `https://wa.me/?text=${shareText}`,
+                          "_blank",
+                        );
+                      }}
+                      className="flex items-center gap-1 text-gray-500 hover:text-maroon transition-colors"
+                    >
+                      <Share2 className="w-4 h-4" /> Share
+                    </button>
+                  </div>
+
+                  {/* Price */}
+                  <div className="mb-6">
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-3xl lg:text-4xl font-bold text-gold">
+                        {selectedProduct.price}
+                      </span>
+                      {selectedProduct.originalPrice && (
+                        <>
+                          <span className="text-lg text-gray-400 line-through">
+                            {selectedProduct.originalPrice}
+                          </span>
+                          <span className="px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full">
+                            {selectedProduct.discount}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Inclusive of all taxes
+                    </p>
+                  </div>
+
+                  {/* Tabs */}
+                  <div className="flex gap-4 border-b mb-4">
+                    <button
+                      onClick={() => setActiveTab("description")}
+                      className={`pb-2 px-1 font-medium transition-colors relative ${
+                        activeTab === "description"
+                          ? "text-maroon"
+                          : "text-gray-500 hover:text-maroon"
+                      }`}
+                    >
+                      Description
+                      {activeTab === "description" && (
+                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("specifications")}
+                      className={`pb-2 px-1 font-medium transition-colors relative ${
+                        activeTab === "specifications"
+                          ? "text-maroon"
+                          : "text-gray-500 hover:text-maroon"
+                      }`}
+                    >
+                      Specifications
+                      {activeTab === "specifications" && (
+                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Tab Content */}
+                  <div className="mb-6">
+                    {activeTab === "description" ? (
+                      <p className="text-gray-600 leading-relaxed">
+                        {selectedProduct.description}
+                      </p>
+                    ) : (
+                      <div className="grid grid-cols-2 gap-3">
+                        {selectedProduct.specifications?.map((spec, index) => (
+                          <div
+                            key={index}
+                            className="bg-gray-50 p-3 rounded-lg"
+                          >
+                            <span className="text-xs text-gray-500">
+                              {spec.label}
+                            </span>
+                            <p className="font-medium text-sm">{spec.value}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {selectedProduct.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Delivery Info */}
+                  <div className="flex items-center gap-4 mb-6 text-sm">
+                    <div className="flex items-center gap-1 text-gray-600">
+                      <Clock className="w-4 h-4" />
+                      Delivery: {selectedProduct.delivery}
+                    </div>
+                    {selectedProduct.minOrder && (
+                      <div className="text-gray-600">
+                        Min. Order: {selectedProduct.minOrder} pieces
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => {
+                        handleWhatsAppOrder(selectedProduct);
+                        closeProductDetails();
+                      }}
+                      className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-bold hover:shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      Order on WhatsApp
+                    </button>
+                    <button
+                      onClick={() => {
+                        toggleItemSelection(selectedProduct);
+                        closeProductDetails();
+                      }}
+                      className={`px-6 py-3 border-2 rounded-lg font-bold transition-all ${
+                        selectedItems.find(
+                          (item) => item.id === selectedProduct.id,
+                        )
+                          ? "bg-gold text-maroon border-gold"
+                          : "border-maroon text-maroon hover:bg-maroon hover:text-white"
+                      }`}
+                    >
+                      {selectedItems.find(
+                        (item) => item.id === selectedProduct.id,
+                      )
+                        ? "Selected"
+                        : "Select"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Filters Modal */}
       {showFilters && (

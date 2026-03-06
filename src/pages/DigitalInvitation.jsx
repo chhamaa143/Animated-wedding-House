@@ -288,14 +288,15 @@ const DigitalInvitation = () => {
             >
               {/* Thumbnail Container with Watermark */}
               <div className="relative aspect-[3/4] rounded-t-xl overflow-hidden">
-                {/* Replace img with Watermark component */}
+                {/* Thumbnail Image with Watermark */}
                 <Watermark
                   src={video.thumbnail}
-                  type="image"
                   alt={video.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  watermarkSize={40}
                   watermarkOpacity={0.15}
-                  watermarkPosition="multiple"
+                  watermarkPosition="bottom-right"
+                  watermarkGap={8}
                 />
                 
                 {/* Overlay */}
@@ -422,7 +423,7 @@ const DigitalInvitation = () => {
         </div>
       </div>
 
-      {/* Video Modal - iPhone Optimized with Watermark */}
+      {/* Video Modal - iPhone Optimized */}
       {selectedVideo && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-2"
@@ -443,17 +444,14 @@ const DigitalInvitation = () => {
               <h3 className="text-sm font-bold pr-8">{selectedVideo.title}</h3>
             </div>
 
-            {/* Video with Watermark */}
+            {/* Video */}
             <div className="aspect-video bg-black">
-              <Watermark
+              <video
                 src={selectedVideo.videoPath}
-                type="video"
                 poster={selectedVideo.thumbnail}
                 controls
                 autoPlay
                 className="w-full h-full"
-                watermarkOpacity={0.2}
-                watermarkPosition="diagonal"
               />
             </div>
 
@@ -494,4 +492,4 @@ const DigitalInvitation = () => {
   );
 };
 
-export default DigitalInvitation; 
+export default DigitalInvitation;

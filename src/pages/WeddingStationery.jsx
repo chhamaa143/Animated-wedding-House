@@ -130,11 +130,10 @@ const WeddingStationery = () => {
       id: 1,
       name: "Premium Door Hanger",
       category: "door-hanger",
-      price: "₹299",
+      price: "₹15 each",
       description: "Elegant welcome door hangers for your wedding guests",
-      image: "/products/doorhanger.webp",
+      image: "/images/products/door-hanger.jpg",
       tags: ["Welcome", "Premium", "Custom"],
-      delivery: "5-7 days",
       rating: 4.8,
       popular: true,
     },
@@ -142,11 +141,10 @@ const WeddingStationery = () => {
       id: 2,
       name: "Luxury Door Hanger Set",
       category: "door-hanger",
-      price: "₹499",
+      price: "₹20 each",
       description: "Set of 10 luxury door hangers with gold foil",
       image: "/products/doorhanger.webp",
       tags: ["Luxury", "Gold Foil", "Set of 10"],
-      delivery: "7-10 days",
       rating: 4.9,
       bestseller: true,
     },
@@ -156,23 +154,21 @@ const WeddingStationery = () => {
       id: 3,
       name: "Wedding Itinerary Card",
       category: "itinerary",
-      price: "₹199",
+      price: "₹30 each",
         description:
         "Beautifully designed itinerary cards for your wedding schedule",
-      image: "/products/itnerary.png",
+      image: "/products/1 (3).png",
       tags: ["Schedule", "Elegant", "Custom"],
-      delivery: "3-5 days",
       rating: 4.7,
     },
     {
       id: 4,
       name: "Pocket Wedding Timeline",
       category: "itinerary",
-      price: "₹349",
+      price: "₹25 each",
       description: "Compact pocket-sized ceremony schedule",
-      image: "/images/products/timeline.jpg",
+      image: "/products/itnerary.png",
       tags: ["Pocket", "Minimalist", "Convenient"],
-      delivery: "5-7 days",
       rating: 4.4,
     },
 
@@ -181,46 +177,34 @@ const WeddingStationery = () => {
       id: 5,
       name: "Gold Foil Menu Cards",
       category: "menu-cards",
-      price: "₹399",
+      price: "₹50 each",
       description: "Elegant menu cards with gold foil detailing",
-      image: "/images/products/menu-card.jpg",
+      image: "/images/products/menu-card.webp",
       tags: ["Gold Foil", "Luxury", "Reception"],
       delivery: "7-10 days",
       rating: 4.7,
     },
-    {
-      id: 6,
-      name: "Place Card Set (50 pcs)",
-      category: "menu-cards",
-      price: "₹1,499",
-      description: "Personalized place cards for seating arrangement",
-      image: "/images/products/place-card.jpg",
-      tags: ["Personalized", "Calligraphy", "Elegant"],
-      delivery: "10-14 days",
-      rating: 4.8,
-      popular: true,
-    },
-
+    
     // STANDEES
     {
-      id: 7,
+      id: 6,
       name: "Welcome Standee",
       category: "standees",
       price: "₹2,499",
       description: "Large welcome standee for wedding entrance",
-      image: "/images/products/standee.jpg",
+      image: "/images/products/welcom-standee.webp",
       tags: ["Welcome", "Large", "Customizable"],
       delivery: "10-12 days",
       rating: 4.9,
       bestseller: true,
     },
     {
-      id: 8,
+      id: 7,
       name: "Photo Standee",
       category: "standees",
       price: "₹1,999",
       description: "Photo standee for guest photo booth",
-      image: "/images/products/photo-standee.jpg",
+      image: "/images/products/photobooth-standee.webp",
       tags: ["Photo", "Fun", "Interactive"],
       delivery: "8-10 days",
       rating: 4.6,
@@ -228,12 +212,12 @@ const WeddingStationery = () => {
 
     // STICKERS
     {
-      id: 9,
+      id: 8,
       name: "Custom Wedding Stickers",
       category: "sticker",
       price: "₹99",
       description: "Personalized stickers for envelopes and gifts",
-      image: "/images/products/sticker.jpg",
+      image: "/images/products/wed-sticker.jpeg",
       tags: ["Custom", "Seal", "Pack of 50"],
       delivery: "3-5 days",
       rating: 4.5,
@@ -241,45 +225,22 @@ const WeddingStationery = () => {
 
     // TENT CARDS
     {
-      id: 10,
+      id: 9,
       name: "Table Tent Cards",
       category: "tent-card",
       price: "₹249",
       description: "Elegant tent cards for table numbers",
-      image: "/images/products/tent-card.jpg",
+      image: "/products/tent-card.png",
       tags: ["Table", "Numbers", "Set of 20"],
       delivery: "5-7 days",
       rating: 4.6,
     },
 
-    // WELCOME BOARDS
-    {
-      id: 11,
-      name: "Acrylic Welcome Board",
-      category: "welcome-board",
-      price: "₹3,499",
-      description: "Premium acrylic welcome board with gold stand",
-      image: "/images/products/welcome-board.jpg",
-      tags: ["Acrylic", "Premium", "Reusable"],
-      delivery: "12-15 days",
-      rating: 4.9,
-      popular: true,
-    },
-    {
-      id: 12,
-      name: "Mirror Welcome Sign",
-      category: "welcome-board",
-      price: "₹2,999",
-      description: "Elegant mirror welcome sign with calligraphy",
-      image: "/images/products/mirror-sign.jpg",
-      tags: ["Mirror", "Elegant", "Calligraphy"],
-      delivery: "10-14 days",
-      rating: 4.8,
-    },
+    
 
     // BOTTLE TAGS
     {
-      id: 13,
+      id: 10,
       name: "Personalized Bottle Tag",
       category: "bottle-tag",
       price: "₹8 per pc",
@@ -293,12 +254,12 @@ const WeddingStationery = () => {
 
     // GRATITUDE CARDS
     {
-      id: 14,
+      id: 11,
       name: "Gratitude Card Set",
       category: "gratitude-card",
       price: "₹299",
       description: "Beautiful thank you cards for your guests",
-      image: "/images/products/gratitude.jpg",
+      image: "/images/products/thankyou-card.jpeg",
       tags: ["Thank You", "Elegant", "Set of 25"],
       delivery: "5-7 days",
       rating: 4.7,
@@ -306,7 +267,7 @@ const WeddingStationery = () => {
 
     // LUGGAGE TAGS
     {
-      id: 15,
+      id: 12,
       name: "Wedding Luggage Tag",
       category: "luggage-tag",
       price: "₹8 Per PC",
@@ -319,49 +280,23 @@ const WeddingStationery = () => {
       popular: true,
     },
 
-    // POST CARDS
-    {
-      id: 16,
-      name: "Wedding Post Card Set",
-      category: "post-card",
-      price: "₹199",
-      description: "Beautiful post cards for wedding announcements",
-      image: "/images/products/postcard.jpg",
-      tags: ["Announcement", "Vintage", "Set of 20"],
-      delivery: "3-5 days",
-      rating: 4.5,
-    },
 
     // RSVP CARDS
     {
-      id: 17,
+      id: 13,
       name: "RSVP Card Set",
       category: "rsvp-card",
       price: "₹299",
       description: "Response cards with envelopes",
-      image: "/images/products/rsvp.jpg",
+      image: "/images/products/RSVP.jpeg",
       tags: ["Response", "Envelopes", "Set of 50"],
       delivery: "5-7 days",
       rating: 4.6,
     },
 
-    // THANK YOU CARDS
-    {
-      id: 18,
-      name: "Thank You Card Set",
-      category: "thank-you-card",
-      price: "₹349",
-      description: "Post-wedding thank you cards with envelopes",
-      image: "/images/products/thankyou.jpg",
-      tags: ["Thank You", "Elegant", "Set of 50"],
-      delivery: "5-7 days",
-      rating: 4.8,
-      popular: true,
-    },
-
     // Envelopes
     {
-      id: 19,
+      id: 14,
       name: "Copper Foil Envelope",
       category: "envelopes",
       price: "₹80",
@@ -373,13 +308,25 @@ const WeddingStationery = () => {
       rating: 4.5,
     },
     {
-      id: 20,
+      id: 15,
       name: "Silver Foil Envelope",
       category: "envelopes",
       price: "₹75",
       description:
         "Celebrate special moments with beautifully designed Shagun envelopes. Perfect for weddings, festivals, ceremonies, and gifting, our custom envelopes add elegance and personal touch to your heartfelt blessings.",
       image: "/images/products/silverfoil.png",
+      tags: ["Silver", "Elegant", "Shagun"],
+      delivery: "1-day",
+      rating: 4.5,
+    },
+     {
+      id: 16,
+      name: "Flower/Petals cone",
+      category: "petal cone",
+      price: "₹75",
+      description:
+        "Celebrate special moments with beautifully designed Shagun envelopes. Perfect for weddings, festivals, ceremonies, and gifting, our custom envelopes add elegance and personal touch to your heartfelt blessings.",
+      image: "/products/petal-cone.png",
       tags: ["Silver", "Elegant", "Shagun"],
       delivery: "1-day",
       rating: 4.5,

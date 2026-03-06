@@ -23,7 +23,7 @@ const Footer = () => {
               {/* Wedding <span className="text-gold">House</span> */}
               <img
                 width={100}
-                src="/images/Wedding House Logo........png"
+                src="/images/gallery/logo.png"
                 alt="Wedding House"
               />
             </h3>

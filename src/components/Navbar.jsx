@@ -63,7 +63,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
-      price: "₹2,499",
+      // price: "₹2,499",
       slug: "anant-bandhan"
     },
     {
@@ -72,7 +72,7 @@ const Navbar = () => {
       description: "Royal scroll-style invitations",
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      price: "₹1,999",
+      // price: "₹1,999",
       slug: "farman-card"
     },
     {
@@ -82,7 +82,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
-      price: "₹3,499",
+      // price: "₹3,499",
       slug: "forever-in-gold"
     },
     {
@@ -91,7 +91,7 @@ const Navbar = () => {
       description: "Legendary designs",
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      price: "₹2,999",
+      // price: "₹2,999",
       slug: "legend-wedding-card"
     },
     {
@@ -100,7 +100,7 @@ const Navbar = () => {
       description: "Traditional Indian motifs",
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      price: "₹1,799",
+      // price: "₹1,799",
       slug: "riwaaz-wed-card"
     },
     {
@@ -109,7 +109,7 @@ const Navbar = () => {
       description: "Regal wedding invitations",
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      price: "₹3,999",
+      // price: "₹3,999",
       slug: "royal-vows"
     },
   ];
@@ -122,7 +122,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
-      price: "₹199",
+      // price: "₹199",
       slug: "itinerary"
     },
     {
@@ -131,7 +131,7 @@ const Navbar = () => {
       description: "Dining menu for guests",
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      price: "₹149",
+      // price: "₹149",
       slug: "menu-cards"
     },
     {
@@ -141,7 +141,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
-      price: "₹799",
+      // price: "₹799",
       slug: "welcome-board"
     },
     {
@@ -150,7 +150,7 @@ const Navbar = () => {
       description: "Post-wedding thank you",
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      price: "₹149",
+      // price: "₹149",
       slug: "thank-you-card"
     },
   ];
@@ -162,7 +162,7 @@ const Navbar = () => {
       description: "Premium box envelopes",
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      price: "₹499",
+      // price: "₹499",
       slug: "box-envelope"
     },
     {
@@ -171,7 +171,7 @@ const Navbar = () => {
       description: "Compact pocket envelopes",
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      price: "₹299",
+      // price: "₹299",
       slug: "pocket-envelope"
     },
     {
@@ -181,7 +181,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
-      price: "₹199",
+      // price: "₹199",
       slug: "regular-envelope"
     },
   ];
@@ -336,7 +336,7 @@ const Navbar = () => {
             <Link to="/" className="flex-shrink-0">
               <img
                 width={100}
-                src="/images/Wedding House Logo........png"
+                src="/images/gallery/logo.png"
                 alt="Wedding House"
               />
             </Link>
