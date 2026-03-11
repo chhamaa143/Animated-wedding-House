@@ -64,7 +64,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       // price: "₹2,499",
-      slug: "anant-bandhan"
+      slug: "anant-bandhan",
     },
     {
       name: "Farman Card",
@@ -73,7 +73,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       // price: "₹1,999",
-      slug: "farman-card"
+      slug: "farman-card",
     },
     {
       name: "Forever in Gold",
@@ -83,7 +83,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       // price: "₹3,499",
-      slug: "forever-in-gold"
+      slug: "forever-in-gold",
     },
     {
       name: "Legend Wedding Card",
@@ -92,7 +92,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       // price: "₹2,999",
-      slug: "legend-wedding-card"
+      slug: "legend-wedding-card",
     },
     {
       name: "Riwaaz Wed Card",
@@ -101,7 +101,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       // price: "₹1,799",
-      slug: "riwaaz-wed-card"
+      slug: "riwaaz-wed-card",
     },
     {
       name: "Royal Vows",
@@ -110,7 +110,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       // price: "₹3,999",
-      slug: "royal-vows"
+      slug: "royal-vows",
     },
   ];
 
@@ -123,7 +123,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       // price: "₹199",
-      slug: "itinerary"
+      slug: "itinerary",
     },
     {
       name: "Menu Cards",
@@ -132,7 +132,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       // price: "₹149",
-      slug: "menu-cards"
+      slug: "menu-cards",
     },
     {
       name: "Welcome Board",
@@ -142,7 +142,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       // price: "₹799",
-      slug: "welcome-board"
+      slug: "welcome-board",
     },
     {
       name: "Thank You Card",
@@ -151,7 +151,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       // price: "₹149",
-      slug: "thank-you-card"
+      slug: "thank-you-card",
     },
   ];
 
@@ -163,7 +163,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       // price: "₹499",
-      slug: "box-envelope"
+      slug: "box-envelope",
     },
     {
       name: "Pocket Envelope",
@@ -172,7 +172,7 @@ const Navbar = () => {
       image:
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       // price: "₹299",
-      slug: "pocket-envelope"
+      slug: "pocket-envelope",
     },
     {
       name: "Regular Envelope",
@@ -182,7 +182,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       popular: true,
       // price: "₹199",
-      slug: "regular-envelope"
+      slug: "regular-envelope",
     },
   ];
 
@@ -426,26 +426,6 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-
-              <Link
-                to="/hamper"
-                className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
-              >
-                Wedding Hamper
-              </Link>
-              <Link
-                to="/e-invite"
-                className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
-              >
-                Digital Invitation
-              </Link>
-              <Link
-                to="/digitalpdf"   
-                className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
-              >
-                Digital PDF
-              </Link>
-
               {/* Shagun Envelopes Dropdown */}
               <div className="relative group">
                 <button className="flex items-center space-x-1 text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap">
@@ -477,6 +457,24 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
+              {/* <Link
+                to="/hamper"
+                className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
+              >
+                Wedding Hamper
+              </Link> */}
+              <Link
+                to="/e-invite"
+                className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
+              >
+                Digital Invitation
+              </Link>
+              <Link
+                to="/digitalpdf"
+                className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
+              >
+                Digital PDF
+              </Link>
 
               <Link
                 to="/gallery"
@@ -555,7 +553,6 @@ const Navbar = () => {
             >
               Home
             </Link>
-
             {/* Mobile Wedding Cards */}
             <div className="py-2">
               <div className="font-medium text-gray-700 mb-2">
@@ -575,7 +572,6 @@ const Navbar = () => {
                 ))}
               </div>
             </div>
-
             {/* Mobile Stationery */}
             <div className="py-2">
               <div className="font-medium text-gray-700 mb-2">
@@ -595,14 +591,14 @@ const Navbar = () => {
                 ))}
               </div>
             </div>
-
             <Link
               to="/hamper"
               className="block py-2 text-gray-700 hover:text-maroon"
               onClick={() => setIsOpen(false)}
             >
               Wedding Hamper
-            </Link>s
+            </Link>
+            s
             <Link
               to="/e-invite"
               className="block py-2 text-gray-700 hover:text-maroon"
@@ -617,7 +613,6 @@ const Navbar = () => {
             >
               Digital PDF
             </Link>
-
             {/* Mobile Envelopes */}
             <div className="py-2">
               <div className="font-medium text-gray-700 mb-2">
@@ -637,7 +632,6 @@ const Navbar = () => {
                 ))}
               </div>
             </div>
-
             <Link
               to="/gallery"
               className="block py-2 text-gray-700 hover:text-maroon"

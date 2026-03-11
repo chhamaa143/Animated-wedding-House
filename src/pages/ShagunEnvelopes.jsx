@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -31,6 +31,17 @@ const ShagunEnvelopes = () => {
   const [sortBy, setSortBy] = useState("popular");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check mobile view
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Product Details Popup State
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -406,7 +417,7 @@ const ShagunEnvelopes = () => {
           <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
+        <div className="max-w-7xl mx-auto px-4 text-center relative z-10 pt-8">
           <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-white mb-4">
             Shagun Envelopes Collection
           </h1>
@@ -631,7 +642,7 @@ const ShagunEnvelopes = () => {
           </div>
         )}
 
-        {/* Products Grid */}
+        {/* Products Grid with Watermark */}
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
@@ -649,10 +660,10 @@ const ShagunEnvelopes = () => {
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    watermarkSize={35}
-                    watermarkOpacity={0.15}
-                    watermarkPosition="bottom-right"
-                    watermarkGap={6}
+                    watermarkSize={isMobile ? 100 : 100}
+                    watermarkOpacity={0.5}
+                    watermarkPosition="center"
+                    watermarkGap={0}
                   />
 
                   {/* Badges */}
@@ -807,7 +818,7 @@ const ShagunEnvelopes = () => {
         </div>
       </div>
 
-      {/* Product Details Popup */}
+      {/* Product Details Popup with Watermark */}
       {selectedProduct && (
         <div
           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto"
@@ -835,10 +846,10 @@ const ShagunEnvelopes = () => {
                       src={selectedProduct.images[selectedImage]}
                       alt={selectedProduct.name}
                       className="w-full h-full object-cover"
-                      watermarkSize={45}
-                      watermarkOpacity={0.15}
-                      watermarkPosition="bottom-right"
-                      watermarkGap={8}
+                      watermarkSize={isMobile ? 100 : 100}
+                      watermarkOpacity={0.5}
+                      watermarkPosition="center"
+                      watermarkGap={0}
                     />
 
                     {/* Navigation Arrows */}
@@ -877,10 +888,10 @@ const ShagunEnvelopes = () => {
                             src={img}
                             alt={`Thumbnail ${index + 1}`}
                             className="w-full h-full object-cover"
-                            watermarkSize={20}
-                            watermarkOpacity={0.1}
-                            watermarkPosition="bottom-right"
-                            watermarkGap={3}
+                            watermarkSize={isMobile ? 100 : 100}
+                            watermarkOpacity={0.5}
+                            watermarkPosition="center"
+                            watermarkGap={0}
                           />
                         </button>
                       ))}

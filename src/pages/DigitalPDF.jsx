@@ -20,6 +20,7 @@ import {
   ZoomOut,
   RotateCw,
 } from "lucide-react";
+import Watermark from "../components/Watermark";
 
 const DigitalPDF = () => {
   const [selectedDesign, setSelectedDesign] = useState(null);
@@ -28,6 +29,17 @@ const DigitalPDF = () => {
   const [selectedPages, setSelectedPages] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(100);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check mobile view
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // PDF Design Categories
   const categories = [
@@ -253,63 +265,6 @@ const DigitalPDF = () => {
   const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 25, 200));
   const handleZoomOut = () => setZoomLevel((prev) => Math.max(prev - 25, 50));
 
-  // Watermark Component
-  const WatermarkedImage = ({ src, alt, className, onClick }) => {
-    const [imageError, setImageError] = useState(false);
-
-    return (
-      <div className="relative overflow-hidden group" onClick={onClick}>
-        <img
-          src={
-            imageError
-              ? "https://via.placeholder.com/400x300?text=PDF+Design"
-              : src
-          }
-          alt={alt}
-          className={`w-full h-full object-cover transition-transform duration-700 ${className}`}
-          onError={() => setImageError(true)}
-        />
-
-        {/* Watermark Overlay */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Main Logo Watermark */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-10">
-            <div className="">
-              <div className="text-2xl md:text-3xl font-cinzel font-bold text-gold">
-                {" "}
-                <img
-                  src="public\images\Wedding House Logo........png"
-                  className="w-50 h-50"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Pattern Watermarks */}
-          {/* <div className="absolute inset-0 opacity-5">
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute font-cinzel font-bold text-gold text-xs whitespace-nowrap"
-                style={{
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  transform: `rotate(${Math.random() * 60 - 30}deg)`,
-                }}
-              >
-                Wedding House
-              </div>
-            ))}
-          </div> */}
-        </div>
-
-        {/* Hover Effect - Shows watermark more prominently */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      </div>
-    );
-  };
-
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-b from-cream to-white">
       {/* Hero Section */}
@@ -320,7 +275,7 @@ const DigitalPDF = () => {
         </div>
 
         <div className="container-custom relative z-10">
-          <div className="text-center text-white">
+          <div className="text-center text-white pt-8">
             <h1 className="text-4xl md:text-5xl font-cinzel font-bold mb-4">
               Digital PDF Invitations
             </h1>
@@ -367,7 +322,7 @@ const DigitalPDF = () => {
       <section className="py-12">
         <div className="container-custom">
           {!selectedDesign || viewMode === "grid" ? (
-            /* Grid View - All Designs */
+            /* Grid View - All Designs with Watermark */
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
               {filteredDesigns.map((design) => (
                 <div
@@ -376,10 +331,14 @@ const DigitalPDF = () => {
                   onClick={() => handleDesignSelect(design)}
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
-                    <WatermarkedImage
+                    <Watermark
                       src={design.thumbnail}
                       alt={design.name}
-                      className="group-hover:scale-110"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      watermarkSize={isMobile ? 100 : 100}
+                      watermarkOpacity={0.5}
+                      watermarkPosition="center"
+                      watermarkGap={0}
                     />
 
                     {/* Page Count Badge */}
@@ -450,7 +409,7 @@ const DigitalPDF = () => {
               ))}
             </div>
           ) : (
-            /* Single Design View - Multi-page PDF */
+            /* Single Design View - Multi-page PDF with Watermark */
             <div>
               {/* Back Button */}
               <button
@@ -553,7 +512,7 @@ const DigitalPDF = () => {
                 </div>
               </div>
 
-              {/* Pages Grid */}
+              {/* Pages Grid with Watermark */}
               <div
                 className={`grid gap-6 ${
                   viewMode === "grid"
@@ -574,11 +533,15 @@ const DigitalPDF = () => {
                       className="relative aspect-[3/4] overflow-hidden cursor-pointer group"
                       onClick={() => togglePageSelection(page.id)}
                     >
-                      <WatermarkedImage
+                      <Watermark
                         src={page.image}
                         alt={page.title}
-                        className="transition-transform duration-700"
+                        className="w-full h-full object-cover transition-transform duration-700"
                         style={{ transform: `scale(${zoomLevel / 100})` }}
+                        watermarkSize={isMobile ? 100 : 100}
+                        watermarkOpacity={0.5}
+                        watermarkPosition="center"
+                        watermarkGap={0}
                       />
 
                       {/* Page Number Badge */}
@@ -682,7 +645,7 @@ const DigitalPDF = () => {
         </div>
       </section>
 
-      {/* Full Page Preview Modal */}
+      {/* Full Page Preview Modal with Watermark */}
       {showPreview && selectedDesign && (
         <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
           <button
@@ -694,10 +657,14 @@ const DigitalPDF = () => {
 
           <div className="relative w-[50vh]">
             <div className="relative overflow-hidden rounded-lg shadow-2xl">
-              <WatermarkedImagen  
+              <Watermark
                 src={selectedDesign.pages_preview[currentPage - 1]?.image}
                 alt={`Page ${currentPage}`}
                 className="w-[50vh] h-auto mx-auto"
+                watermarkSize={isMobile ? 40 : 50}
+                watermarkOpacity={0.15}
+                watermarkPosition="center"
+                watermarkGap={0}
               />
             </div>
 

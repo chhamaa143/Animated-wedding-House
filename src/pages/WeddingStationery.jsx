@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -17,12 +17,24 @@ import {
   X,
   Check,
 } from "lucide-react";
+import Watermark from "../components/Watermark";
 
 const WeddingStationery = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedItems, setSelectedItems] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check mobile view
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // WhatsApp Configuration
   const whatsappNumber = "918120461118";
@@ -155,7 +167,7 @@ const WeddingStationery = () => {
       name: "Wedding Itinerary Card",
       category: "itinerary",
       price: "₹30 each",
-        description:
+      description:
         "Beautifully designed itinerary cards for your wedding schedule",
       image: "/products/1 (3).png",
       tags: ["Schedule", "Elegant", "Custom"],
@@ -236,8 +248,6 @@ const WeddingStationery = () => {
       rating: 4.6,
     },
 
-    
-
     // BOTTLE TAGS
     {
       id: 10,
@@ -280,7 +290,6 @@ const WeddingStationery = () => {
       popular: true,
     },
 
-
     // RSVP CARDS
     {
       id: 13,
@@ -319,7 +328,7 @@ const WeddingStationery = () => {
       delivery: "1-day",
       rating: 4.5,
     },
-     {
+    {
       id: 16,
       name: "Flower/Petals cone",
       category: "petal cone",
@@ -388,7 +397,7 @@ const WeddingStationery = () => {
           <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
+        <div className="max-w-7xl mx-auto px-4 text-center relative z-10 pt-8">
           <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-white mb-6">
             Wedding Stationery Collection
           </h1>
@@ -543,7 +552,7 @@ const WeddingStationery = () => {
           </div>
         )}
 
-        {/* Products Grid */}
+        {/* Products Grid with Watermark */}
         {priceFilteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {priceFilteredProducts.map((product) => (
@@ -554,20 +563,20 @@ const WeddingStationery = () => {
                 transition={{ delay: product.id * 0.05 }}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 group"
               >
-                {/* Product Image */}
+                {/* Product Image with Watermark */}
                 <div className="relative h-56 overflow-hidden">
-                  <img
+                  <Watermark
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    onError={(e) => {
-                      e.target.src =
-                        "https://via.placeholder.com/400x300?text=Product";
-                    }}
+                    watermarkSize={isMobile ? 100 : 100}
+                    watermarkOpacity={0.5}
+                    watermarkPosition="center"
+                    watermarkGap={0}
                   />
 
                   {/* Badges */}
-                  <div className="absolute top-3 left-3 flex gap-2">
+                  <div className="absolute top-3 left-3 flex gap-2 z-10">
                     {product.bestseller && (
                       <span className="px-2 py-1 bg-gold text-maroon text-xs font-bold rounded-full">
                         BESTSELLER
@@ -583,7 +592,7 @@ const WeddingStationery = () => {
                   {/* Select Button */}
                   <button
                     onClick={() => toggleItemSelection(product)}
-                    className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-300 transform hover:scale-110 ${
+                    className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-300 transform hover:scale-110 z-10 ${
                       selectedItems.find((item) => item.id === product.id)
                         ? "bg-gold text-maroon"
                         : "bg-white/90 text-gray-700 hover:bg-maroon hover:text-white"
@@ -641,10 +650,12 @@ const WeddingStationery = () => {
                       <div className="text-gold font-bold text-xl">
                         {product.price}
                       </div>
-                      <div className="flex items-center gap-1 text-gray-500 text-xs">
-                        <Clock className="w-3 h-3" />
-                        {product.delivery}
-                      </div>
+                      {product.delivery && (
+                        <div className="flex items-center gap-1 text-gray-500 text-xs">
+                          <Clock className="w-3 h-3" />
+                          {product.delivery}
+                        </div>
+                      )}
                     </div>
                   </div>
 

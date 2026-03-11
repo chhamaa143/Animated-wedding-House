@@ -1,24 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
+import Watermark from "../components/Watermark";
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check mobile view
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const images = [
-    { id: 1, src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', category: 'Wedding Cards' },
-    { id: 2, src: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', category: 'Hampers' },
-    { id: 3, src: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', category: 'Stationery' },
-    { id: 4, src: 'https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', category: 'Wedding Cards' },
-    { id: 5, src: 'https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', category: 'Wedding Cards' },
-    { id: 6, src: 'https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', category: 'Stationery' },
-    { id: 7, src: 'https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', category: 'Hampers' },
-    { id: 8, src: 'https://images.unsplash.com/photo-1607083206868-6c852a3e5f7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', category: 'Wedding Cards' },
+    { id: 1, src: '/products/Anant-Bandhan (1).png', category: 'Wedding Cards' },
+    { id: 2, src: '/products/cls-pocket-env1.webp', category: 'Hampers' },
+    { id: 3, src: '/products/bottle-tag.webp', category: 'Stationery' },
+    { id: 4, src: '/products/classic-card (1).png', category: 'Wedding Cards' },
+    { id: 5, src: '/products/farman-wed-card (4).png', category: 'Wedding Cards' },
+    { id: 6, src: '/products/itinerery.png', category: 'Stationery' },
+    { id: 7, src: '/products/hamper.png', category: 'Hampers' },
+    { id: 8, src: '/products/luxury (1).webp', category: 'Wedding Cards' },
   ];
 
   return (
     <div className="pt-20">
       <section className="bg-maroon text-white py-16">
-        <div className="container-custom text-center">
+        <div className="container-custom text-center pt-8">
           <h1 className="text-4xl md:text-5xl font-cinzel font-bold mb-4">Gallery Collection</h1>
           <p className="text-xl opacity-90">Real moments from our beautiful wedding Cards</p>
         </div>
@@ -33,11 +45,17 @@ const Gallery = () => {
                 onClick={() => setSelectedImage(image)}
                 className="relative group overflow-hidden rounded-lg cursor-pointer"
               >
-                <img
-                  src={image.src}
-                  alt={image.category}
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
+                <div className="relative w-full h-64 overflow-hidden">
+                  <Watermark
+                    src={image.src}
+                    alt={image.category}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    watermarkSize={isMobile ? 100 : 100}
+                    watermarkOpacity={0.5}
+                    watermarkPosition="center"
+                    watermarkGap={0}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="absolute bottom-4 left-4 text-white">
                     <span className="text-sm font-medium">{image.category}</span>
@@ -49,13 +67,23 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Lightbox */}
+      {/* Lightbox with Watermark */}
       {selectedImage && (
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onClick={() => setSelectedImage(null)}>
-          <button className="absolute top-4 right-4 text-white hover:text-gold" onClick={() => setSelectedImage(null)}>
+          <button className="absolute top-4 right-4 text-white hover:text-gold z-10" onClick={() => setSelectedImage(null)}>
             <X className="w-8 h-8" />
           </button>
-          <img src={selectedImage.src} alt={selectedImage.category} className="max-w-full max-h-[90vh] object-contain" />
+          <div className="relative max-w-full max-h-[90vh]">
+            <Watermark
+              src={selectedImage.src}
+              alt={selectedImage.category}
+              className="max-w-full max-h-[90vh] object-contain"
+              watermarkSize={isMobile ? 100 : 100}
+              watermarkOpacity={0.5}
+              watermarkPosition="center"
+              watermarkGap={0}
+            />
+          </div>
         </div>
       )}
     </div>

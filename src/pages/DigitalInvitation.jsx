@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   Play,
@@ -27,12 +27,89 @@ import {
   Maximize2,
 } from "lucide-react";
 import Watermark from "../components/Watermark"; // Import your watermark component
+import test from "node:test";
 
 const DigitalInvitation = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [activeFilter, setActiveFilter] = useState("all");
   const [playingVideo, setPlayingVideo] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const videoRefs = useRef({});
+  const canvasRefs = useRef({});
+
+  // Check mobile view
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Function to add logo watermark to video
+  const setupVideoWatermark = (videoId) => {
+    const video = videoRefs.current[videoId];
+    const canvas = canvasRefs.current[videoId];
+    if (!video || !canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    const updateCanvasSize = () => {
+      canvas.width = video.clientWidth;
+      canvas.height = video.clientHeight;
+    };
+
+    updateCanvasSize();
+
+    // Load logo image
+    const logo = new Image();
+    logo.src = "/images/gallery/logo.png"; // Path to your logo image
+    logo.crossOrigin = "anonymous";
+
+    logo.onload = () => {
+      const drawWatermark = () => {
+        if (!video || video.paused || video.ended) return;
+
+        // Clear canvas and draw video frame
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Draw logo watermark in center
+        const logoSize = Math.min(canvas.width, canvas.height) * 0.15; // 15% of video size
+        const logoX = (canvas.width - logoSize) / 2;
+        const logoY = (canvas.height - logoSize) / 2;
+
+        ctx.globalAlpha = 0.5; // Opacity
+        ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+        ctx.globalAlpha = 1.0;
+
+        // Draw corner logo watermarks
+        const cornerSize = Math.min(canvas.width, canvas.height) * 0.08; // 8% of video size
+
+        // // Top-left
+        // ctx.globalAlpha = 0.2;
+        // ctx.drawImage(logo, 20, 20, cornerSize, cornerSize);
+
+        // // Top-right
+        // ctx.drawImage(logo, canvas.width - cornerSize - 20, 20, cornerSize, cornerSize);
+
+        // // Bottom-left
+        // ctx.drawImage(logo, 20, canvas.height - cornerSize - 20, cornerSize, cornerSize);
+
+        // // Bottom-right
+        // ctx.drawImage(logo, canvas.width - cornerSize - 20, canvas.height - cornerSize - 20, cornerSize, cornerSize);
+        // ctx.globalAlpha = 1.0;
+
+        requestAnimationFrame(drawWatermark);
+      };
+
+      video.addEventListener("play", () => {
+        drawWatermark();
+      });
+    };
+  };
 
   // Sample data - 12 items for 2 rows of 6
   const eInvitationVideos = [
@@ -182,15 +259,37 @@ const DigitalInvitation = () => {
   ];
 
   const filters = [
-    { id: "all", name: "All Designs", icon: <Film className="w-4 h-4" />, count: eInvitationVideos.length },
-    { id: "floral", name: "Floral", icon: <Flower2 className="w-4 h-4" />, count: eInvitationVideos.filter(v => v.category === "floral").length },
-    { id: "modern", name: "Modern", icon: <Gem className="w-4 h-4" />, count: eInvitationVideos.filter(v => v.category === "modern").length },
-    { id: "traditional", name: "Traditional", icon: <Crown className="w-4 h-4" />, count: eInvitationVideos.filter(v => v.category === "traditional").length },
+    {
+      id: "all",
+      name: "All Designs",
+      icon: <Film className="w-4 h-4" />,
+      count: eInvitationVideos.length,
+    },
+    {
+      id: "floral",
+      name: "Floral",
+      icon: <Flower2 className="w-4 h-4" />,
+      count: eInvitationVideos.filter((v) => v.category === "floral").length,
+    },
+    {
+      id: "modern",
+      name: "Modern",
+      icon: <Gem className="w-4 h-4" />,
+      count: eInvitationVideos.filter((v) => v.category === "modern").length,
+    },
+    {
+      id: "traditional",
+      name: "Traditional",
+      icon: <Crown className="w-4 h-4" />,
+      count: eInvitationVideos.filter((v) => v.category === "traditional")
+        .length,
+    },
   ];
 
-  const filteredVideos = activeFilter === "all" 
-    ? eInvitationVideos 
-    : eInvitationVideos.filter(v => v.category === activeFilter);
+  const filteredVideos =
+    activeFilter === "all"
+      ? eInvitationVideos
+      : eInvitationVideos.filter((v) => v.category === activeFilter);
 
   const handleVideoSelect = (video) => {
     setSelectedVideo(video);
@@ -203,6 +302,8 @@ const DigitalInvitation = () => {
 
   const handlePlayVideo = (videoId) => {
     setPlayingVideo(videoId);
+    // Setup watermark for this video
+    setTimeout(() => setupVideoWatermark(videoId), 100);
   };
 
   const whatsappNumber = "918120461118";
@@ -215,12 +316,14 @@ const DigitalInvitation = () => {
           <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
         </div>
-        
-        <div className="container-custom relative z-10">
-          <div className="flex flex-col items-center text-center">
+
+        <div className="container-custom relative z-10 pt-8">
+          <div className="flex flex-col items-center text-center pt-8">
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
               <Sparkles className="w-4 h-4 text-amber-200" />
-              <span className="text-amber-200 text-sm font-medium">DIGITAL INVITATIONS</span>
+              <span className="text-amber-200 text-sm font-medium">
+                DIGITAL INVITATIONS
+              </span>
               <Sparkles className="w-4 h-4 text-amber-200" />
             </div>
             <h1 className="text-3xl md:text-4xl font-cinzel font-bold text-white mb-3">
@@ -263,13 +366,19 @@ const DigitalInvitation = () => {
                     : "bg-white text-gray-700 border border-gray-200 hover:border-gold"
                 }`}
               >
-                <span className={activeFilter === filter.id ? "text-amber-200" : "text-gold"}>
+                <span
+                  className={
+                    activeFilter === filter.id ? "text-amber-200" : "text-gold"
+                  }
+                >
                   {filter.icon}
                 </span>
                 {filter.name}
-                <span className={`ml-1 text-xs ${
-                  activeFilter === filter.id ? "bg-white/20" : "bg-gray-100"
-                } px-1.5 py-0.5 rounded-full`}>
+                <span
+                  className={`ml-1 text-xs ${
+                    activeFilter === filter.id ? "bg-white/20" : "bg-gray-100"
+                  } px-1.5 py-0.5 rounded-full`}
+                >
                   {filter.count}
                 </span>
               </button>
@@ -293,22 +402,26 @@ const DigitalInvitation = () => {
                   src={video.thumbnail}
                   alt={video.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  watermarkSize={40}
-                  watermarkOpacity={0.15}
-                  watermarkPosition="bottom-right"
-                  watermarkGap={8}
+                  watermarkSize={isMobile ? 100 : 100}
+                  watermarkOpacity={0.5}
+                  watermarkPosition="center"
+                  watermarkGap={0}
                 />
-                
+
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                
+
                 {/* Category Badge */}
                 <div className="absolute top-2 left-2 z-10">
-                  <span className={`text-[10px] font-bold px-2 py-1 rounded-full shadow-lg ${
-                    video.category === 'floral' ? 'bg-pink-500 text-white' :
-                    video.category === 'modern' ? 'bg-blue-500 text-white' :
-                    'bg-amber-600 text-white'
-                  }`}>
+                  <span
+                    className={`text-[10px] font-bold px-2 py-1 rounded-full shadow-lg ${
+                      video.category === "floral"
+                        ? "bg-pink-500 text-white"
+                        : video.category === "modern"
+                          ? "bg-blue-500 text-white"
+                          : "bg-amber-600 text-white"
+                    }`}
+                  >
                     {video.category}
                   </span>
                 </div>
@@ -324,7 +437,10 @@ const DigitalInvitation = () => {
 
                 {/* Play Button - Appears on Hover */}
                 <button
-                  onClick={() => handleVideoSelect(video)}
+                  onClick={() => {
+                    handleVideoSelect(video);
+                    handlePlayVideo(video.id);
+                  }}
                   className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
                 >
                   <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center transform hover:scale-110 transition-transform shadow-xl">
@@ -357,7 +473,9 @@ const DigitalInvitation = () => {
                 {/* Price and Actions */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-gold font-bold text-sm">{video.price}</span>
+                    <span className="text-gold font-bold text-sm">
+                      {video.price}
+                    </span>
                   </div>
                   <div className="flex items-center gap-1">
                     <button className="p-1.5 bg-rose-50 rounded-full hover:bg-rose-100 transition-colors">
@@ -388,15 +506,36 @@ const DigitalInvitation = () => {
 
         {/* Features Grid - 2x2 for Mobile */}
         <div className="mt-12">
-          <h2 className="text-lg font-bold text-center text-maroon mb-4">Why Choose Us</h2>
+          <h2 className="text-lg font-bold text-center text-maroon mb-4">
+            Why Choose Us
+          </h2>
           <div className="grid grid-cols-2 gap-3">
             {[
-              { icon: <Smartphone className="w-5 h-5" />, title: "Mobile First", desc: "Perfect on iPhone" },
-              { icon: <Download className="w-5 h-5" />, title: "Instant", desc: "Delivery in 2 hours" },
-              { icon: <Users className="w-5 h-5" />, title: "Easy Share", desc: "WhatsApp, Instagram" },
-              { icon: <Palette className="w-5 h-5" />, title: "Customizable", desc: "Match your theme" },
+              {
+                icon: <Smartphone className="w-5 h-5" />,
+                title: "Mobile First",
+                desc: "Perfect on iPhone",
+              },
+              {
+                icon: <Download className="w-5 h-5" />,
+                title: "Instant",
+                desc: "Delivery in 2 hours",
+              },
+              {
+                icon: <Users className="w-5 h-5" />,
+                title: "Easy Share",
+                desc: "WhatsApp, Instagram",
+              },
+              {
+                icon: <Palette className="w-5 h-5" />,
+                title: "Customizable",
+                desc: "Match your theme",
+              },
             ].map((item, idx) => (
-              <div key={idx} className="bg-white p-4 rounded-xl shadow-sm text-center">
+              <div
+                key={idx}
+                className="bg-white p-4 rounded-xl shadow-sm text-center"
+              >
                 <div className="inline-flex items-center justify-center w-10 h-10 bg-maroon/10 rounded-full mb-2 text-maroon">
                   {item.icon}
                 </div>
@@ -410,7 +549,9 @@ const DigitalInvitation = () => {
         {/* WhatsApp CTA - Compact */}
         <div className="mt-8 bg-gradient-to-r from-maroon to-gold rounded-xl p-5 text-center text-white">
           <h3 className="text-base font-bold mb-1">Need a Custom Design?</h3>
-          <p className="text-xs text-white/90 mb-3">Share your ideas, we'll create it</p>
+          <p className="text-xs text-white/90 mb-3">
+            Share your ideas, we'll create it
+          </p>
           <a
             href={`https://wa.me/${whatsappNumber}?text=Hello! I want a custom E-Invitation for my wedding.`}
             target="_blank"
@@ -423,7 +564,8 @@ const DigitalInvitation = () => {
         </div>
       </div>
 
-      {/* Video Modal - iPhone Optimized */}
+      {/* Video Modal with Logo Watermark */}
+
       {selectedVideo && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-2"
@@ -444,24 +586,35 @@ const DigitalInvitation = () => {
               <h3 className="text-sm font-bold pr-8">{selectedVideo.title}</h3>
             </div>
 
-            {/* Video */}
-            <div className="aspect-video bg-black">
+            {/* Video with Logo Watermark Overlay */}
+            <div className="aspect-video bg-black relative">
               <video
+                ref={(el) => (videoRefs.current[selectedVideo.id] = el)}
                 src={selectedVideo.videoPath}
                 poster={selectedVideo.thumbnail}
                 controls
                 autoPlay
-                className="w-full h-full"
+                className="w-[100vh] h-[70vh]"
+                onPlay={() => setupVideoWatermark(selectedVideo.id)}
+              />
+              <canvas
+                ref={(el) => (canvasRefs.current[selectedVideo.id] = el)}
+                className="absolute top-0 left-0 w-full h-full pointer-events-none"
+                style={{ zIndex: 5 }}
               />
             </div>
 
             {/* Details */}
             <div className="p-4">
-              <p className="text-xs text-gray-600 mb-3">{selectedVideo.description}</p>
+              <p className="text-xs text-gray-600 mb-3">
+                {selectedVideo.description}
+              </p>
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-xs text-gray-500">Price</span>
-                  <div className="text-xl font-bold text-gold">{selectedVideo.price}</div>
+                  <div className="text-xl font-bold text-gold">
+                    {selectedVideo.price}
+                  </div>
                 </div>
                 <a
                   href={`https://wa.me/${whatsappNumber}?text=I'm interested in ${selectedVideo.title} (${selectedVideo.price})`}

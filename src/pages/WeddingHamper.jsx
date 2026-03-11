@@ -36,7 +36,7 @@ const WeddingHamper = () => {
   return (
     <div className="pt-20">
       <section className="bg-maroon text-white py-16">
-        <div className="container-custom text-center">
+        <div className="container-custom text-center pt-8">
           <h1 className="text-4xl md:text-5xl font-cinzel font-bold mb-4">
             Wedding Hampers
           </h1>

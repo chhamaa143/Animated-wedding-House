@@ -17,6 +17,7 @@ import {
   Check,
   Share2,
 } from "lucide-react";
+import Watermark from "../components/Watermark";
 
 const WeddingCards = () => {
   const { category } = useParams();
@@ -26,6 +27,17 @@ const WeddingCards = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
   const [showFilters, setShowFilters] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check mobile view
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Product View State
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -630,16 +642,16 @@ const WeddingCards = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
               {/* Left Column - Images */}
               <div>
-                {/* Main Image */}
+                {/* Main Image with Watermark */}
                 <div className="relative aspect-square rounded-xl overflow-hidden mb-4 bg-gray-100">
-                  <img
+                  <Watermark
                     src={selectedProduct.images[selectedImage]}
                     alt={selectedProduct.name}
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.src =
-                        "https://via.placeholder.com/500x500?text=Product+Image";
-                    }}
+                    watermarkSize={isMobile ? 100 : 100}
+                    watermarkOpacity={0.5}
+                    watermarkPosition="center"
+                    watermarkGap={0}
                   />
 
                   {/* Navigation Arrows */}
@@ -662,7 +674,7 @@ const WeddingCards = () => {
                   </button>
                 </div>
 
-                {/* Thumbnails */}
+                {/* Thumbnails with Watermark */}
                 <div className="grid grid-cols-4 gap-2">
                   {selectedProduct.images.map((img, index) => (
                     <button
@@ -674,14 +686,14 @@ const WeddingCards = () => {
                           : "border-transparent hover:border-gray-300"
                       }`}
                     >
-                      <img
+                      <Watermark
                         src={img}
                         alt={`Thumbnail ${index + 1}`}
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.src =
-                            "https://via.placeholder.com/100x100?text=Image";
-                        }}
+                        watermarkSize={isMobile ? 100 :100}
+                        watermarkOpacity={0.5}
+                        watermarkPosition="center"
+                        watermarkGap={0}
                       />
                     </button>
                   ))}
@@ -925,7 +937,7 @@ const WeddingCards = () => {
             </div>
           </div>
 
-          {/* Related Products */}
+          {/* Related Products with Watermark */}
           <div className="mt-12">
             <h2 className="text-2xl font-cinzel font-bold text-maroon mb-6">
               You May Also Like
@@ -945,14 +957,14 @@ const WeddingCards = () => {
                     className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all cursor-pointer"
                   >
                     <div className="aspect-square bg-gray-100">
-                      <img
+                      <Watermark
                         src={product.image}
                         alt={product.name}
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.src =
-                            "https://via.placeholder.com/200x200?text=Product";
-                        }}
+                        watermarkSize={isMobile ? 100 : 100}
+                        watermarkOpacity={0.50}
+                        watermarkPosition="center"
+                        watermarkGap={0}
                       />
                     </div>
                     <div className="p-3">
@@ -983,7 +995,7 @@ const WeddingCards = () => {
         </div>
 
         <div className="container-custom relative z-10">
-          <div className="text-center text-white">
+          <div className="text-center text-white pt-8">
             <h1 className="text-4xl md:text-5xl font-cinzel font-bold mb-4">
               Wedding Cards
             </h1>
@@ -1097,7 +1109,7 @@ const WeddingCards = () => {
                   onChange={(e) => setSortBy(e.target.value)}
                   className="w-full p-2 border border-gray-200 rounded-lg focus:outline-none focus:border-gold"
                 >
-                  <option value="popular">Most Popular</option>
+                  <option value="popular">Most Popular</option> 
                   <option value="rating">Highest Rated</option>
                   <option value="price-low">Price: Low to High</option>
                   <option value="price-high">Price: High to Low</option>
@@ -1168,7 +1180,7 @@ const WeddingCards = () => {
               </p>
             </div>
 
-            {/* Cards Grid */}
+            {/* Cards Grid with Watermark */}
             {sortedCards.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                 {sortedCards.map((card) => (
@@ -1177,18 +1189,18 @@ const WeddingCards = () => {
                     className="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
                   >
                     <div className="relative aspect-[3/4] overflow-hidden">
-                      <img
+                      <Watermark
                         src={card.image}
                         alt={card.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        onError={(e) => {
-                          e.target.src =
-                            "https://via.placeholder.com/300x400?text=Wedding+Card";
-                        }}
+                        watermarkSize={isMobile ? 100 : 100}
+                        watermarkOpacity={0.5}
+                        watermarkPosition="center"
+                        watermarkGap={0}
                       />
 
                       {/* Badges */}
-                      <div className="absolute top-3 left-3 flex gap-2">
+                      <div className="absolute top-3 left-3 flex gap-2 z-10">
                         {card.popular && (
                           <span className="bg-gold text-maroon text-xs font-bold px-2 py-1 rounded-full">
                             Popular
@@ -1202,12 +1214,12 @@ const WeddingCards = () => {
                       </div>
 
                       {/* Category Badge */}
-                      <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-maroon text-xs font-bold px-3 py-1 rounded-full">
+                      <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-maroon text-xs font-bold px-3 py-1 rounded-full z-10">
                         {card.category}
                       </span>
 
                       {/* Overlay with Quick View */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 z-20">
                         <button
                           onClick={(e) => {
                             e.preventDefault();
@@ -1272,7 +1284,7 @@ const WeddingCards = () => {
         </div>
       </div>
 
-      {/* Quick View Modal */}
+      {/* Quick View Modal with Watermark */}
       {quickViewProduct && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div className="relative bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
@@ -1288,16 +1300,16 @@ const WeddingCards = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Left Column - Images */}
                 <div>
-                  {/* Main Image */}
+                  {/* Main Image with Watermark */}
                   <div className="relative aspect-square rounded-xl overflow-hidden mb-4 bg-gray-100">
-                    <img
+                    <Watermark
                       src={quickViewProduct.images[selectedImage]}
                       alt={quickViewProduct.name}
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.src =
-                          "https://via.placeholder.com/500x500?text=Product+Image";
-                      }}
+                      watermarkSize={isMobile ? 100 : 100}
+                      watermarkOpacity={0.5}
+                      watermarkPosition="center"
+                      watermarkGap={0}
                     />
 
                     {/* Navigation Arrows */}
@@ -1315,7 +1327,7 @@ const WeddingCards = () => {
                     </button>
                   </div>
 
-                  {/* Thumbnails */}
+                  {/* Thumbnails with Watermark */}
                   <div className="grid grid-cols-4 gap-2">
                     {quickViewProduct.images.map((img, index) => (
                       <button
@@ -1327,14 +1339,14 @@ const WeddingCards = () => {
                             : "border-transparent hover:border-gray-300"
                         }`}
                       >
-                        <img
+                        <Watermark
                           src={img}
                           alt={`Thumbnail ${index + 1}`}
                           className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.src =
-                              "https://via.placeholder.com/100x100?text=Image";
-                          }}
+                          watermarkSize={isMobile ? 20 : 25}
+                          watermarkOpacity={0.15}
+                          watermarkPosition="center"
+                          watermarkGap={0}
                         />
                       </button>
                     ))}
