@@ -457,12 +457,12 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-              {/* <Link
+              <Link
                 to="/hamper"
                 className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
               >
                 Wedding Hamper
-              </Link> */}
+              </Link>
               <Link
                 to="/e-invite"
                 className="text-gray-700 hover:text-maroon text-sm font-medium whitespace-nowrap"
