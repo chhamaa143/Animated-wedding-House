@@ -308,7 +308,7 @@ const WeddingCards = () => {
       name: "Forever in Gold",
       category: "Forever in Gold",
       price: 80,
-      image: "/images/products/legend (1).png",
+      image: "/products/Forever in Gold-L-53 (2).png",
       rating: 4.8,
       reviews: 145,
       popular: true,
@@ -316,10 +316,9 @@ const WeddingCards = () => {
       description:
         "Elegant gold-themed wedding card symbolizing forever love. Features rose gold accents.",
       images: [
-        "/images/products/legend (1).png",
-        "/images/products/legend (2).png",
-        "/images/products/legend (3).png",
-        "/images/products/legend (4).png",
+        "/products/Forever in Gold-L-53 (2).png",
+        "/products/Forever in Gold-L-53 (1).png",
+        "/products/Forever in Gold-L-53 (3).png",
       ],
       slabRates: [
         { quantity: 50, price: 4000, perPiece: 80 },
@@ -558,7 +557,7 @@ const WeddingCards = () => {
       setSelectedImage(
         (prev) =>
           (prev - 1 + quickViewProduct.images.length) %
-          quickViewProduct.images.length
+          quickViewProduct.images.length,
       );
     }
   };
@@ -600,7 +599,7 @@ const WeddingCards = () => {
         `Quantity: ${selectedSet} pieces\n` +
         `Price: ₹${getCurrentPrice().toLocaleString()}\n` +
         `Per Piece: ₹${getPerPiecePrice()}\n` +
-        `Category: ${product.category}`
+        `Category: ${product.category}`,
     );
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
   };
@@ -690,7 +689,7 @@ const WeddingCards = () => {
                         src={img}
                         alt={`Thumbnail ${index + 1}`}
                         className="w-full h-full object-cover"
-                        watermarkSize={isMobile ? 100 :100}
+                        watermarkSize={isMobile ? 100 : 100}
                         watermarkOpacity={0.5}
                         watermarkPosition="center"
                         watermarkGap={0}
@@ -746,7 +745,7 @@ const WeddingCards = () => {
                           `⭐ Rating: ${product.rating}/5 (${product.reviews} reviews)\n` +
                           `📸 View Image: ${productImage}\n\n` +
                           `🔗 See full details: ${productUrl}\n\n` +
-                          `Visit Wedding House for more amazing designs! 🏠`
+                          `Visit Wedding House for more amazing designs! 🏠`,
                       );
 
                       window.open(`https://wa.me/?text=${shareText}`, "_blank");
@@ -947,7 +946,7 @@ const WeddingCards = () => {
                 .filter(
                   (c) =>
                     c.id !== selectedProduct.id &&
-                    c.category === selectedProduct.category
+                    c.category === selectedProduct.category,
                 )
                 .slice(0, 5)
                 .map((product) => (
@@ -962,7 +961,7 @@ const WeddingCards = () => {
                         alt={product.name}
                         className="w-full h-full object-cover"
                         watermarkSize={isMobile ? 100 : 100}
-                        watermarkOpacity={0.50}
+                        watermarkOpacity={0.5}
                         watermarkPosition="center"
                         watermarkGap={0}
                       />
@@ -1109,7 +1108,7 @@ const WeddingCards = () => {
                   onChange={(e) => setSortBy(e.target.value)}
                   className="w-full p-2 border border-gray-200 rounded-lg focus:outline-none focus:border-gold"
                 >
-                  <option value="popular">Most Popular</option> 
+                  <option value="popular">Most Popular</option>
                   <option value="rating">Highest Rated</option>
                   <option value="price-low">Price: Low to High</option>
                   <option value="price-high">Price: High to Low</option>

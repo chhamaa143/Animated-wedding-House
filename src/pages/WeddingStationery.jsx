@@ -196,7 +196,7 @@ const WeddingStationery = () => {
       delivery: "7-10 days",
       rating: 4.7,
     },
-    
+
     // STANDEES
     {
       id: 6,
