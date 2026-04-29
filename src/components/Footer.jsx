@@ -74,7 +74,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/weddingstationory"
+                  to="/weddingstationery"
                   className="text-gray-300 hover:text-gold transition-colors"
                 >
                   Wedding Stationery
@@ -98,7 +98,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/shagunenvelope"
+                  to="/shagunenvelopes"
                   className="text-gray-300 hover:text-gold transition-colors"
                 >
                   Shagun Envelopes
@@ -155,8 +155,9 @@ const Footer = () => {
         {/* Copyright */}
         <div className="text-center pt-8 border-t border-gray-700">
           <p className="text-gray-400">
-            © {new Date().getFullYear()} Wedding House. All rights reserved. |
-            Union of Hearts
+            © {new Date().getFullYear()} Powered by Wedding House. 
+<a href="https://weddinghouse.online/">All rights reserved.  </a>            
+            
           </p>
         </div>
       </div>

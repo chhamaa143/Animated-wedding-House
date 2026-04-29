@@ -306,14 +306,14 @@ const Navbar = () => {
 
             <div className="flex items-center space-x-4 z-10 relative">
               <Link
-                to="/bulk-order"
+                to="/weddingcards"
                 className="hover:text-gold transition-colors flex items-center bg-black/20 px-3 py-1 rounded-full"
               >
                 <span className="mr-1 animate-pulse">📦</span> Bulk Order
               </Link>
               <span className="text-gray-300">|</span>
               <Link
-                to="/products"
+                to="/gallery"
                 className="hover:text-gold transition-colors flex items-center bg-black/20 px-3 py-1 rounded-full"
               >
                 <span className="mr-1 animate-pulse">🛍️</span> Products
