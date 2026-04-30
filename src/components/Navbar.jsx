@@ -500,7 +500,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-3 flex-shrink-0">
               <button
                 onClick={() => {
-                  const phoneNumber = "918120461118";
+                  const phoneNumber = "9184351 11188";
                   const message = encodeURIComponent(
                     "Hello! I'm interested in your wedding Design & Prints services.",
                   );

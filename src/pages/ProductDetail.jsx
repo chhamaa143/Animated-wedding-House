@@ -134,7 +134,7 @@ const ProductDetail = () => {
                   Request Quote
                 </button>
                 <a
-                  href="https://wa.me/918120461118"
+                  href="https://wa.me/9184351 11188"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 bg-green-600 text-white py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center gap-2"

@@ -37,7 +37,7 @@ const WeddingStationery = () => {
   }, []);
 
   // WhatsApp Configuration
-  const whatsappNumber = "918120461118";
+  const whatsappNumber = "9184351 11188";
   const whatsappMessage = (item) =>
     `Hello! I'm interested in ordering:\n\n📦 *${item.name}*\n💰 Price: ${item.price}\n📋 Category: ${item.category}\n\nPlease send me more details and let me know how to proceed with ordering.`;
 

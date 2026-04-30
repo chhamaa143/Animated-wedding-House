@@ -306,7 +306,7 @@ const DigitalInvitation = () => {
     setTimeout(() => setupVideoWatermark(videoId), 100);
   };
 
-  const whatsappNumber = "918120461118";
+  const whatsappNumber = "9184351 11188";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50/30 via-white to-rose-50/20 pt-16">

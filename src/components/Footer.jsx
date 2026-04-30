@@ -121,7 +121,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-gold" />
-                <span className="text-gray-300">+91 81204 61118</span>
+                <span className="text-gray-300">+91 84351 11188</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-gold" />
@@ -141,7 +141,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold mb-4 text-gold">Quick Inquiry</h4>
             <a
-              href="https://wa.me/918120461118"
+              href="https://wa.me/9184351 11188"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"

@@ -588,7 +588,7 @@ const WeddingCards = () => {
     return slab.perPiece;
   };
 
-  const whatsappNumber = "918120461118";
+  const whatsappNumber = "9184351 11188";
 
   const handleWhatsAppOrder = () => {
     const product = quickViewProduct || selectedProduct;
