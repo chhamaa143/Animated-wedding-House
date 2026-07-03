@@ -38,10 +38,7 @@ const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState({});
   const [hoveredProduct, setHoveredProduct] = useState(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState("all");
   const videoRefs = useRef([]);
 
   // Check mobile view
@@ -54,29 +51,17 @@ const Home = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Track image loading
-  const handleImageLoad = (id) => {
-    setImagesLoaded((prev) => ({ ...prev, [id]: true }));
-  };
-
-  const handleImageError = (id, e) => {
-    console.error(`Image failed to load: ${id}`);
-    setImagesLoaded((prev) => ({ ...prev, [id]: false }));
-    e.target.src = "https://via.placeholder.com/400x500?text=Wedding+House";
-  };
-
-  // Wedding stationery themed slides
+  // Slides data
   const slides = [
     {
       id: 1,
-      type: "video",
-      src: "/videos/slide1 (1).mp4",
-      mobileSrc: "/videos/slide1 (1).mp4",
-      poster: "/images/gallery/banner2-poster.jpg",
-      title: "Royal Wedding Cards",
-      subtitle: "Announce Your Big Day in Royal Style",
-      cta: "Explore Collection",
-      overlay: "from-amber-600/30 via-maroon/20 to-rose-600/30",
+     type: "video",
+      src: "/videos/slide1 (5).mp4",
+      poster: "/images/gallery/banner5.jpeg",
+      title: "Luxury Hampers",
+      subtitle: "Premium Gift Boxes for Your Guests",
+      cta: "Discover Luxury",
+      overlay: "from-rose-600/30 via-pink-400/20 to-red-300/30",
     },
     {
       id: 2,
@@ -100,23 +85,25 @@ const Home = () => {
     },
     {
       id: 4,
-      type: "video",
-      src: "/videos/slide1 (5).mp4",
-      poster: "/images/gallery/banner5.jpeg",
-      title: "Luxury Hampers",
-      subtitle: "Premium Gift Boxes for Your Guests",
-      cta: "Discover Luxury",
-      overlay: "from-rose-600/30 via-pink-400/20 to-red-300/30",
+       type: "video",
+      src: "/videos/slide1 (1).mp4",
+      mobileSrc: "/videos/slide1 (1).mp4",
+      poster: "/images/gallery/banner2-poster.jpg",
+      title: "Royal Wedding Cards",
+      subtitle: "Announce Your Big Day in Royal Style",
+      cta: "Explore Collection",
+      overlay: "from-amber-600/30 via-maroon/20 to-rose-600/30",
+      
     },
   ];
 
-  // Enhanced categories with more data
+  // Categories data
   const categories = [
     {
       id: 1,
       name: "Wedding Cards",
       image: "/products/vivah-sutra (2).png",
-      mobileImage: "/products/vivah-sutra (2)-mobile.png",
+      mobileImage: "/products/vivah-sutra (2).png",
       link: "/weddingcards",
       description: "Exquisite wedding invitations",
       count: 150,
@@ -126,7 +113,7 @@ const Home = () => {
       id: 2,
       name: "Wedding Stationery",
       image: "/images/products/stationary.png",
-      mobileImage: "/images/products/stationary-mobile.png",
+      mobileImage: "/images/products/stationary.png",
       link: "/weddingstationery",
       description: "Complete your wedding ensemble",
       count: 85,
@@ -136,7 +123,7 @@ const Home = () => {
       id: 3,
       name: "Digital Invitations",
       image: "/images/thumbnail/1.png",
-      mobileImage: "/images/thumbnail/1-mobile.png",
+      mobileImage: "/images/thumbnail/1.png",
       link: "/e-invite",
       description: "Modern & instant",
       count: 45,
@@ -146,7 +133,7 @@ const Home = () => {
       id: 4,
       name: "Wedding Hampers",
       image: "/products/hamper.png",
-      mobileImage: "/products/hamper-mobile.png",
+      mobileImage: "/products/hamper.png",
       link: "/hamper",
       description: "Luxury gift boxes",
       count: 30,
@@ -156,7 +143,7 @@ const Home = () => {
       id: 5,
       name: "Shagun Envelopes",
       image: "/images/products/copperfoil.png",
-      mobileImage: "/images/products/copperfoil-mobile.png",
+      mobileImage: "/images/products/copperfoil.png",
       link: "/shagunenvelopes",
       description: "Luxury envelopes",
       count: 25,
@@ -164,7 +151,7 @@ const Home = () => {
     },
   ];
 
-  // Enhanced featured products
+  // Featured products
   const featuredProducts = [
     {
       id: 1,
@@ -172,7 +159,7 @@ const Home = () => {
       price: "₹500",
       originalPrice: "₹650",
       image: "/products/gold-Foil (4).png",
-      mobileImage: "/products/gold-Foil (4)-mobile.png",
+      mobileImage: "/products/gold-Foil (4).png",
       rating: 4.8,
       reviews: 124,
       category: "Premium",
@@ -185,7 +172,7 @@ const Home = () => {
       price: "₹255",
       originalPrice: "₹350",
       image: "/products/luxury (2).webp",
-      mobileImage: "/products/luxury (2)-mobile.webp",
+      mobileImage: "/products/luxury (2).webp",
       rating: 4.9,
       reviews: 98,
       category: "Luxury",
@@ -198,7 +185,7 @@ const Home = () => {
       price: "₹445",
       originalPrice: "₹550",
       image: "/products/emboss (2).webp",
-      mobileImage: "/products/emboss (2)-mobile.webp",
+      mobileImage: "/products/emboss (2).webp",
       rating: 4.7,
       reviews: 76,
       category: "Premium",
@@ -211,7 +198,7 @@ const Home = () => {
       price: "₹149",
       originalPrice: "₹199",
       image: "/products/farman-wed-card (4).png",
-      mobileImage: "/products/farman-wed-card (4)-mobile.png",
+      mobileImage: "/products/farman-wed-card (4).png",
       rating: 4.8,
       reviews: 203,
       category: "Traditional",
@@ -222,7 +209,7 @@ const Home = () => {
       price: "₹450",
       originalPrice: "₹580",
       image: "/images/products/legend (1).png",
-      mobileImage: "/images/products/legend (1)-mobile.png",
+      mobileImage: "/images/products/legend (1).png",
       rating: 4.8,
       reviews: 67,
       category: "Premium",
@@ -235,14 +222,14 @@ const Home = () => {
       price: "₹265",
       originalPrice: "₹340",
       image: "/images/products/Natural (1).webp",
-      mobileImage: "/images/products/Natural (1)-mobile.webp",
+      mobileImage: "/images/products/Natural (1).webp",
       rating: 4.9,
       reviews: 112,
       category: "Luxury",
     },
   ];
 
-  // Enhanced testimonials with more details
+  // Testimonials
   const testimonials = [
     {
       name: "Priya & Raj",
@@ -250,7 +237,6 @@ const Home = () => {
       rating: 5,
       location: "Indore",
       date: "March 2024",
-      image: "https://via.placeholder.com/60x60?text=PR",
       event: "Wedding",
     },
     {
@@ -259,7 +245,6 @@ const Home = () => {
       rating: 5,
       location: "Delhi",
       date: "February 2024",
-      image: "https://via.placeholder.com/60x60?text=AV",
       event: "Engagement",
     },
     {
@@ -268,12 +253,11 @@ const Home = () => {
       rating: 5,
       location: "Bangalore",
       date: "January 2024",
-      image: "https://via.placeholder.com/60x60?text=NA",
       event: "Wedding",
     },
   ];
 
-  // Stats for social proof
+  // Stats
   const stats = [
     { value: "10K+", label: "Happy Couples", icon: <Heart className="w-6 h-6" /> },
     { value: "500+", label: "Designs", icon: <Sparkles className="w-6 h-6" /> },
@@ -303,6 +287,7 @@ const Home = () => {
     setTimeout(() => setIsAutoPlaying(true), 10000);
   };
 
+  // Get image source based on device
   const getImageSrc = (item) => {
     if (isMobile && item.mobileImage) {
       return item.mobileImage;
@@ -310,15 +295,16 @@ const Home = () => {
     return item.image;
   };
 
-  // Scroll to top on navigation
+  // Handle navigation
   const handleNavigate = (path) => {
     navigate(path);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <div className="w-full overflow-x-hidden bg-gradient-to-b from-white via-cream/20 to-white">
-      {/* Enhanced Hero Section with Carousel */}
+      
+      {/* Hero Section with Carousel */}
       <section className="relative h-[60vh] sm:h-[70vh] md:h-[85vh] lg:h-screen w-full overflow-hidden">
         {slides.map((slide, index) => (
           <div
@@ -336,9 +322,12 @@ const Home = () => {
               playsInline
               poster={slide.poster}
               className="absolute inset-0 w-full h-full object-cover"
-              ref={el => videoRefs.current[index] = el}
+              ref={(el) => (videoRefs.current[index] = el)}
             >
-              <source src={isMobile && slide.mobileSrc ? slide.mobileSrc : slide.src} type="video/mp4" />
+              <source
+                src={isMobile && slide.mobileSrc ? slide.mobileSrc : slide.src}
+                type="video/mp4"
+              />
             </video>
 
             <div className={`absolute inset-0 w-full h-full bg-gradient-to-r ${slide.overlay}`} />
@@ -368,10 +357,6 @@ const Home = () => {
                     : "translate-y-10 opacity-0"
                 }`}
               >
-                {/* <div className="inline-block px-4 py-1 md:px-6 md:py-2 bg-white/10 backdrop-blur-sm rounded-full mb-3 md:mb-4 animate-fade-in-up">
-                  <span className="text-gold text-xs md:text-sm font-semibold tracking-wider">WEDDING HOUSE</span>
-                </div> */}
-
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-cinzel font-bold mb-3 md:mb-4 animate-title px-2">
                   {slide.title.split("").map((char, i) => (
                     <span
@@ -404,7 +389,7 @@ const Home = () => {
                   </button>
 
                   <a
-                    href="https://wa.me/9184351 11188"
+                    href="https://wa.me/918435111188"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden bg-gradient-to-r from-green-500 to-green-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl text-sm sm:text-base w-full sm:w-auto shadow-lg"
@@ -453,15 +438,9 @@ const Home = () => {
             />
           ))}
         </div>
-
-        {/* Progress Bar */}
-        <div
-          // className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-gold to-maroon z-20 transition-all duration-[6000ms] ease-linear"
-          // style={{ width: isAutoPlaying ? "100%" : "0%" }}
-        />
       </section>
 
-      {/* Stats Section - Social Proof */}
+      {/* Stats Section */}
       <div className="relative -mt-8 sm:-mt-12 z-10 px-4">
         <div className="container-custom mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6">
@@ -470,8 +449,12 @@ const Home = () => {
                 <div className="text-gold mb-2 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
                   {stat.icon}
                 </div>
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-maroon">{stat.value}</div>
-                <div className="text-xs sm:text-sm text-gray-600">{stat.label}</div>
+                <div className="text-lg sm:text-xl md:text-2xl font-bold text-maroon">
+                  {stat.value}
+                </div>
+                <div className="text-xs sm:text-sm text-gray-600">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
@@ -497,13 +480,13 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 md:gap-6">
-            {categories.map((category, idx) => (
+            {categories.map((category) => (
               <Link
                 key={category.id}
                 to={category.link}
                 className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
               >
-                <div className="relative aspect-[3/4] overflow-hidden">
+                <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
                   <Watermark
                     src={getImageSrc(category)}
                     alt={category.name}
@@ -512,16 +495,21 @@ const Home = () => {
                     watermarkOpacity={0.4}
                     watermarkPosition="center"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${category.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  
+
                   <div className="absolute top-2 right-2 bg-gold/20 backdrop-blur-sm rounded-full px-2 py-1">
-                    <span className="text-gold text-xs font-bold">{category.count}+</span>
+                    <span className="text-gold text-xs font-bold">
+                      {category.count}+
+                    </span>
                   </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-base sm:text-lg font-cinzel font-bold mb-1">{category.name}</h3>
-                    <p className="text-xs text-white/80 mb-2">{category.description}</p>
+                    <h3 className="text-base sm:text-lg font-cinzel font-bold mb-1">
+                      {category.name}
+                    </h3>
+                    <p className="text-xs text-white/80 mb-2">
+                      {category.description}
+                    </p>
                     <div className="flex items-center text-gold opacity-0 group-hover:opacity-100 transition-all duration-300">
                       <span className="text-xs font-medium">Explore Now</span>
                       <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -534,12 +522,14 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Products - Enhanced */}
+      {/* Featured Products */}
       <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-cream/30 to-white">
         <div className="container-custom px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <div className="inline-block px-4 py-1 bg-gold/10 rounded-full mb-3">
-              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">Best Sellers</span>
+              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">
+                Best Sellers
+              </span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-cinzel font-bold text-maroon mb-3">
               Featured Wedding Cards
@@ -559,7 +549,7 @@ const Home = () => {
                 onMouseLeave={() => setHoveredProduct(null)}
                 onClick={() => handleNavigate("/weddingcards")}
               >
-                <div className="relative aspect-square overflow-hidden rounded-t-xl">
+                <div className="relative aspect-square overflow-hidden rounded-t-xl bg-gray-100">
                   <Watermark
                     src={getImageSrc(product)}
                     alt={product.name}
@@ -570,7 +560,9 @@ const Home = () => {
                   />
 
                   {product.badge && (
-                    <span className={`absolute top-2 left-2 ${product.badgeColor} text-white text-xs font-bold px-2 py-1 rounded-lg z-10 shadow-md`}>
+                    <span
+                      className={`absolute top-2 left-2 ${product.badgeColor} text-white text-xs font-bold px-2 py-1 rounded-lg z-10 shadow-md`}
+                    >
                       {product.badge}
                     </span>
                   )}
@@ -583,7 +575,6 @@ const Home = () => {
                     className="absolute bottom-2 right-2 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-maroon hover:text-white transition-all duration-300 transform hover:scale-110 z-10 opacity-0 group-hover:opacity-100"
                     onClick={(e) => {
                       e.stopPropagation();
-                      // Add to wishlist logic
                     }}
                   >
                     <Heart className="w-4 h-4" />
@@ -617,7 +608,9 @@ const Home = () => {
                           />
                         ))}
                       </div>
-                      <span className="ml-1 text-xs text-gray-500">({product.reviews})</span>
+                      <span className="ml-1 text-xs text-gray-500">
+                        ({product.reviews})
+                      </span>
                     </div>
                     <div className="text-right">
                       <span className="text-gold font-bold text-sm sm:text-base">
@@ -651,12 +644,14 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Why Choose Us - Enhanced */}
+      {/* Why Choose Us */}
       <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-maroon/5 to-gold/5">
         <div className="container-custom px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <div className="inline-block px-4 py-1 bg-gold/10 rounded-full mb-3">
-              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">Our Promise</span>
+              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">
+                Our Promise
+              </span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-cinzel font-bold text-maroon mb-3">
               Why Choose Wedding House
@@ -700,7 +695,9 @@ const Home = () => {
               >
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
                 <div className="relative z-10">
-                  <div className={`inline-block p-3 sm:p-4 bg-gradient-to-br ${feature.color} bg-opacity-10 rounded-2xl text-maroon mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <div
+                    className={`inline-block p-3 sm:p-4 bg-gradient-to-br ${feature.color} bg-opacity-10 rounded-2xl text-maroon mb-4 group-hover:scale-110 transition-transform duration-300`}
+                  >
                     <div className="text-gold">{feature.icon}</div>
                   </div>
                   <h3 className="font-bold text-base sm:text-lg mb-2 group-hover:text-maroon transition-colors">
@@ -716,12 +713,14 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials - Enhanced Carousel Style */}
+      {/* Testimonials */}
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="container-custom px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
             <div className="inline-block px-4 py-1 bg-gold/10 rounded-full mb-3">
-              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">Testimonials</span>
+              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">
+                Testimonials
+              </span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-cinzel font-bold text-maroon mb-3">
               What Couples Say
@@ -745,7 +744,10 @@ const Home = () => {
                 <div className="relative z-10">
                   <div className="flex items-center mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-gold fill-current" />
+                      <Star
+                        key={i}
+                        className="w-4 h-4 sm:w-5 sm:h-5 text-gold fill-current"
+                      />
                     ))}
                   </div>
 
@@ -758,12 +760,20 @@ const Home = () => {
                       {testimonial.name.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="font-bold text-base text-maroon">{testimonial.name}</h4>
-                      <p className="text-xs text-gray-500">{testimonial.location}</p>
+                      <h4 className="font-bold text-base text-maroon">
+                        {testimonial.name}
+                      </h4>
+                      <p className="text-xs text-gray-500">
+                        {testimonial.location}
+                      </p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-gold font-semibold">{testimonial.event}</span>
+                        <span className="text-xs text-gold font-semibold">
+                          {testimonial.event}
+                        </span>
                         <span className="text-xs text-gray-400">•</span>
-                        <span className="text-xs text-gray-400">{testimonial.date}</span>
+                        <span className="text-xs text-gray-400">
+                          {testimonial.date}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -780,7 +790,7 @@ const Home = () => {
           <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
         </div>
-        
+
         <div className="container-custom px-4 sm:px-6 text-center relative z-10">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-cinzel font-bold text-white mb-3">
             Ready to Make Your Wedding Memorable?
@@ -796,7 +806,7 @@ const Home = () => {
               Explore Collections
             </button>
             <a
-              href="https://wa.me/9184351 11188"
+              href="https://wa.me/918435111188"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 sm:px-8 py-3 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-maroon transition-all duration-300"
@@ -807,66 +817,48 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Add custom CSS for animations */}
-      <style jsx>{`
+      {/* CSS Animations */}
+      <style>{`
         @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-        
+
         @keyframes particle {
-          0% {
-            transform: translateY(0) translateX(0);
-            opacity: 0;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-100px) translateX(50px);
-            opacity: 0;
-          }
+          0% { transform: translateY(0) translateX(0); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
         }
-        
+
         .animate-fade-in-up {
           animation: fade-in-up 0.6s ease-out;
         }
-        
+
         .animate-particle {
           animation: particle linear infinite;
         }
-        
+
         .animate-title span {
           animation: fade-in-up 0.4s ease-out forwards;
           opacity: 0;
         }
-        
+
         .animate-width {
           animation: width 0.8s ease-out;
         }
-        
+
         @keyframes width {
-          from {
-            width: 0;
-          }
-          to {
-            width: 100%;
-          }
+          from { width: 0; }
+          to { width: 100%; }
         }
-        
+
         .line-clamp-1 {
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
-        
+
         .line-clamp-3 {
           display: -webkit-box;
           -webkit-line-clamp: 3;

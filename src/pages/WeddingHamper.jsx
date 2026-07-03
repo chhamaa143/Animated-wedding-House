@@ -87,7 +87,7 @@ const WeddingHamper = () => {
         "/products/hampers (8).png",
       ],
       items: "8 Items",
-      rating: 4.8,
+      rating: 4.8,   
       reviews: 256,
       description:
         "Our premium hamper offers a complete wedding stationery solution with elegant packaging and high-quality materials. Perfect for medium-sized weddings.",
