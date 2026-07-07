@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   Phone,
@@ -14,8 +14,85 @@ import {
 } from "lucide-react";
 
 const Footer = () => {
+  const cursorRef = useRef(null);
+
+  // Heart Bubble Cursor Effect
+  useEffect(() => {
+    const createHeartBubble = (x, y) => {
+      const heart = document.createElement('div');
+      heart.innerHTML = '❤️';
+      heart.style.cssText = `
+        position: fixed;
+        left: ${x}px;
+        top: ${y}px;
+        font-size: ${20 + Math.random() * 30}px;
+        pointer-events: none;
+        z-index: 9999;
+        animation: heartBubble 1.5s ease-out forwards;
+        user-select: none;
+      `;
+      document.body.appendChild(heart);
+
+      // Remove heart after animation
+      setTimeout(() => {
+        heart.remove();
+      }, 1500);
+    };
+
+    // Add keyframe animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes heartBubble {
+        0% {
+          transform: translate(0, 0) scale(1) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(${-50 + Math.random() * 100}px, -150px) scale(1.5) rotate(20deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Mouse move handler
+    const handleMouseMove = (e) => {
+      // Random chance to create heart (20% chance)
+      if (Math.random() < 0.2) {
+        createHeartBubble(e.clientX, e.clientY);
+      }
+    };
+
+    // Mouse click handler - creates multiple hearts
+    const handleClick = (e) => {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          createHeartBubble(
+            e.clientX + (Math.random() - 0.5) * 60,
+            e.clientY + (Math.random() - 0.5) * 60
+          );
+        }, i * 100);
+      }
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('click', handleClick);
+      document.head.removeChild(style);
+    };
+  }, []);
+
   return (
-    <footer className="bg-[#EFE5E7] text-[#532D2A] pt-16 pb-8 border-t border-[#B392A4]/20">
+    <footer className="bg-[#EFE5E7] text-[#532D2A] pt-16 pb-8 border-t border-[#B392A4]/20 relative overflow-hidden">
+      {/* Cursor tracking element */}
+      <div 
+        ref={cursorRef}
+        className="hidden"
+      />
+      
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* About */}
@@ -211,11 +288,11 @@ const Footer = () => {
         {/* Divider with heart */}
         <div className="relative flex items-center justify-center my-8">
           <div className="flex-1 border-t border-[#B392A4]/20"></div>
-          <Heart className="w-6 h-6 text-[#B392A4] mx-4 fill-[#B392A4]/20" />
+          <Heart className="w-6 h-6 text-[#B392A4] mx-4 fill-[#B392A4]/20 animate-pulse" />
           <div className="flex-1 border-t border-[#B392A4]/20"></div>
         </div>
 
-        {/* Copyright - Updated with working links */}
+        {/* Copyright */}
         <div className="text-center pt-4">
           <p className="text-[#532D2A]/50 text-sm">
             © {new Date().getFullYear()} Powered by{' '}
@@ -242,6 +319,39 @@ const Footer = () => {
           </p>
         </div>
       </div>
+
+      {/* Cursor Animation Styles */}
+      <style>{`
+        @keyframes heartBubble {
+          0% {
+            transform: translate(0, 0) scale(1) rotate(0deg);
+            opacity: 1;
+          }
+          100% {
+            transform: translate(var(--tx), -150px) scale(1.5) rotate(20deg);
+            opacity: 0;
+          }
+        }
+
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+        }
+
+        .animate-pulse {
+          animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Custom cursor for the footer */
+        footer {
+          cursor: default;
+        }
+
+        /* Heart trail effect on hover over links */
+        footer a:hover {
+          position: relative;
+        }
+      `}</style>
     </footer>
   );
 };
