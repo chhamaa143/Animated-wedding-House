@@ -30,7 +30,7 @@ function App() {
             path="/shagunenvelopes/:category"
             element={<ShagunEnvelopes />}
           />{" "}
-          <Route path="gallery" element={<Gallery />} />
+          {/* <Route path="gallery" element={<Gallery />} /> */}
           <Route path="hamper" element={<WeddingHamper />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />

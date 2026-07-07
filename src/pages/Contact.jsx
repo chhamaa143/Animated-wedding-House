@@ -55,9 +55,9 @@ const Contact = () => {
       icon: Phone,
       title: "Phone",
       details: ["+91 84351 11188"],
-      action: "tel:+84351 11188",
+      action: "tel:+918435111188",
       actionText: "Call Now",
-      color: "bg-green-50 text-green-600"
+      color: "bg-[#B392A4]/10 text-[#532D2A]"
     },
     {
       icon: Mail,
@@ -65,7 +65,7 @@ const Contact = () => {
       details: ["printkaraopramo@gmail.com"],
       action: "mailto:printkaraopramo@gmail.com",
       actionText: "Send Email",
-      color: "bg-blue-50 text-blue-600"
+      color: "bg-[#B392A4]/10 text-[#532D2A]"
     },
     {
       icon: MapPin,
@@ -77,43 +77,36 @@ const Contact = () => {
       ],
       action: "https://maps.google.com/?q=102+The+Magnet+Tower+Indore",
       actionText: "Get Directions",
-      color: "bg-red-50 text-red-600"
+      color: "bg-[#B392A4]/10 text-[#532D2A]"
     },
     {
       icon: Clock,
       title: "Business Hours",
       details: [
         "Monday - Saturday: 10:00 AM - 7:00 PM",
-        "Sunday: CLOSE"
+        "Sunday: CLOSED"
       ],
-      color: "bg-purple-50 text-purple-600"
+      color: "bg-[#B392A4]/10 text-[#532D2A]"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#EFE5E7]">
       
-      {/* Hero Banner - FIXED with navbar compensation */}
-      {/* Add style={{ paddingTop: navbarHeight }} to dynamically adjust */}
+      {/* Hero Banner */}
       <div 
-        className="bg-gradient-to-r from-maroon via-maroon to-gold pb-16 md:pb-20"
+        className="bg-[#532D2A] pb-16 md:pb-20"
         style={{ paddingTop: `${navbarHeight}px` }}
       >
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Breadcrumb */}
-            {/* <div className="inline-flex items-center gap-2 text-white/70 text-sm mb-4">
-              <a href="/" className="hover:text-white transition">Home</a>
-              <span>/</span>
-              <span className="text-white">Contact Us</span>
-            </div> */}
             
-            {/* Main Title - Now fully visible */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+            {/* Main Title */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-cinzel font-bold text-white mb-4">
               Let's Connect
             </h1>
             
-            <div className="w-24 h-0.5 bg-white/50 mx-auto mb-6"></div>
+            <div className="w-24 h-0.5 bg-[#B392A4] mx-auto mb-6"></div>
             
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
@@ -124,10 +117,10 @@ const Contact = () => {
             {/* CTA Buttons in Banner */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
               <a
-                href="https://wa.me/9184351 11188"
+                href="https://wa.me/918435111188"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-white text-maroon px-6 py-3 rounded-full font-semibold hover:shadow-xl transition-all transform hover:scale-105 group"
+                className="inline-flex items-center justify-center gap-2 bg-[#B392A4] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#EFE5E7] hover:text-[#532D2A] shadow-lg transition-all transform hover:scale-105 group"
               >
                 <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 WhatsApp Us
@@ -136,7 +129,7 @@ const Contact = () => {
               
               <button 
                 onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-maroon transition-all"
+                className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-[#532D2A] transition-all"
               >
                 Send Message
               </button>
@@ -157,7 +150,7 @@ const Contact = () => {
             ].map((stat, i) => (
               <div key={i} className="bg-white rounded-lg shadow-md p-4 text-center transform hover:-translate-y-1 transition">
                 <div className="text-2xl mb-2">{stat.icon}</div>
-                <div className="text-xl font-bold text-maroon">{stat.value}</div>
+                <div className="text-xl font-bold text-[#532D2A]">{stat.value}</div>
                 <div className="text-xs text-gray-500">{stat.label}</div>
               </div>
             ))}
@@ -171,12 +164,12 @@ const Contact = () => {
           
           {/* Section Header */}
           <div className="text-center mb-10">
-            <span className="text-gold font-semibold text-sm uppercase tracking-wider">Get in Touch</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-maroon mt-2 mb-3">
+            <span className="text-[#B392A4] font-semibold text-sm uppercase tracking-wider">Get in Touch</span>
+            <h2 className="text-3xl md:text-4xl font-cinzel font-bold text-[#532D2A] mt-2 mb-3">
               We'd Love to Hear From You
             </h2>
-            <div className="w-20 h-0.5 bg-gradient-to-r from-gold to-maroon mx-auto"></div>
-            <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+            <div className="w-20 h-0.5 bg-[#B392A4] mx-auto"></div>
+            <p className="text-[#532D2A]/70 mt-4 max-w-2xl mx-auto">
               Have questions about our wedding cards? Need a custom design? 
               Our team is ready to assist you.
             </p>
@@ -187,12 +180,12 @@ const Contact = () => {
             {contactInfo.map((item, index) => (
               <div key={index} className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 p-6">
                 <div className={`w-12 h-12 ${item.color} rounded-lg flex items-center justify-center mb-4`}>
-                  <item.icon className="w-6 h-6" />
+                  <item.icon className="w-6 h-6 text-[#B392A4]" />
                 </div>
-                <h3 className="font-bold text-lg text-gray-800 mb-2">{item.title}</h3>
+                <h3 className="font-bold text-lg text-[#532D2A] mb-2">{item.title}</h3>
                 <div className="space-y-1">
                   {item.details.map((detail, i) => (
-                    <p key={i} className="text-gray-600 text-sm">{detail}</p>
+                    <p key={i} className="text-[#532D2A]/70 text-sm">{detail}</p>
                   ))}
                 </div>
                 {item.action && (
@@ -200,7 +193,7 @@ const Contact = () => {
                     href={item.action}
                     target={item.title === "Address" ? "_blank" : "_self"}
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-gold text-sm mt-3 hover:gap-2 transition-all"
+                    className="inline-flex items-center gap-1 text-[#B392A4] text-sm mt-3 hover:gap-2 transition-all"
                   >
                     {item.actionText}
                     <ExternalLink className="w-3 h-3" />
@@ -214,13 +207,13 @@ const Contact = () => {
           <div className="grid lg:grid-cols-2 gap-8" id="contact-form">
             {/* Contact Form */}
             <div className="bg-white rounded-xl shadow-sm p-6 md:p-8">
-              <h3 className="text-2xl font-bold text-maroon mb-2">Send us a Message</h3>
-              <p className="text-gray-600 mb-6">Fill out the form below and we'll get back to you within 24 hours.</p>
+              <h3 className="text-2xl font-cinzel font-bold text-[#532D2A] mb-2">Send us a Message</h3>
+              <p className="text-[#532D2A]/70 mb-6">Fill out the form below and we'll get back to you within 24 hours.</p>
               
               {formStatus.submitted && (
-                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="flex items-center gap-2 text-green-700">
-                    <CheckCircle className="w-5 h-5" />
+                <div className="mb-6 p-4 bg-[#B392A4]/10 border border-[#B392A4]/30 rounded-lg">
+                  <div className="flex items-center gap-2 text-[#532D2A]">
+                    <CheckCircle className="w-5 h-5 text-[#B392A4]" />
                     <span>Thank you! We'll contact you soon.</span>
                   </div>
                 </div>
@@ -228,50 +221,50 @@ const Contact = () => {
               
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                  <label className="block text-sm font-medium text-[#532D2A] mb-1">Full Name *</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-2 border border-[#B392A4]/30 rounded-lg focus:ring-2 focus:ring-[#B392A4] focus:border-[#B392A4] outline-none transition text-[#532D2A]"
                     placeholder="Enter your full name"
                   />
                 </div>
                 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                    <label className="block text-sm font-medium text-[#532D2A] mb-1">Email Address *</label>
                     <input
                       type="email"
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent outline-none transition"
+                      className="w-full px-4 py-2 border border-[#B392A4]/30 rounded-lg focus:ring-2 focus:ring-[#B392A4] focus:border-[#B392A4] outline-none transition text-[#532D2A]"
                       placeholder="your@email.com"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                    <label className="block text-sm font-medium text-[#532D2A] mb-1">Phone Number *</label>
                     <input
                       type="tel"
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent outline-none transition"
+                      className="w-full px-4 py-2 border border-[#B392A4]/30 rounded-lg focus:ring-2 focus:ring-[#B392A4] focus:border-[#B392A4] outline-none transition text-[#532D2A]"
                       placeholder="+91 XXXXX XXXXX"
                     />
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Your Message *</label>
+                  <label className="block text-sm font-medium text-[#532D2A] mb-1">Your Message *</label>
                   <textarea
                     rows="5"
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent outline-none transition resize-none"
+                    className="w-full px-4 py-2 border border-[#B392A4]/30 rounded-lg focus:ring-2 focus:ring-[#B392A4] focus:border-[#B392A4] outline-none transition resize-none text-[#532D2A]"
                     placeholder="Tell us about your wedding plans, preferred designs, or any questions..."
                   />
                 </div>
@@ -279,7 +272,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={formStatus.submitting}
-                  className="w-full bg-gradient-to-r from-maroon to-gold hover:shadow-lg text-white font-semibold py-3 rounded-lg transition-all transform hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full bg-[#532D2A] hover:bg-[#B392A4] text-white font-semibold py-3 rounded-lg transition-all transform hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {formStatus.submitting ? (
                     <>
@@ -312,11 +305,11 @@ const Contact = () => {
                     className="w-full h-full"
                   ></iframe>
                 </div>
-                <div className="p-4 border-t">
+                <div className="p-4 border-t border-[#B392A4]/20">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">
-                        <strong className="text-gray-800">The Magnet Tower</strong>
+                      <p className="text-sm text-[#532D2A]/70">
+                        <strong className="text-[#532D2A]">The Magnet Tower</strong>
                         <br />
                         New Palasia, Indore
                       </p>
@@ -325,7 +318,7 @@ const Contact = () => {
                       href="https://maps.google.com/?q=102+The+Magnet+Tower+Indore"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gold text-sm hover:underline flex items-center gap-1"
+                      className="text-[#B392A4] text-sm hover:underline flex items-center gap-1"
                     >
                       Open in Maps
                       <ExternalLink className="w-3 h-3" />
@@ -335,7 +328,7 @@ const Contact = () => {
               </div>
 
               {/* WhatsApp Card */}
-              <div className="bg-gradient-to-r from-green-600 to-green-500 rounded-xl shadow-sm p-6 text-white transform hover:scale-[1.01] transition">
+              <div className="bg-[#B392A4] rounded-xl shadow-sm p-6 text-white transform hover:scale-[1.01] transition">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
                     <MessageCircle className="w-6 h-6" />
@@ -346,10 +339,10 @@ const Contact = () => {
                   Get instant replies to your queries. Click below to start a conversation on WhatsApp.
                 </p>
                 <a
-                  href="https://wa.me/9184351 11188"
+                  href="https://wa.me/918435111188"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-white text-green-600 px-6 py-2.5 rounded-lg font-semibold hover:shadow-lg transition transform hover:scale-105"
+                  className="inline-flex items-center gap-2 bg-white text-[#532D2A] px-6 py-2.5 rounded-lg font-semibold hover:shadow-lg transition transform hover:scale-105"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Chat on WhatsApp
@@ -357,12 +350,12 @@ const Contact = () => {
               </div>
 
               {/* Quick Response Promise */}
-              <div className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100">
-                <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Clock className="w-6 h-6 text-gold" />
+              <div className="bg-[#EFE5E7] rounded-xl p-6 text-center border border-[#B392A4]/20">
+                <div className="w-12 h-12 bg-[#B392A4]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Clock className="w-6 h-6 text-[#B392A4]" />
                 </div>
-                <h4 className="font-bold text-gray-800 mb-1">Quick Response Guarantee</h4>
-                <p className="text-sm text-gray-500">
+                <h4 className="font-bold text-[#532D2A] mb-1">Quick Response Guarantee</h4>
+                <p className="text-sm text-[#532D2A]/60">
                   We respond to all inquiries within 24 hours
                 </p>
               </div>
@@ -372,13 +365,13 @@ const Contact = () => {
       </div>
 
       {/* Footer CTA */}
-      <div className="bg-gray-900 text-white py-12 mt-8">
+      <div className="bg-[#532D2A] text-white py-12 mt-8">
         <div className="container mx-auto px-4 text-center">
-          <h3 className="text-2xl font-bold mb-2">Ready to start your wedding journey?</h3>
-          <p className="text-gray-400 mb-6">Let's create something beautiful together</p>
+          <h3 className="text-2xl font-cinzel font-bold mb-2">Ready to start your wedding journey?</h3>
+          <p className="text-[#B392A4] mb-6">Let's create something beautiful together</p>
           <button 
             onClick={() => window.location.href = '/weddingcards'}
-            className="bg-gold hover:bg-gold/90 text-maroon px-8 py-3 rounded-lg font-semibold transition transform hover:scale-105 inline-flex items-center gap-2"
+            className="bg-[#B392A4] hover:bg-[#EFE5E7] hover:text-[#532D2A] text-white px-8 py-3 rounded-lg font-semibold transition transform hover:scale-105 inline-flex items-center gap-2"
           >
             Explore Wedding Cards
             <ArrowRight className="w-4 h-4" />

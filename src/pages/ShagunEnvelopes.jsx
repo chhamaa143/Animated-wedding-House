@@ -61,14 +61,14 @@ const ShagunEnvelopes = () => {
       id: "all",
       name: "All Envelopes",
       icon: "📬",
-      color: "from-maroon to-gold",
+      color: "from-[#532D2A] to-[#B392A4]",
       count: 15,
     },
     {
       id: "box-envelope",
       name: "Box Envelope",
       icon: "📦",
-      color: "from-blue-500 to-cyan-500",
+      color: "from-[#532D2A] to-[#76153C]",
       description: "Premium rigid box envelopes for special occasions",
       count: 5,
       popular: true,
@@ -77,7 +77,7 @@ const ShagunEnvelopes = () => {
       id: "pocket-envelope",
       name: "Pocket Size Envelope",
       icon: "📩",
-      color: "from-green-500 to-emerald-500",
+      color: "from-[#76153C] to-[#B392A4]",
       description: "Compact pocket-sized envelopes for convenience",
       count: 5,
       popular: true,
@@ -86,7 +86,7 @@ const ShagunEnvelopes = () => {
       id: "regular-envelope",
       name: "Regular Envelope",
       icon: "✉️",
-      color: "from-amber-500 to-orange-500",
+      color: "from-[#B392A4] to-[#532D2A]",
       description: "Classic standard size envelopes",
       count: 5,
       popular: false,
@@ -378,7 +378,6 @@ const ShagunEnvelopes = () => {
 
   const getCurrentPrice = () => {
     if (!selectedProduct) return 0;
-    // For now, just return the base price
     return parseInt(selectedProduct.price.replace(/[^0-9]/g, ""));
   };
 
@@ -409,12 +408,12 @@ const ShagunEnvelopes = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-cream to-white pt-20">
+    <div className="min-h-screen bg-[#EFE5E7] pt-20">
       {/* Hero Section */}
-      <div className="relative py-16 bg-gradient-to-r from-maroon via-maroon/90 to-gold overflow-hidden">
+      <div className="relative py-16 bg-[#532D2A] overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-40 h-40 bg-[#B392A4] rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#B392A4] rounded-full blur-3xl"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10 pt-8">
@@ -437,7 +436,7 @@ const ShagunEnvelopes = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-maroon to-gold text-white rounded-lg font-medium hover:shadow-lg transition-all"
+                  className="flex items-center gap-2 px-6 py-3 bg-[#532D2A] text-white rounded-lg font-medium hover:bg-[#76153C] transition-all shadow-md"
                 >
                   <span>{currentCategory.icon}</span>
                   <span>{currentCategory.name}</span>
@@ -446,17 +445,17 @@ const ShagunEnvelopes = () => {
                   />
                 </button>
 
-                {/* Dropdown Menu - Click on any category to show its products */}
+                {/* Dropdown Menu */}
                 {isDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl py-2 z-50 border border-gray-100">
+                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl py-2 z-50 border border-[#B392A4]/20">
                     {categories.map((cat) => (
                       <button
                         key={cat.id}
                         onClick={() => handleCategorySelect(cat.id)}
-                        className={`w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors flex items-center justify-between ${
+                        className={`w-full text-left px-4 py-3 hover:bg-[#EFE5E7] transition-colors flex items-center justify-between ${
                           selectedCategory === cat.id
-                            ? "bg-gold/10 text-maroon font-medium"
-                            : ""
+                            ? "bg-[#B392A4]/10 text-[#532D2A] font-medium"
+                            : "text-[#532D2A]"
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -471,7 +470,7 @@ const ShagunEnvelopes = () => {
                           </div>
                         </div>
                         {cat.popular && (
-                          <span className="text-xs bg-gold/20 text-maroon px-2 py-1 rounded-full">
+                          <span className="text-xs bg-[#B392A4]/20 text-[#532D2A] px-2 py-1 rounded-full">
                             Popular
                           </span>
                         )}
@@ -489,8 +488,8 @@ const ShagunEnvelopes = () => {
                     onClick={() => handleCategorySelect(cat.id)}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                       selectedCategory === cat.id
-                        ? "bg-maroon text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        ? "bg-[#532D2A] text-white"
+                        : "bg-[#EFE5E7] text-[#532D2A] hover:bg-[#B392A4]/20"
                     }`}
                   >
                     {cat.name}
@@ -502,7 +501,7 @@ const ShagunEnvelopes = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 bg-maroon text-white rounded-lg"
+              className="lg:hidden flex items-center gap-2 px-4 py-2 bg-[#532D2A] text-white rounded-lg"
             >
               <Menu className="w-5 h-5" />
               <span>{currentCategory.name}</span>
@@ -514,24 +513,24 @@ const ShagunEnvelopes = () => {
             {/* Filter Button */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg"
+              className="lg:hidden flex items-center gap-2 px-4 py-2 border border-[#B392A4]/30 text-[#532D2A] rounded-lg hover:bg-[#EFE5E7] transition-colors"
             >
               <Filter className="w-4 h-4" />
               Filters
             </button>
           </div>
 
-          {/* Mobile Menu - Click on any category to show its products */}
+          {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="lg:hidden mt-4 bg-white rounded-lg shadow-xl border border-gray-100 py-2">
+            <div className="lg:hidden mt-4 bg-white rounded-lg shadow-xl border border-[#B392A4]/20 py-2">
               {categories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => handleCategorySelect(cat.id)}
-                  className={`w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors flex items-center justify-between ${
+                  className={`w-full text-left px-4 py-3 hover:bg-[#EFE5E7] transition-colors flex items-center justify-between ${
                     selectedCategory === cat.id
-                      ? "bg-gold/10 text-maroon font-medium"
-                      : ""
+                      ? "bg-[#B392A4]/10 text-[#532D2A] font-medium"
+                      : "text-[#532D2A]"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -544,7 +543,7 @@ const ShagunEnvelopes = () => {
                     </div>
                   </div>
                   {cat.popular && (
-                    <span className="text-xs bg-gold/20 text-maroon px-2 py-1 rounded-full">
+                    <span className="text-xs bg-[#B392A4]/20 text-[#532D2A] px-2 py-1 rounded-full">
                       Popular
                     </span>
                   )}
@@ -557,17 +556,17 @@ const ShagunEnvelopes = () => {
 
       {/* Category Description */}
       {selectedCategory !== "all" && (
-        <div className="bg-gradient-to-r from-gold/10 to-maroon/10 py-6">
+        <div className="bg-[#B392A4]/10 py-6">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-start gap-4">
               <div className="text-4xl">
                 {categories.find((c) => c.id === selectedCategory)?.icon}
               </div>
               <div>
-                <h3 className="text-xl font-bold text-maroon mb-2">
+                <h3 className="text-xl font-bold text-[#532D2A] mb-2">
                   {categories.find((c) => c.id === selectedCategory)?.name}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-[#532D2A]/70">
                   {
                     categories.find((c) => c.id === selectedCategory)
                       ?.description
@@ -583,9 +582,9 @@ const ShagunEnvelopes = () => {
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Results Count */}
         <div className="flex justify-between items-center mb-6">
-          <p className="text-gray-600">
+          <p className="text-[#532D2A]/70">
             Showing{" "}
-            <span className="font-bold text-maroon">
+            <span className="font-bold text-[#532D2A]">
               {filteredProducts.length}
             </span>{" "}
             of {filteredByCategory.length} products
@@ -595,7 +594,7 @@ const ShagunEnvelopes = () => {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-gold text-sm"
+            className="px-4 py-2 border border-[#B392A4]/30 rounded-lg focus:outline-none focus:border-[#532D2A] text-sm text-[#532D2A] bg-white"
           >
             <option value="popular">Most Popular</option>
             <option value="rating">Highest Rated</option>
@@ -606,14 +605,14 @@ const ShagunEnvelopes = () => {
 
         {/* Selected Items Bar */}
         {selectedItems.length > 0 && (
-          <div className="mb-6 p-4 bg-gradient-to-r from-gold/20 to-maroon/20 rounded-xl shadow-lg border border-gold/30">
+          <div className="mb-6 p-4 bg-[#B392A4]/10 rounded-xl shadow-lg border border-[#B392A4]/30">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                <div className="font-bold text-lg">
+                <div className="font-bold text-lg text-[#532D2A]">
                   {selectedItems.length} envelope
                   {selectedItems.length > 1 ? "s" : ""} selected
                 </div>
-                <div className="text-gray-600">
+                <div className="text-[#532D2A]/70">
                   Total: ₹
                   {selectedItems
                     .reduce((sum, item) => {
@@ -626,13 +625,13 @@ const ShagunEnvelopes = () => {
               <div className="flex gap-3">
                 <button
                   onClick={() => setSelectedItems([])}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                  className="px-4 py-2 border border-[#B392A4]/30 text-[#532D2A] rounded-lg hover:bg-[#EFE5E7] transition-colors text-sm"
                 >
                   Clear
                 </button>
                 <button
                   onClick={handleBulkOrder}
-                  className="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 text-sm hover:shadow-lg transition-all"
+                  className="bg-[#B392A4] hover:bg-[#532D2A] text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 text-sm hover:shadow-lg transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Order All via WhatsApp
@@ -642,7 +641,7 @@ const ShagunEnvelopes = () => {
           </div>
         )}
 
-        {/* Products Grid with Watermark */}
+        {/* Products Grid */}
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
@@ -651,7 +650,7 @@ const ShagunEnvelopes = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: product.id * 0.02 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 group cursor-pointer"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-[#B392A4]/10 group cursor-pointer"
                 onClick={() => openProductDetails(product)}
               >
                 {/* Product Image with Watermark */}
@@ -669,12 +668,12 @@ const ShagunEnvelopes = () => {
                   {/* Badges */}
                   <div className="absolute top-3 left-3 flex gap-2 z-10">
                     {product.bestseller && (
-                      <span className="px-2 py-1 bg-gold text-maroon text-xs font-bold rounded-full">
+                      <span className="px-2 py-1 bg-[#B392A4] text-white text-xs font-bold rounded-full">
                         BESTSELLER
                       </span>
                     )}
                     {product.popular && (
-                      <span className="px-2 py-1 bg-rose-500 text-white text-xs font-bold rounded-full">
+                      <span className="px-2 py-1 bg-[#532D2A] text-white text-xs font-bold rounded-full">
                         POPULAR
                       </span>
                     )}
@@ -693,8 +692,8 @@ const ShagunEnvelopes = () => {
                     }}
                     className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-300 transform hover:scale-110 z-10 ${
                       selectedItems.find((item) => item.id === product.id)
-                        ? "bg-gold text-maroon"
-                        : "bg-white/90 text-gray-700 hover:bg-maroon hover:text-white"
+                        ? "bg-[#B392A4] text-white"
+                        : "bg-white/90 text-[#532D2A] hover:bg-[#B392A4] hover:text-white"
                     }`}
                   >
                     {selectedItems.find((item) => item.id === product.id) ? (
@@ -717,12 +716,12 @@ const ShagunEnvelopes = () => {
                 <div className="p-5">
                   {/* Title & Rating */}
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-bold text-gray-800 line-clamp-1 group-hover:text-maroon transition-colors flex-1">
+                    <h3 className="font-bold text-[#532D2A] line-clamp-1 group-hover:text-[#B392A4] transition-colors flex-1">
                       {product.name}
                     </h3>
                     <div className="flex items-center gap-1 ml-2">
-                      <Star className="w-4 h-4 text-gold fill-current" />
-                      <span className="text-sm font-medium">
+                      <Star className="w-4 h-4 text-[#B392A4] fill-current" />
+                      <span className="text-sm font-medium text-[#532D2A]">
                         {product.rating}
                       </span>
                     </div>
@@ -730,7 +729,7 @@ const ShagunEnvelopes = () => {
 
                   {/* Price */}
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xl font-bold text-gold">
+                    <span className="text-xl font-bold text-[#B392A4]">
                       {product.price}
                     </span>
                     {product.originalPrice && (
@@ -747,20 +746,20 @@ const ShagunEnvelopes = () => {
                     {product.tags.slice(0, 2).map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded"
+                        className="text-xs px-2 py-1 bg-[#EFE5E7] text-[#532D2A]/70 rounded"
                       >
                         {tag}
                       </span>
                     ))}
                     {product.tags.length > 2 && (
-                      <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
+                      <span className="text-xs px-2 py-1 bg-[#EFE5E7] text-[#532D2A]/70 rounded">
                         +{product.tags.length - 2}
                       </span>
                     )}
                   </div>
 
                   {/* Delivery & Reviews */}
-                  <div className="flex items-center justify-between mb-4 text-xs text-gray-500">
+                  <div className="flex items-center justify-between mb-4 text-xs text-[#532D2A]/50">
                     <div className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {product.delivery}
@@ -774,7 +773,7 @@ const ShagunEnvelopes = () => {
                       e.stopPropagation();
                       handleWhatsAppOrder(product);
                     }}
-                    className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-2.5 rounded-lg hover:shadow-lg transition-all hover:scale-105 text-sm font-medium flex items-center justify-center gap-2"
+                    className="w-full bg-[#B392A4] hover:bg-[#532D2A] text-white py-2.5 rounded-lg hover:shadow-lg transition-all hover:scale-105 text-sm font-medium flex items-center justify-center gap-2"
                   >
                     <MessageCircle className="w-4 h-4" />
                     Quick Order
@@ -785,16 +784,16 @@ const ShagunEnvelopes = () => {
           </div>
         ) : (
           <div className="text-center py-16">
-            <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+            <Package className="w-16 h-16 text-[#B392A4]/30 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-[#532D2A] mb-2">
               No envelopes found
             </h3>
-            <p className="text-gray-500">Try selecting a different category</p>
+            <p className="text-[#532D2A]/60">Try selecting a different category</p>
           </div>
         )}
 
         {/* Bulk Order CTA */}
-        <div className="mt-16 bg-gradient-to-r from-maroon to-gold rounded-2xl p-8 text-center text-white">
+        <div className="mt-16 bg-[#532D2A] rounded-2xl p-8 text-center text-white">
           <h2 className="text-2xl font-bold mb-4">Need Bulk Envelopes?</h2>
           <p className="mb-6 max-w-2xl mx-auto opacity-90">
             Get custom envelopes with your wedding details printed
@@ -809,7 +808,7 @@ const ShagunEnvelopes = () => {
                 "_blank",
               );
             }}
-            className="bg-white text-maroon px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors inline-flex items-center gap-3 shadow-xl hover:scale-105 transform transition-all"
+            className="bg-[#B392A4] hover:bg-white hover:text-[#532D2A] text-white px-8 py-4 rounded-full font-bold text-lg transition-colors inline-flex items-center gap-3 shadow-xl hover:scale-105 transform transition-all"
           >
             <MessageCircle className="w-6 h-6" />
             Chat for Bulk Order
@@ -880,7 +879,7 @@ const ShagunEnvelopes = () => {
                           onClick={() => setSelectedImage(index)}
                           className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                             selectedImage === index
-                              ? "border-gold scale-105"
+                              ? "border-[#B392A4] scale-105"
                               : "border-transparent hover:border-gray-300"
                           }`}
                         >
@@ -905,7 +904,7 @@ const ShagunEnvelopes = () => {
                         key={index}
                         className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 p-2 rounded-lg"
                       >
-                        <span className="text-maroon">{feature.icon}</span>
+                        <span className="text-[#532D2A]">{feature.icon}</span>
                         <span>{feature.text}</span>
                       </div>
                     ))}
@@ -916,14 +915,14 @@ const ShagunEnvelopes = () => {
                 <div>
                   {/* Title & Category */}
                   <div className="flex items-start justify-between mb-2">
-                    <h2 className="text-2xl lg:text-3xl font-cinzel font-bold text-maroon">
+                    <h2 className="text-2xl lg:text-3xl font-cinzel font-bold text-[#532D2A]">
                       {selectedProduct.name}
                     </h2>
                   </div>
 
                   {/* Category Badge */}
                   <div className="flex items-center gap-2 mb-4">
-                    <span className="px-3 py-1 bg-gold/20 text-maroon rounded-full text-sm font-medium flex items-center gap-1">
+                    <span className="px-3 py-1 bg-[#B392A4]/20 text-[#532D2A] rounded-full text-sm font-medium flex items-center gap-1">
                       {
                         categories.find(
                           (c) => c.id === selectedProduct.category,
@@ -936,7 +935,7 @@ const ShagunEnvelopes = () => {
                       }
                     </span>
                     {selectedProduct.bestseller && (
-                      <span className="px-3 py-1 bg-gold text-maroon rounded-full text-sm font-medium">
+                      <span className="px-3 py-1 bg-[#B392A4] text-white rounded-full text-sm font-medium">
                         Bestseller
                       </span>
                     )}
@@ -945,8 +944,8 @@ const ShagunEnvelopes = () => {
                   {/* Rating */}
                   <div className="flex items-center gap-4 mb-4">
                     <div className="flex items-center">
-                      <Star className="w-5 h-5 text-gold fill-current" />
-                      <span className="ml-1 font-bold text-lg">
+                      <Star className="w-5 h-5 text-[#B392A4] fill-current" />
+                      <span className="ml-1 font-bold text-lg text-[#532D2A]">
                         {selectedProduct.rating}
                       </span>
                       <span className="text-gray-500 ml-1">
@@ -963,7 +962,7 @@ const ShagunEnvelopes = () => {
                           "_blank",
                         );
                       }}
-                      className="flex items-center gap-1 text-gray-500 hover:text-maroon transition-colors"
+                      className="flex items-center gap-1 text-gray-500 hover:text-[#532D2A] transition-colors"
                     >
                       <Share2 className="w-4 h-4" /> Share
                     </button>
@@ -972,7 +971,7 @@ const ShagunEnvelopes = () => {
                   {/* Price */}
                   <div className="mb-6">
                     <div className="flex items-baseline gap-3">
-                      <span className="text-3xl lg:text-4xl font-bold text-gold">
+                      <span className="text-3xl lg:text-4xl font-bold text-[#B392A4]">
                         {selectedProduct.price}
                       </span>
                       {selectedProduct.originalPrice && (
@@ -997,26 +996,26 @@ const ShagunEnvelopes = () => {
                       onClick={() => setActiveTab("description")}
                       className={`pb-2 px-1 font-medium transition-colors relative ${
                         activeTab === "description"
-                          ? "text-maroon"
-                          : "text-gray-500 hover:text-maroon"
+                          ? "text-[#532D2A]"
+                          : "text-gray-500 hover:text-[#532D2A]"
                       }`}
                     >
                       Description
                       {activeTab === "description" && (
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#532D2A]"></div>
                       )}
                     </button>
                     <button
                       onClick={() => setActiveTab("specifications")}
                       className={`pb-2 px-1 font-medium transition-colors relative ${
                         activeTab === "specifications"
-                          ? "text-maroon"
-                          : "text-gray-500 hover:text-maroon"
+                          ? "text-[#532D2A]"
+                          : "text-gray-500 hover:text-[#532D2A]"
                       }`}
                     >
                       Specifications
                       {activeTab === "specifications" && (
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#532D2A]"></div>
                       )}
                     </button>
                   </div>
@@ -1037,7 +1036,9 @@ const ShagunEnvelopes = () => {
                             <span className="text-xs text-gray-500">
                               {spec.label}
                             </span>
-                            <p className="font-medium text-sm">{spec.value}</p>
+                            <p className="font-medium text-sm text-[#532D2A]">
+                              {spec.value}
+                            </p>
                           </div>
                         ))}
                       </div>
@@ -1049,7 +1050,7 @@ const ShagunEnvelopes = () => {
                     {selectedProduct.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
+                        className="px-3 py-1 bg-[#EFE5E7] text-[#532D2A]/70 text-xs rounded-full"
                       >
                         {tag}
                       </span>
@@ -1058,12 +1059,12 @@ const ShagunEnvelopes = () => {
 
                   {/* Delivery Info */}
                   <div className="flex items-center gap-4 mb-6 text-sm">
-                    <div className="flex items-center gap-1 text-gray-600">
+                    <div className="flex items-center gap-1 text-[#532D2A]/70">
                       <Clock className="w-4 h-4" />
                       Delivery: {selectedProduct.delivery}
                     </div>
                     {selectedProduct.minOrder && (
-                      <div className="text-gray-600">
+                      <div className="text-[#532D2A]/70">
                         Min. Order: {selectedProduct.minOrder} pieces
                       </div>
                     )}
@@ -1076,7 +1077,7 @@ const ShagunEnvelopes = () => {
                         handleWhatsAppOrder(selectedProduct);
                         closeProductDetails();
                       }}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-bold hover:shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2"
+                      className="flex-1 bg-[#B392A4] hover:bg-[#532D2A] text-white py-3 rounded-lg font-bold hover:shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2"
                     >
                       <MessageCircle className="w-5 h-5" />
                       Order on WhatsApp
@@ -1090,8 +1091,8 @@ const ShagunEnvelopes = () => {
                         selectedItems.find(
                           (item) => item.id === selectedProduct.id,
                         )
-                          ? "bg-gold text-maroon border-gold"
-                          : "border-maroon text-maroon hover:bg-maroon hover:text-white"
+                          ? "bg-[#B392A4] text-white border-[#B392A4]"
+                          : "border-[#532D2A] text-[#532D2A] hover:bg-[#532D2A] hover:text-white"
                       }`}
                     >
                       {selectedItems.find(
@@ -1113,19 +1114,19 @@ const ShagunEnvelopes = () => {
         <div className="lg:hidden fixed inset-0 bg-black/50 z-50 flex items-end">
           <div className="bg-white rounded-t-2xl w-full p-6 max-h-[80vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-lg">Filters</h3>
+              <h3 className="font-bold text-lg text-[#532D2A]">Filters</h3>
               <button onClick={() => setShowFilters(false)}>
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5 text-[#532D2A]" />
               </button>
             </div>
 
             {/* Sort Options */}
             <div className="mb-6">
-              <h4 className="font-medium mb-3">Sort By</h4>
+              <h4 className="font-medium mb-3 text-[#532D2A]">Sort By</h4>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full p-3 border border-gray-200 rounded-lg"
+                className="w-full p-3 border border-[#B392A4]/30 rounded-lg text-[#532D2A]"
               >
                 <option value="popular">Most Popular</option>
                 <option value="rating">Highest Rated</option>
@@ -1136,7 +1137,7 @@ const ShagunEnvelopes = () => {
 
             {/* Price Range */}
             <div className="mb-6">
-              <h4 className="font-medium mb-3">
+              <h4 className="font-medium mb-3 text-[#532D2A]">
                 Price Range (Max: ₹{priceRange.max})
               </h4>
               <input
@@ -1151,13 +1152,13 @@ const ShagunEnvelopes = () => {
                     max: parseInt(e.target.value),
                   })
                 }
-                className="w-full accent-maroon"
+                className="w-full accent-[#532D2A]"
               />
             </div>
 
             <button
               onClick={() => setShowFilters(false)}
-              className="w-full bg-maroon text-white py-3 rounded-lg font-medium"
+              className="w-full bg-[#532D2A] hover:bg-[#B392A4] text-white py-3 rounded-lg font-medium transition-colors"
             >
               Apply Filters
             </button>
@@ -1165,13 +1166,19 @@ const ShagunEnvelopes = () => {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
         .hide-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        .line-clamp-1 {
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </div>

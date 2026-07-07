@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Filter,
@@ -20,11 +20,23 @@ import {
 import Watermark from "../components/Watermark";
 
 const WeddingStationery = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedItems, setSelectedItems] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
   const [isMobile, setIsMobile] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Get category from URL on mount
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const category = params.get('category');
+    if (category) {
+      setSelectedCategory(category);
+    }
+  }, [location.search]);
 
   // Check mobile view
   useEffect(() => {
@@ -37,105 +49,34 @@ const WeddingStationery = () => {
   }, []);
 
   // WhatsApp Configuration
-  const whatsappNumber = "9184351 11188";
+  const whatsappNumber = "918435111188";
   const whatsappMessage = (item) =>
     `Hello! I'm interested in ordering:\n\n📦 *${item.name}*\n💰 Price: ${item.price}\n📋 Category: ${item.category}\n\nPlease send me more details and let me know how to proceed with ordering.`;
 
   // Stationery Categories
   const categories = [
-    {
-      id: "invitations",
-      name: "Wedding Cards",
-      icon: "💌",
-      color: "from-pink-500 to-rose-500",
-    },
-    {
-      id: "envelopes",
-      name: "Shagun Envelopes",
-      icon: "📜",
-      color: "from-blue-500 to-cyan-500",
-    },
-    {
-      id: "cards-tags",
-      name: "Cards & Tags",
-      icon: "🍽️",
-      color: "from-emerald-500 to-green-500",
-    },
-    {
-      id: "bags-box",
-      name: "Bags & Boxes",
-      icon: "🎁",
-      color: "from-amber-500 to-orange-500",
-    },
-    {
-      id: "door-hanger",
-      name: "Door Hangers",
-      icon: "🚪",
-      color: "from-purple-500 to-violet-500",
-    },
-    {
-      id: "itinerary",
-      name: "Itinerary",
-      icon: "📋",
-      color: "from-indigo-500 to-blue-500",
-    },
-    {
-      id: "menu-cards",
-      name: "Menu Cards",
-      icon: "🍽️",
-      color: "from-red-500 to-pink-500",
-    },
-    {
-      id: "standees",
-      name: "Standees",
-      icon: "🖼️",
-      color: "from-teal-500 to-cyan-500",
-    },
-    {
-      id: "welcome-board",
-      name: "Welcome Boards",
-      icon: "🎨",
-      color: "from-lime-500 to-green-500",
-    },
-    {
-      id: "bottle-tag",
-      name: "Bottle Tags",
-      icon: "🏷️",
-      color: "from-amber-500 to-yellow-500",
-    },
-    {
-      id: "gratitude-card",
-      name: "Gratitude Cards",
-      icon: "💝",
-      color: "from-rose-500 to-pink-500",
-    },
-    {
-      id: "luggage-tag",
-      name: "Luggage Tags",
-      icon: "🧳",
-      color: "from-stone-500 to-gray-500",
-    },
-    {
-      id: "post-card",
-      name: "Post Cards",
-      icon: "📮",
-      color: "from-sky-500 to-blue-500",
-    },
-    {
-      id: "rsvp-card",
-      name: "RSVP Cards",
-      icon: "📬",
-      color: "from-emerald-500 to-teal-500",
-    },
-    {
-      id: "thank-you-card",
-      name: "Thank You Cards",
-      icon: "🙏",
-      color: "from-fuchsia-500 to-purple-500",
-    },
+    { id: "all", name: "All Items", icon: "📦" },
+    { id: "invitations", name: "Wedding Cards", icon: "💌" },
+    { id: "envelopes", name: "Shagun Envelopes", icon: "📜" },
+    { id: "cards-tags", name: "Cards & Tags", icon: "🏷️" },
+    { id: "bags-box", name: "Bags & Boxes", icon: "🎁" },
+    { id: "door-hanger", name: "Door Hangers", icon: "🚪" },
+    { id: "itinerary", name: "Itinerary", icon: "📋" },
+    { id: "menu-cards", name: "Menu Cards", icon: "🍽️" },
+    { id: "standees", name: "Standees", icon: "🖼️" },
+    { id: "welcome-board", name: "Welcome Boards", icon: "🎨" },
+    { id: "bottle-tag", name: "Bottle Tags", icon: "🏷️" },
+    { id: "gratitude-card", name: "Gratitude Cards", icon: "💝" },
+    { id: "luggage-tag", name: "Luggage Tags", icon: "🧳" },
+    { id: "post-card", name: "Post Cards", icon: "📮" },
+    { id: "rsvp-card", name: "RSVP Cards", icon: "📬" },
+    { id: "thank-you-card", name: "Thank You Cards", icon: "🙏" },
+    { id: "sticker", name: "Stickers", icon: "⭐" },
+    { id: "tent-card", name: "Tent Cards", icon: "🏕️" },
+    { id: "petal-cone", name: "Petal Cones", icon: "🌸" },
   ];
 
-  // Stationery Products
+  // Stationery Products - Fixed category IDs to match dropdown
   const stationeryProducts = [
     // DOOR HANGERS
     {
@@ -167,8 +108,7 @@ const WeddingStationery = () => {
       name: "Wedding Itinerary Card",
       category: "itinerary",
       price: "₹30 each",
-      description:
-        "Beautifully designed itinerary cards for your wedding schedule",
+      description: "Beautifully designed itinerary cards for your wedding schedule",
       image: "/products/1 (3).png",
       tags: ["Schedule", "Elegant", "Custom"],
       rating: 4.7,
@@ -254,8 +194,7 @@ const WeddingStationery = () => {
       name: "Personalized Bottle Tag",
       category: "bottle-tag",
       price: "₹8 each",
-      description:
-        "Make your big day unforgettable with our exquisitely designed wedding Bottle Tags",
+      description: "Exquisitely designed wedding bottle tags",
       image: "/images/products/bottle-tag.webp",
       tags: ["Bar", "Drinks", "Modern"],
       delivery: "1-2 days",
@@ -281,8 +220,7 @@ const WeddingStationery = () => {
       name: "Wedding Luggage Tag",
       category: "luggage-tag",
       price: "₹8 each",
-      description:
-        "Add a unique and personal touch to your wedding with our beautifully crafted Wedding Luggage Tag Cards With Dori",
+      description: "Beautifully crafted wedding luggage tags with dori",
       image: "/images/products/card.png",
       tags: ["Seating", "Display", "Elegant"],
       delivery: "1-2 days",
@@ -309,8 +247,7 @@ const WeddingStationery = () => {
       name: "Copper Foil Envelope",
       category: "envelopes",
       price: "₹80 each",
-      description:
-        "Celebrate special moments with beautifully designed Shagun envelopes. Perfect for weddings, festivals, ceremonies, and gifting, our custom envelopes add elegance and personal touch to your heartfelt blessings.",
+      description: "Beautifully designed Shagun envelopes with copper foil",
       image: "/images/products/copperfoil.png",
       tags: ["Copper", "Elegant", "Shagun"],
       delivery: "1-day",
@@ -321,8 +258,7 @@ const WeddingStationery = () => {
       name: "Silver Foil Envelope",
       category: "envelopes",
       price: "₹75 each",
-      description:
-        "Celebrate special moments with beautifully designed Shagun envelopes. Perfect for weddings, festivals, ceremonies, and gifting, our custom envelopes add elegance and personal touch to your heartfelt blessings.",
+      description: "Beautifully designed Shagun envelopes with silver foil",
       image: "/images/products/silverfoil.png",
       tags: ["Silver", "Elegant", "Shagun"],
       delivery: "1-day",
@@ -330,13 +266,12 @@ const WeddingStationery = () => {
     },
     {
       id: 16,
-      name: "Flower/Petals cone",
-      category: "petal cone",
+      name: "Flower/Petals Cone",
+      category: "petal-cone",
       price: "₹75 each",
-      description:
-        "Celebrate special moments with beautifully designed Shagun envelopes. Perfect for weddings, festivals, ceremonies, and gifting, our custom envelopes add elegance and personal touch to your heartfelt blessings.",
+      description: "Beautiful flower and petals cone for your wedding",
       image: "/products/petal-cone.png",
-      tags: ["Silver", "Elegant", "Shagun"],
+      tags: ["Flower", "Elegant", "Cone"],
       delivery: "1-day",
       rating: 4.5,
     },
@@ -355,6 +290,12 @@ const WeddingStationery = () => {
     const price = parseInt(product.price.replace(/[^0-9]/g, ""));
     return price >= priceRange.min && price <= priceRange.max;
   });
+
+  // Search filter
+  const searchFilteredProducts = priceFilteredProducts.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    product.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleWhatsAppOrder = (product) => {
     const message = encodeURIComponent(whatsappMessage(product));
@@ -388,74 +329,86 @@ const WeddingStationery = () => {
     }
   };
 
+  // Handle category change with URL update
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategory(categoryId);
+    // Update URL with category parameter
+    navigate(`/weddingstationery?category=${categoryId}`, { replace: true });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-cream to-white pt-20">
-      {/* Hero Section */}
-      <div className="relative py-16 bg-gradient-to-r from-maroon via-maroon/90 to-gold overflow-hidden">
+    <div className="min-h-screen bg-[#EFE5E7] pt-20">
+      {/* Hero Section - New Theme */}
+      <div className="relative py-16 bg-[#532D2A] overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-40 h-40 bg-[#B392A4] rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#B392A4] rounded-full blur-3xl"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10 pt-8">
-          <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-[#EFE5E7] mb-6">
             Wedding Stationery Collection
           </h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-[#EFE5E7]/80 max-w-3xl mx-auto mb-8">
             Everything you need for your perfect wedding - from door hangers to
             thank you cards
           </p>
 
           {/* Quick Stats */}
           <div className="flex flex-wrap justify-center gap-6">
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-              <Package className="w-4 h-4 text-gold" />
-              <span className="text-white">50+ Designs</span>
+            <div className="flex items-center gap-2 bg-[#B392A4]/10 backdrop-blur-sm px-4 py-2 rounded-full border border-[#B392A4]/30">
+              <Package className="w-4 h-4 text-[#B392A4]" />
+              <span className="text-[#EFE5E7]">50+ Designs</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-              <Clock className="w-4 h-4 text-gold" />
-              <span className="text-white">Quick Delivery</span>
+            <div className="flex items-center gap-2 bg-[#B392A4]/10 backdrop-blur-sm px-4 py-2 rounded-full border border-[#B392A4]/30">
+              <Clock className="w-4 h-4 text-[#B392A4]" />
+              <span className="text-[#EFE5E7]">Quick Delivery</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-              <Star className="w-4 h-4 text-gold" />
-              <span className="text-white">Premium Quality</span>
+            <div className="flex items-center gap-2 bg-[#B392A4]/10 backdrop-blur-sm px-4 py-2 rounded-full border border-[#B392A4]/30">
+              <Star className="w-4 h-4 text-[#B392A4]" />
+              <span className="text-[#EFE5E7]">Premium Quality</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Categories Navigation */}
-      <div className="sticky top-16 z-40 bg-white shadow-lg border-b">
+      {/* Categories Navigation - Fixed */}
+      <div className="sticky top-16 z-40 bg-[#EFE5E7] shadow-lg border-b border-[#B392A4]/20">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="font-bold text-maroon">Browse Categories</h2>
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden flex items-center gap-2 text-maroon"
-            >
-              <Filter className="w-4 h-4" />
-              Filters
-            </button>
+            <h2 className="font-bold text-[#532D2A]">Browse Categories</h2>
+            <div className="flex items-center gap-2">
+              {/* Search Bar */}
+              <div className="relative hidden sm:block">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-8 pr-4 py-1.5 border border-[#B392A4]/30 rounded-lg bg-white/50 text-sm focus:outline-none focus:border-[#B392A4] text-[#532D2A]"
+                />
+                <Search className="w-4 h-4 absolute left-2 top-1/2 transform -translate-y-1/2 text-[#B392A4]" />
+              </div>
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="lg:hidden flex items-center gap-2 text-[#532D2A] hover:text-[#B392A4] transition-colors"
+              >
+                <Filter className="w-4 h-4" />
+                Filters
+              </button>
+            </div>
           </div>
+          
+          {/* Category Buttons - Fixed to show all and filter correctly */}
           <div className="flex overflow-x-auto pb-2 hide-scrollbar gap-2">
-            <button
-              onClick={() => setSelectedCategory("all")}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
-                selectedCategory === "all"
-                  ? "bg-maroon text-white shadow-lg"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              All Items
-            </button>
             {categories.map((cat) => (
               <button
                 key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
+                onClick={() => handleCategoryChange(cat.id)}
                 className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all flex items-center gap-1 ${
                   selectedCategory === cat.id
-                    ? `bg-gradient-to-r ${cat.color} text-white shadow-lg`
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    ? "bg-[#B392A4] text-white shadow-lg"
+                    : "bg-white text-[#532D2A] hover:bg-[#B392A4]/20 border border-[#B392A4]/20"
                 }`}
               >
                 <span>{cat.icon}</span>
@@ -469,17 +422,17 @@ const WeddingStationery = () => {
       {/* Mobile Filters */}
       {showFilters && (
         <div className="lg:hidden fixed inset-0 bg-black/50 z-50 flex items-end">
-          <div className="bg-white rounded-t-2xl w-full p-6">
+          <div className="bg-[#EFE5E7] rounded-t-2xl w-full p-6">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-lg">Filters</h3>
+              <h3 className="font-bold text-lg text-[#532D2A]">Filters</h3>
               <button onClick={() => setShowFilters(false)}>
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5 text-[#532D2A]" />
               </button>
             </div>
 
             {/* Price Range Filter */}
             <div className="mb-6">
-              <h4 className="font-medium mb-3">Price Range</h4>
+              <h4 className="font-medium mb-3 text-[#532D2A]">Price Range</h4>
               <div className="space-y-3">
                 <input
                   type="range"
@@ -493,9 +446,9 @@ const WeddingStationery = () => {
                       max: parseInt(e.target.value),
                     })
                   }
-                  className="w-full accent-maroon"
+                  className="w-full accent-[#B392A4]"
                 />
-                <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center justify-between text-sm text-[#532D2A]">
                   <span>₹{priceRange.min}</span>
                   <span>₹{priceRange.max}</span>
                 </div>
@@ -504,7 +457,7 @@ const WeddingStationery = () => {
 
             <button
               onClick={() => setShowFilters(false)}
-              className="w-full bg-maroon text-white py-3 rounded-lg font-medium"
+              className="w-full bg-[#B392A4] hover:bg-[#532D2A] text-white py-3 rounded-lg font-medium transition-colors"
             >
               Apply Filters
             </button>
@@ -514,16 +467,30 @@ const WeddingStationery = () => {
 
       {/* Products Grid */}
       <div className="max-w-7xl mx-auto px-4 py-12">
+        {/* Search Bar - Mobile */}
+        <div className="sm:hidden mb-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 border border-[#B392A4]/30 rounded-lg bg-white text-[#532D2A] placeholder-[#532D2A]/50 focus:outline-none focus:border-[#B392A4]"
+            />
+            <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-[#B392A4]" />
+          </div>
+        </div>
+
         {/* Selected Items Bar */}
         {selectedItems.length > 0 && (
-          <div className="mb-6 p-4 bg-gradient-to-r from-gold/20 to-maroon/20 rounded-xl shadow-lg border border-gold/30">
+          <div className="mb-6 p-4 bg-[#B392A4]/10 rounded-xl shadow-lg border border-[#B392A4]/30">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                <div className="font-bold text-lg">
+                <div className="font-bold text-lg text-[#532D2A]">
                   {selectedItems.length} item
                   {selectedItems.length > 1 ? "s" : ""} selected
                 </div>
-                <div className="text-gray-600">
+                <div className="text-[#532D2A]/70">
                   Total: ₹
                   {selectedItems
                     .reduce((sum, item) => {
@@ -536,13 +503,13 @@ const WeddingStationery = () => {
               <div className="flex gap-3">
                 <button
                   onClick={() => setSelectedItems([])}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                  className="px-4 py-2 border border-[#B392A4]/30 rounded-lg hover:bg-[#B392A4]/10 transition-colors text-sm text-[#532D2A]"
                 >
                   Clear
                 </button>
                 <button
                   onClick={handleBulkOrder}
-                  className="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 text-sm hover:shadow-lg transition-all"
+                  className="bg-[#B392A4] hover:bg-[#532D2A] text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 text-sm hover:shadow-lg transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Order All via WhatsApp
@@ -553,15 +520,15 @@ const WeddingStationery = () => {
         )}
 
         {/* Products Grid with Watermark */}
-        {priceFilteredProducts.length > 0 ? (
+        {searchFilteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {priceFilteredProducts.map((product) => (
+            {searchFilteredProducts.map((product) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: product.id * 0.05 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 group"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-[#B392A4]/20 group"
               >
                 {/* Product Image with Watermark */}
                 <div className="relative h-56 overflow-hidden">
@@ -578,12 +545,12 @@ const WeddingStationery = () => {
                   {/* Badges */}
                   <div className="absolute top-3 left-3 flex gap-2 z-10">
                     {product.bestseller && (
-                      <span className="px-2 py-1 bg-gold text-maroon text-xs font-bold rounded-full">
+                      <span className="px-2 py-1 bg-[#B392A4] text-white text-xs font-bold rounded-full">
                         BESTSELLER
                       </span>
                     )}
                     {product.popular && (
-                      <span className="px-2 py-1 bg-rose-500 text-white text-xs font-bold rounded-full">
+                      <span className="px-2 py-1 bg-[#532D2A] text-white text-xs font-bold rounded-full">
                         POPULAR
                       </span>
                     )}
@@ -594,8 +561,8 @@ const WeddingStationery = () => {
                     onClick={() => toggleItemSelection(product)}
                     className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-300 transform hover:scale-110 z-10 ${
                       selectedItems.find((item) => item.id === product.id)
-                        ? "bg-gold text-maroon"
-                        : "bg-white/90 text-gray-700 hover:bg-maroon hover:text-white"
+                        ? "bg-[#B392A4] text-white"
+                        : "bg-white/90 text-[#532D2A] hover:bg-[#B392A4] hover:text-white"
                     }`}
                   >
                     {selectedItems.find((item) => item.id === product.id) ? (
@@ -610,25 +577,25 @@ const WeddingStationery = () => {
                 <div className="p-5">
                   {/* Category & Rating */}
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-medium px-3 py-1 bg-gold/20 text-maroon rounded-full">
+                    <span className="text-xs font-medium px-3 py-1 bg-[#B392A4]/20 text-[#532D2A] rounded-full">
                       {categories.find((c) => c.id === product.category)
                         ?.name || product.category}
                     </span>
                     <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-gold fill-current" />
-                      <span className="text-sm font-medium">
+                      <Star className="w-4 h-4 text-[#B392A4] fill-current" />
+                      <span className="text-sm font-medium text-[#532D2A]">
                         {product.rating}
                       </span>
                     </div>
                   </div>
 
                   {/* Name */}
-                  <h3 className="font-bold text-gray-800 mb-2 line-clamp-1 group-hover:text-maroon transition-colors">
+                  <h3 className="font-bold text-[#532D2A] mb-2 line-clamp-1 group-hover:text-[#B392A4] transition-colors">
                     {product.name}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                  <p className="text-[#532D2A]/70 text-sm mb-4 line-clamp-2">
                     {product.description}
                   </p>
 
@@ -637,7 +604,7 @@ const WeddingStationery = () => {
                     {product.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded"
+                        className="text-xs px-2 py-1 bg-[#EFE5E7] text-[#532D2A]/70 rounded"
                       >
                         {tag}
                       </span>
@@ -647,11 +614,11 @@ const WeddingStationery = () => {
                   {/* Price & Delivery */}
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <div className="text-gold font-bold text-xl">
+                      <div className="text-[#B392A4] font-bold text-xl">
                         {product.price}
                       </div>
                       {product.delivery && (
-                        <div className="flex items-center gap-1 text-gray-500 text-xs">
+                        <div className="flex items-center gap-1 text-[#532D2A]/50 text-xs">
                           <Clock className="w-3 h-3" />
                           {product.delivery}
                         </div>
@@ -663,7 +630,7 @@ const WeddingStationery = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleWhatsAppOrder(product)}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-2.5 rounded-lg hover:shadow-lg transition-all hover:scale-105 text-sm font-medium flex items-center justify-center gap-2"
+                      className="flex-1 bg-[#B392A4] hover:bg-[#532D2A] text-white py-2.5 rounded-lg hover:shadow-lg transition-all hover:scale-105 text-sm font-medium flex items-center justify-center gap-2"
                     >
                       <MessageCircle className="w-4 h-4" />
                       Order
@@ -672,8 +639,8 @@ const WeddingStationery = () => {
                       onClick={() => toggleItemSelection(product)}
                       className={`px-3 py-2.5 border rounded-lg transition-all text-sm ${
                         selectedItems.find((item) => item.id === product.id)
-                          ? "bg-gold text-maroon border-gold"
-                          : "border-gray-300 hover:border-gold"
+                          ? "bg-[#B392A4] text-white border-[#B392A4]"
+                          : "border-[#B392A4]/30 text-[#532D2A] hover:border-[#B392A4]"
                       }`}
                     >
                       {selectedItems.find((item) => item.id === product.id) ? (
@@ -689,16 +656,16 @@ const WeddingStationery = () => {
           </div>
         ) : (
           <div className="text-center py-16">
-            <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+            <Package className="w-16 h-16 text-[#B392A4]/50 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-[#532D2A] mb-2">
               No products found
             </h3>
-            <p className="text-gray-500">Try selecting a different category</p>
+            <p className="text-[#532D2A]/60">Try selecting a different category</p>
           </div>
         )}
 
         {/* Bulk Order CTA */}
-        <div className="mt-16 bg-gradient-to-r from-maroon to-gold rounded-2xl p-8 text-center text-white">
+        <div className="mt-16 bg-[#532D2A] rounded-2xl p-8 text-center text-[#EFE5E7]">
           <h2 className="text-2xl font-bold mb-4">Need a Custom Package?</h2>
           <p className="mb-6 max-w-2xl mx-auto opacity-90">
             Tell us your requirements and we'll create a personalized stationery
@@ -714,7 +681,7 @@ const WeddingStationery = () => {
                 "_blank",
               );
             }}
-            className="bg-white text-maroon px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors inline-flex items-center gap-3 shadow-xl hover:scale-105 transform transition-all"
+            className="bg-[#B392A4] hover:bg-[#EFE5E7] hover:text-[#532D2A] text-white px-8 py-4 rounded-full font-bold text-lg transition-all inline-flex items-center gap-3 shadow-xl hover:scale-105 transform"
           >
             <MessageCircle className="w-6 h-6" />
             Chat for Custom Package
@@ -723,13 +690,25 @@ const WeddingStationery = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
         .hide-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        .line-clamp-1 {
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </div>

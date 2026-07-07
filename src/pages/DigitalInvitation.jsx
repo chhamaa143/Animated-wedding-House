@@ -26,8 +26,7 @@ import {
   VolumeX,
   Maximize2,
 } from "lucide-react";
-import Watermark from "../components/Watermark"; // Import your watermark component
-import test from "node:test";
+import Watermark from "../components/Watermark";
 
 const DigitalInvitation = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -65,42 +64,23 @@ const DigitalInvitation = () => {
 
     // Load logo image
     const logo = new Image();
-    logo.src = "/images/gallery/logo.png"; // Path to your logo image
+    logo.src = "/images/gallery/logo.png";
     logo.crossOrigin = "anonymous";
 
     logo.onload = () => {
       const drawWatermark = () => {
         if (!video || video.paused || video.ended) return;
 
-        // Clear canvas and draw video frame
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Draw logo watermark in center
-        const logoSize = Math.min(canvas.width, canvas.height) * 0.15; // 15% of video size
+        const logoSize = Math.min(canvas.width, canvas.height) * 0.15;
         const logoX = (canvas.width - logoSize) / 2;
         const logoY = (canvas.height - logoSize) / 2;
 
-        ctx.globalAlpha = 0.5; // Opacity
+        ctx.globalAlpha = 0.5;
         ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
         ctx.globalAlpha = 1.0;
-
-        // Draw corner logo watermarks
-        const cornerSize = Math.min(canvas.width, canvas.height) * 0.08; // 8% of video size
-
-        // // Top-left
-        // ctx.globalAlpha = 0.2;
-        // ctx.drawImage(logo, 20, 20, cornerSize, cornerSize);
-
-        // // Top-right
-        // ctx.drawImage(logo, canvas.width - cornerSize - 20, 20, cornerSize, cornerSize);
-
-        // // Bottom-left
-        // ctx.drawImage(logo, 20, canvas.height - cornerSize - 20, cornerSize, cornerSize);
-
-        // // Bottom-right
-        // ctx.drawImage(logo, canvas.width - cornerSize - 20, canvas.height - cornerSize - 20, cornerSize, cornerSize);
-        // ctx.globalAlpha = 1.0;
 
         requestAnimationFrame(drawWatermark);
       };
@@ -302,47 +282,46 @@ const DigitalInvitation = () => {
 
   const handlePlayVideo = (videoId) => {
     setPlayingVideo(videoId);
-    // Setup watermark for this video
     setTimeout(() => setupVideoWatermark(videoId), 100);
   };
 
   const whatsappNumber = "9184351 11188";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50/30 via-white to-rose-50/20 pt-16">
-      {/* Hero Section - More Compact */}
-      <div className="bg-gradient-to-r from-maroon via-maroon/90 to-gold py-12 relative overflow-hidden">
+    <div className="min-h-screen bg-[#EFE5E7] pt-16">
+      {/* Hero Section */}
+      <div className="bg-[#532D2A] py-12 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-40 h-40 bg-[#B392A4] rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#B392A4] rounded-full blur-3xl"></div>
         </div>
 
         <div className="container-custom relative z-10 pt-8">
           <div className="flex flex-col items-center text-center pt-8">
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
-              <Sparkles className="w-4 h-4 text-amber-200" />
-              <span className="text-amber-200 text-sm font-medium">
+            <div className="flex items-center gap-2 bg-[#B392A4]/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
+              <Sparkles className="w-4 h-4 text-[#B392A4]" />
+              <span className="text-[#B392A4] text-sm font-medium">
                 DIGITAL INVITATIONS
               </span>
-              <Sparkles className="w-4 h-4 text-amber-200" />
+              <Sparkles className="w-4 h-4 text-[#B392A4]" />
             </div>
             <h1 className="text-3xl md:text-4xl font-cinzel font-bold text-white mb-3">
-              Beautiful <span className="text-amber-200">E-Invitations</span>
+              Beautiful <span className="text-[#B392A4]">E-Invitations</span>
             </h1>
             <p className="text-white/90 text-sm md:text-base max-w-2xl mb-4">
               Animated video invitations that your guests will love
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs">
-                <Smartphone className="w-3 h-3 text-amber-200" />
+              <div className="flex items-center gap-1 bg-[#B392A4]/20 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs">
+                <Smartphone className="w-3 h-3 text-[#B392A4]" />
                 <span className="text-white">Mobile Ready</span>
               </div>
-              <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs">
-                <Download className="w-3 h-3 text-amber-200" />
+              <div className="flex items-center gap-1 bg-[#B392A4]/20 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs">
+                <Download className="w-3 h-3 text-[#B392A4]" />
                 <span className="text-white">Instant</span>
               </div>
-              <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs">
-                <Users className="w-3 h-3 text-amber-200" />
+              <div className="flex items-center gap-1 bg-[#B392A4]/20 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs">
+                <Users className="w-3 h-3 text-[#B392A4]" />
                 <span className="text-white">Shareable</span>
               </div>
             </div>
@@ -352,9 +331,9 @@ const DigitalInvitation = () => {
 
       {/* Main Content */}
       <div className="container-custom py-8">
-        {/* Filters - Horizontal Scroll on Mobile */}
+        {/* Filters */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-maroon">Browse Designs</h2>
+          <h2 className="text-lg font-bold text-[#532D2A]">Browse Designs</h2>
           <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
             {filters.map((filter) => (
               <button
@@ -362,13 +341,13 @@ const DigitalInvitation = () => {
                 onClick={() => setActiveFilter(filter.id)}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 whitespace-nowrap ${
                   activeFilter === filter.id
-                    ? "bg-maroon text-white shadow-md"
-                    : "bg-white text-gray-700 border border-gray-200 hover:border-gold"
+                    ? "bg-[#532D2A] text-white shadow-md"
+                    : "bg-white text-[#532D2A] border border-[#B392A4]/30 hover:border-[#B392A4]"
                 }`}
               >
                 <span
                   className={
-                    activeFilter === filter.id ? "text-amber-200" : "text-gold"
+                    activeFilter === filter.id ? "text-[#B392A4]" : "text-[#B392A4]"
                   }
                 >
                   {filter.icon}
@@ -376,7 +355,7 @@ const DigitalInvitation = () => {
                 {filter.name}
                 <span
                   className={`ml-1 text-xs ${
-                    activeFilter === filter.id ? "bg-white/20" : "bg-gray-100"
+                    activeFilter === filter.id ? "bg-white/20" : "bg-[#EFE5E7]"
                   } px-1.5 py-0.5 rounded-full`}
                 >
                   {filter.count}
@@ -386,7 +365,7 @@ const DigitalInvitation = () => {
           </div>
         </div>
 
-        {/* Video Grid - 6 Cards Per Row for iPhone */}
+        {/* Video Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
           {filteredVideos.map((video) => (
             <div
@@ -395,9 +374,8 @@ const DigitalInvitation = () => {
               onMouseEnter={() => setHoveredCard(video.id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
-              {/* Thumbnail Container with Watermark */}
+              {/* Thumbnail Container */}
               <div className="relative aspect-[3/4] rounded-t-xl overflow-hidden">
-                {/* Thumbnail Image with Watermark */}
                 <Watermark
                   src={video.thumbnail}
                   alt={video.title}
@@ -408,7 +386,6 @@ const DigitalInvitation = () => {
                   watermarkGap={0}
                 />
 
-                {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                 {/* Category Badge */}
@@ -416,10 +393,10 @@ const DigitalInvitation = () => {
                   <span
                     className={`text-[10px] font-bold px-2 py-1 rounded-full shadow-lg ${
                       video.category === "floral"
-                        ? "bg-pink-500 text-white"
+                        ? "bg-[#B392A4] text-white"
                         : video.category === "modern"
-                          ? "bg-blue-500 text-white"
-                          : "bg-amber-600 text-white"
+                          ? "bg-[#532D2A] text-white"
+                          : "bg-[#76153C] text-white"
                     }`}
                   >
                     {video.category}
@@ -429,13 +406,13 @@ const DigitalInvitation = () => {
                 {/* Trending Badge */}
                 {video.trending && (
                   <div className="absolute top-2 right-2 z-10">
-                    <span className="bg-gold text-maroon text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                    <span className="bg-[#B392A4] text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-lg">
                       <Sparkles className="w-3 h-3" /> Trending
                     </span>
                   </div>
                 )}
 
-                {/* Play Button - Appears on Hover */}
+                {/* Play Button */}
                 <button
                   onClick={() => {
                     handleVideoSelect(video);
@@ -443,8 +420,8 @@ const DigitalInvitation = () => {
                   }}
                   className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
                 >
-                  <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center transform hover:scale-110 transition-transform shadow-xl">
-                    <Play className="w-5 h-5 text-maroon ml-0.5" />
+                  <div className="w-10 h-10 bg-[#B392A4] rounded-full flex items-center justify-center transform hover:scale-110 transition-transform shadow-xl">
+                    <Play className="w-5 h-5 text-white ml-0.5" />
                   </div>
                 </button>
 
@@ -463,31 +440,31 @@ const DigitalInvitation = () => {
 
               {/* Content */}
               <div className="p-3">
-                <h3 className="font-bold text-xs mb-1 line-clamp-1 group-hover:text-maroon transition-colors">
+                <h3 className="font-bold text-xs mb-1 line-clamp-1 text-[#532D2A] group-hover:text-[#B392A4] transition-colors">
                   {video.title}
                 </h3>
-                <p className="text-[10px] text-gray-500 mb-2 line-clamp-1">
+                <p className="text-[10px] text-[#532D2A]/60 mb-2 line-clamp-1">
                   {video.description}
                 </p>
 
                 {/* Price and Actions */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-gold font-bold text-sm">
+                    <span className="text-[#B392A4] font-bold text-sm">
                       {video.price}
                     </span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <button className="p-1.5 bg-rose-50 rounded-full hover:bg-rose-100 transition-colors">
-                      <Heart className="w-3 h-3 text-rose-500" />
+                    <button className="p-1.5 bg-[#EFE5E7] rounded-full hover:bg-[#B392A4]/20 transition-colors">
+                      <Heart className="w-3 h-3 text-[#532D2A]" />
                     </button>
                     <a
                       href={`https://wa.me/${whatsappNumber}?text=I'm interested in ${video.title} (${video.price})`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1.5 bg-green-50 rounded-full hover:bg-green-100 transition-colors"
+                      className="p-1.5 bg-[#B392A4]/20 rounded-full hover:bg-[#B392A4]/40 transition-colors"
                     >
-                      <MessageCircle className="w-3 h-3 text-green-600" />
+                      <MessageCircle className="w-3 h-3 text-[#532D2A]" />
                     </a>
                   </div>
                 </div>
@@ -498,15 +475,15 @@ const DigitalInvitation = () => {
 
         {/* View All Button */}
         <div className="text-center mt-8">
-          <button className="inline-flex items-center gap-2 bg-maroon text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all hover:scale-105 shadow-md">
+          <button className="inline-flex items-center gap-2 bg-[#532D2A] text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#B392A4] transition-all hover:scale-105 shadow-md">
             Load More Designs
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Features Grid - 2x2 for Mobile */}
+        {/* Features Grid */}
         <div className="mt-12">
-          <h2 className="text-lg font-bold text-center text-maroon mb-4">
+          <h2 className="text-lg font-bold text-center text-[#532D2A] mb-4">
             Why Choose Us
           </h2>
           <div className="grid grid-cols-2 gap-3">
@@ -536,18 +513,18 @@ const DigitalInvitation = () => {
                 key={idx}
                 className="bg-white p-4 rounded-xl shadow-sm text-center"
               >
-                <div className="inline-flex items-center justify-center w-10 h-10 bg-maroon/10 rounded-full mb-2 text-maroon">
+                <div className="inline-flex items-center justify-center w-10 h-10 bg-[#532D2A]/10 rounded-full mb-2 text-[#532D2A]">
                   {item.icon}
                 </div>
-                <h3 className="font-bold text-xs mb-1">{item.title}</h3>
-                <p className="text-[10px] text-gray-500">{item.desc}</p>
+                <h3 className="font-bold text-xs mb-1 text-[#532D2A]">{item.title}</h3>
+                <p className="text-[10px] text-[#532D2A]/60">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* WhatsApp CTA - Compact */}
-        <div className="mt-8 bg-gradient-to-r from-maroon to-gold rounded-xl p-5 text-center text-white">
+        {/* WhatsApp CTA */}
+        <div className="mt-8 bg-[#532D2A] rounded-xl p-5 text-center text-white">
           <h3 className="text-base font-bold mb-1">Need a Custom Design?</h3>
           <p className="text-xs text-white/90 mb-3">
             Share your ideas, we'll create it
@@ -556,7 +533,7 @@ const DigitalInvitation = () => {
             href={`https://wa.me/${whatsappNumber}?text=Hello! I want a custom E-Invitation for my wedding.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-white text-maroon px-5 py-2.5 rounded-full text-xs font-bold hover:bg-gray-100 transition-all shadow-md"
+            className="inline-flex items-center gap-2 bg-[#B392A4] text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-white hover:text-[#532D2A] transition-all shadow-md"
           >
             <MessageCircle className="w-4 h-4" />
             Chat on WhatsApp
@@ -564,8 +541,7 @@ const DigitalInvitation = () => {
         </div>
       </div>
 
-      {/* Video Modal with Logo Watermark */}
-
+      {/* Video Modal */}
       {selectedVideo && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-2"
@@ -576,7 +552,7 @@ const DigitalInvitation = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="relative bg-gradient-to-r from-maroon to-gold p-4 text-white">
+            <div className="relative bg-[#532D2A] p-4 text-white">
               <button
                 onClick={closeVideoModal}
                 className="absolute top-2 right-2 w-8 h-8 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center"
@@ -606,13 +582,13 @@ const DigitalInvitation = () => {
 
             {/* Details */}
             <div className="p-4">
-              <p className="text-xs text-gray-600 mb-3">
+              <p className="text-xs text-[#532D2A]/70 mb-3">
                 {selectedVideo.description}
               </p>
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-xs text-gray-500">Price</span>
-                  <div className="text-xl font-bold text-gold">
+                  <span className="text-xs text-[#532D2A]/50">Price</span>
+                  <div className="text-xl font-bold text-[#B392A4]">
                     {selectedVideo.price}
                   </div>
                 </div>
@@ -620,7 +596,7 @@ const DigitalInvitation = () => {
                   href={`https://wa.me/${whatsappNumber}?text=I'm interested in ${selectedVideo.title} (${selectedVideo.price})`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg text-sm"
+                  className="flex items-center gap-2 bg-[#B392A4] hover:bg-[#532D2A] text-white px-4 py-2 rounded-lg text-sm transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Order
@@ -631,14 +607,20 @@ const DigitalInvitation = () => {
         </div>
       )}
 
-      {/* Add this CSS to hide scrollbar but keep functionality */}
-      <style jsx>{`
+      {/* CSS */}
+      <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
         .hide-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        .line-clamp-1 {
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </div>

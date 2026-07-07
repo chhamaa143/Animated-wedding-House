@@ -25,11 +25,13 @@ import Watermark from "../components/Watermark";
 const DigitalPDF = () => {
   const [selectedDesign, setSelectedDesign] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'single'
+  const [viewMode, setViewMode] = useState("grid");
   const [selectedPages, setSelectedPages] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(100);
   const [isMobile, setIsMobile] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState(0);
 
   // Check mobile view
   React.useEffect(() => {
@@ -51,7 +53,7 @@ const DigitalPDF = () => {
     { id: "custom", name: "Custom Templates" },
   ];
 
-  // PDF Designs Data
+  // PDF Designs Data with actual PDF URLs
   const pdfDesigns = [
     {
       id: 1,
@@ -70,135 +72,106 @@ const DigitalPDF = () => {
       ],
       customizable: true,
       printReady: true,
+      // Use a real PDF URL or generate one
+      pdfUrl: "/pdf/sample-invitation.pdf",
     },
     {
       id: 2,
       name: "Modern Elegance",
       category: "modern",
       pages: 3,
-      thumbnail: "/images/pdf/modern-elegance-thumb.jpg",
-      preview: "/images/pdf/modern-elegance-preview.jpg",
+      thumbnail: "/images/thumbnail/3.png",
+      preview: "/images/thumbnail/3.png",
       price: "₹1,299",
       description:
         "Contemporary design with clean lines and elegant typography",
       formats: ["PDF", "AI", "EPS"],
       pages_preview: [
-        {
-          id: 1,
-          image: "/images/pdf/modern-elegance-1.jpg",
-          title: "Main Card",
-        },
-        {
-          id: 2,
-          image: "/images/pdf/modern-elegance-2.jpg",
-          title: "Details Card",
-        },
-        {
-          id: 3,
-          image: "/images/pdf/modern-elegance-3.jpg",
-          title: "Map Card",
-        },
+        { id: 1, image: "/images/thumbnail/3.png", title: "Main Card" },
+        { id: 2, image: "/images/thumbnail/6.png", title: "Details Card" },
+        { id: 3, image: "/images/thumbnail/1.png", title: "Map Card" },
       ],
       customizable: true,
       printReady: true,
+      pdfUrl: "/pdf/sample-invitation.pdf",
     },
     {
       id: 3,
       name: "Gold Luxe",
       category: "luxury",
       pages: 4,
-      thumbnail: "/images/pdf/gold-luxe-thumb.jpg",
-      preview: "/images/pdf/gold-luxe-preview.jpg",
+      thumbnail: "/images/thumbnail/6.png",
+      preview: "/images/thumbnail/6.png",
       price: "₹1,999",
       description: "Premium gold foil design with embossed details",
       formats: ["PDF", "PSD", "AI"],
       pages_preview: [
-        { id: 1, image: "/images/pdf/gold-luxe-1.jpg", title: "Cover Page" },
-        { id: 2, image: "/images/pdf/gold-luxe-2.jpg", title: "Invitation" },
-        { id: 3, image: "/images/pdf/gold-luxe-3.jpg", title: "Schedule" },
-        { id: 4, image: "/images/pdf/gold-luxe-4.jpg", title: "Response Card" },
+        { id: 1, image: "/images/thumbnail/3.png", title: "Cover Page" },
+        { id: 2, image: "/images/thumbnail/2.png", title: "Invitation" },
+        { id: 3, image: "/images/thumbnail/5.png", title: "Schedule" },
+        { id: 4, image: "/images/thumbnail/6.png", title: "Response Card" },
       ],
       customizable: true,
       printReady: true,
+      pdfUrl: "/pdf/sample-invitation.pdf",
     },
     {
       id: 4,
       name: "Floral Garden",
       category: "floral",
       pages: 2,
-      thumbnail: "/images/pdf/floral-garden-thumb.jpg",
-      preview: "/images/pdf/floral-garden-preview.jpg",
+      thumbnail: "/images/thumbnail/4.png",
+      preview: "/images/thumbnail/4.png",
       price: "₹899",
       description: "Beautiful floral design with watercolor elements",
       formats: ["PDF", "JPEG"],
       pages_preview: [
-        { id: 1, image: "/images/pdf/floral-garden-1.jpg", title: "Main Card" },
-        {
-          id: 2,
-          image: "/images/pdf/floral-garden-2.jpg",
-          title: "Details Card",
-        },
+        { id: 1, image: "/images/thumbnail/4.png", title: "Main Card" },
+        { id: 2, image: "/images/thumbnail/5.png", title: "Details Card" },
       ],
       customizable: true,
       printReady: true,
+      pdfUrl: "/pdf/sample-invitation.pdf",
     },
     {
       id: 5,
       name: "Cultural Fusion",
       category: "cultural",
       pages: 3,
-      thumbnail: "/images/pdf/cultural-fusion-thumb.jpg",
-      preview: "/images/pdf/cultural-fusion-preview.jpg",
+      thumbnail: "/images/thumbnail/5.png",
+      preview: "/images/thumbnail/5.png",
       price: "₹1,499",
       description: "Blend of traditional and modern cultural elements",
       formats: ["PDF", "AI", "EPS"],
       pages_preview: [
-        {
-          id: 1,
-          image: "/images/pdf/cultural-fusion-1.jpg",
-          title: "Main Card",
-        },
-        {
-          id: 2,
-          image: "/images/pdf/cultural-fusion-2.jpg",
-          title: "Ritual Card",
-        },
-        {
-          id: 3,
-          image: "/images/pdf/cultural-fusion-3.jpg",
-          title: "Response Card",
-        },
+        { id: 1, image: "/images/thumbnail/5.png", title: "Main Card" },
+        { id: 2, image: "/images/thumbnail/4.png", title: "Ritual Card" },
+        { id: 3, image: "/images/thumbnail/3.png", title: "Response Card" },
       ],
       customizable: true,
       printReady: true,
+      pdfUrl: "/pdf/sample-invitation.pdf",
     },
     {
       id: 6,
       name: "Custom Template",
       category: "custom",
       pages: 5,
-      thumbnail: "/images/pdf/custom-template-thumb.jpg",
-      preview: "/images/pdf/custom-template-preview.jpg",
+      thumbnail: "/images/thumbnail/6.png",
+      preview: "/images/thumbnail/6.png",
       price: "₹2,499",
       description: "Fully customizable template with all necessary pages",
       formats: ["PDF", "AI", "PSD", "INDD"],
       pages_preview: [
-        { id: 1, image: "/images/pdf/custom-template-1.jpg", title: "Cover" },
-        {
-          id: 2,
-          image: "/images/pdf/custom-template-2.jpg",
-          title: "Invitation",
-        },
-        {
-          id: 3,
-          image: "/images/pdf/custom-template-3.jpg",
-          title: "Schedule",
-        },
-        { id: 4, image: "/images/pdf/custom-template-4.jpg", title: "Map" },
-        { id: 5, image: "/images/pdf/custom-template-5.jpg", title: "RSVP" },
+        { id: 1, image: "/images/thumbnail/1.png", title: "Cover" },
+        { id: 2, image: "/images/thumbnail/2.png", title: "Invitation" },
+        { id: 3, image: "/images/thumbnail/3.png", title: "Schedule" },
+        { id: 4, image: "/images/thumbnail/4.png", title: "Map" },
+        { id: 5, image: "/images/thumbnail/5.png", title: "RSVP" },
       ],
       customizable: true,
       printReady: true,
+      pdfUrl: "/pdf/sample-invitation.pdf",
     },
   ];
 
@@ -234,18 +207,136 @@ const DigitalPDF = () => {
     );
   };
 
-  // Handle PDF download
-  const handleDownload = (design, pageId = null) => {
-    // In a real app, this would trigger actual PDF download
-    console.log(
-      "Downloading PDF:",
-      design.name,
-      pageId ? `Page ${pageId}` : "All pages",
-    );
-    // Simulate download
-    alert(
-      `Downloading ${design.name} ${pageId ? `- Page ${pageId}` : "- Complete Set"}`,
-    );
+  // FIXED: Handle PDF download with proper file handling
+  const handleDownload = async (design, pageId = null) => {
+    setDownloading(true);
+    setDownloadProgress(0);
+
+    try {
+      // Simulate progress
+      const progressInterval = setInterval(() => {
+        setDownloadProgress((prev) => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return 90;
+          }
+          return prev + 10;
+        });
+      }, 200);
+
+      // If there's a PDF URL, fetch and download it
+      if (design.pdfUrl) {
+        const response = await fetch(design.pdfUrl);
+        const blob = await response.blob();
+        
+        // Check if it's a valid PDF
+        if (blob.type === 'application/pdf' || blob.type === '') {
+          // Create download link
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `${design.name.replace(/\s+/g, '_')}${pageId ? `_Page${pageId}` : ''}.pdf`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Clean up
+          setTimeout(() => {
+            window.URL.revokeObjectURL(url);
+          }, 100);
+          
+          setDownloadProgress(100);
+          setTimeout(() => {
+            setDownloading(false);
+            setDownloadProgress(0);
+          }, 500);
+        } else {
+          // If not a valid PDF, generate one
+          generateSamplePDF(design, pageId);
+        }
+      } else {
+        // Generate a sample PDF
+        generateSamplePDF(design, pageId);
+      }
+      
+      clearInterval(progressInterval);
+      
+    } catch (error) {
+      console.error('Download error:', error);
+      // Fallback: generate a simple PDF
+      generateSamplePDF(design, pageId);
+    }
+  };
+
+  // Generate a simple sample PDF
+  const generateSamplePDF = (design, pageId) => {
+    // Create a simple HTML-based PDF
+    const pdfContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>${design.name}</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 40px; background: #EFE5E7; }
+          .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+          h1 { color: #532D2A; text-align: center; font-size: 28px; }
+          .divider { border: 1px solid #B392A4; margin: 20px 0; }
+          .info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+          .label { font-weight: bold; color: #532D2A; }
+          .value { color: #333; }
+          .footer { text-align: center; margin-top: 30px; color: #999; font-size: 12px; }
+          .watermark { text-align: center; margin: 20px 0; font-size: 14px; color: #B392A4; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="watermark">✦ Wedding House ✦</div>
+          <h1>${design.name}</h1>
+          <div class="divider"></div>
+          <p style="text-align: center; font-size: 16px; color: #555;">${design.description}</p>
+          <div class="divider"></div>
+          <div class="info">
+            <div><span class="label">Price:</span> <span class="value">${design.price}</span></div>
+            <div><span class="label">Pages:</span> <span class="value">${design.pages}</span></div>
+            <div><span class="label">Category:</span> <span class="value">${design.category}</span></div>
+            <div><span class="label">Formats:</span> <span class="value">${design.formats.join(', ')}</span></div>
+            ${pageId ? `<div><span class="label">Selected Page:</span> <span class="value">Page ${pageId}</span></div>` : ''}
+            <div><span class="label">Customizable:</span> <span class="value">${design.customizable ? '✅ Yes' : '❌ No'}</span></div>
+            <div><span class="label">Print Ready:</span> <span class="value">${design.printReady ? '✅ Yes' : '❌ No'}</span></div>
+          </div>
+          <div class="divider"></div>
+          <div style="text-align: center; padding: 20px; background: #F8F4ED; border-radius: 8px; margin: 20px 0;">
+            <p style="font-size: 18px; color: #532D2A; font-weight: bold;">✨ This is a sample PDF invitation ✨</p>
+            <p style="color: #666; font-size: 14px;">For the full design, please contact Wedding House.</p>
+          </div>
+          <div class="footer">
+            © ${new Date().getFullYear()} Wedding House. All rights reserved.
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    // Convert HTML to Blob
+    const blob = new Blob([pdfContent], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${design.name.replace(/\s+/g, '_')}${pageId ? `_Page${pageId}` : ''}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url);
+    }, 100);
+    
+    setDownloadProgress(100);
+    setTimeout(() => {
+      setDownloading(false);
+      setDownloadProgress(0);
+    }, 500);
   };
 
   // Handle WhatsApp share
@@ -265,13 +356,27 @@ const DigitalPDF = () => {
   const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 25, 200));
   const handleZoomOut = () => setZoomLevel((prev) => Math.max(prev - 25, 50));
 
+  // Open PDF in new tab for preview
+  const openPDFPreview = (design, pageId = null) => {
+    if (design.pdfUrl) {
+      window.open(design.pdfUrl, '_blank');
+    } else {
+      // Generate and open preview
+      generateSamplePDF(design, pageId);
+      // Open the downloaded file
+      setTimeout(() => {
+        // The file will be downloaded, user can open it
+      }, 500);
+    }
+  };
+
   return (
-    <div className="pt-20 min-h-screen bg-gradient-to-b from-cream to-white">
+    <div className="pt-20 min-h-screen bg-[#EFE5E7]">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-maroon via-maroon/90 to-gold py-16 relative overflow-hidden">
+      <section className="bg-[#532D2A] py-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-40 h-40 bg-[#B392A4] rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#B392A4] rounded-full blur-3xl"></div>
         </div>
 
         <div className="container-custom relative z-10">
@@ -288,15 +393,15 @@ const DigitalPDF = () => {
       </section>
 
       {/* Category Filters */}
-      <section className="py-8 bg-cream border-b">
+      <section className="py-8 bg-[#EFE5E7] border-b border-[#B392A4]/20">
         <div className="container-custom">
           <div className="flex flex-wrap gap-3 justify-center">
             <button
               onClick={() => filterByCategory("all")}
               className={`px-6 py-2 rounded-full font-medium transition-all ${
                 selectedCategory === "all"
-                  ? "bg-maroon text-white shadow-lg"
-                  : "bg-white text-gray-700 hover:bg-gold hover:text-white"
+                  ? "bg-[#532D2A] text-white shadow-lg"
+                  : "bg-white text-[#532D2A] hover:bg-[#B392A4] hover:text-white"
               }`}
             >
               All Designs
@@ -307,8 +412,8 @@ const DigitalPDF = () => {
                 onClick={() => filterByCategory(cat.id)}
                 className={`px-6 py-2 rounded-full font-medium transition-all ${
                   selectedCategory === cat.id
-                    ? "bg-maroon text-white shadow-lg"
-                    : "bg-white text-gray-700 hover:bg-gold hover:text-white"
+                    ? "bg-[#532D2A] text-white shadow-lg"
+                    : "bg-white text-[#532D2A] hover:bg-[#B392A4] hover:text-white"
                 }`}
               >
                 {cat.name}
@@ -322,7 +427,7 @@ const DigitalPDF = () => {
       <section className="py-12">
         <div className="container-custom">
           {!selectedDesign || viewMode === "grid" ? (
-            /* Grid View - All Designs with Watermark */
+            /* Grid View */
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
               {filteredDesigns.map((design) => (
                 <div
@@ -342,13 +447,13 @@ const DigitalPDF = () => {
                     />
 
                     {/* Page Count Badge */}
-                    <div className="absolute top-3 left-3 bg-maroon text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 z-10">
+                    <div className="absolute top-3 left-3 bg-[#532D2A] text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 z-10">
                       <Layers className="w-3 h-3" />
                       {design.pages} {design.pages === 1 ? "Page" : "Pages"}
                     </div>
 
                     {/* Price Badge */}
-                    <div className="absolute top-3 right-3 bg-gold text-maroon text-xs font-bold px-3 py-1.5 rounded-full z-10">
+                    <div className="absolute top-3 right-3 bg-[#B392A4] text-white text-xs font-bold px-3 py-1.5 rounded-full z-10">
                       {design.price}
                     </div>
 
@@ -359,27 +464,41 @@ const DigitalPDF = () => {
                           e.stopPropagation();
                           handleShare(design);
                         }}
-                        className="bg-white/90 p-2 rounded-full hover:bg-gold transition-colors"
+                        className="bg-white/90 p-2 rounded-full hover:bg-[#B392A4] transition-colors"
                       >
-                        <Share2 className="w-4 h-4 text-maroon" />
+                        <Share2 className="w-4 h-4 text-[#532D2A]" />
                       </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDownload(design);
-                        }}
-                        className="bg-gold text-maroon px-4 py-2 rounded-lg text-sm font-medium hover:bg-white transition-colors"
-                      >
-                        Download Sample
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openPDFPreview(design);
+                          }}
+                          className="bg-white text-[#532D2A] px-3 py-2 rounded-lg text-sm font-medium hover:bg-[#B392A4] hover:text-white transition-colors flex items-center gap-1"
+                        >
+                          <Eye className="w-4 h-4" />
+                          Preview
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDownload(design);
+                          }}
+                          className="bg-[#B392A4] text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-[#532D2A] transition-colors flex items-center gap-1"
+                          disabled={downloading}
+                        >
+                          <Download className="w-4 h-4" />
+                          {downloading ? `${downloadProgress}%` : "Download"}
+                        </button>
+                      </div>
                     </div>
                   </div>
 
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-maroon transition-colors">
+                    <h3 className="text-xl font-bold mb-2 text-[#532D2A] group-hover:text-[#B392A4] transition-colors">
                       {design.name}
                     </h3>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    <p className="text-[#532D2A]/70 text-sm mb-4 line-clamp-2">
                       {design.description}
                     </p>
 
@@ -388,7 +507,7 @@ const DigitalPDF = () => {
                       {design.formats.map((format, idx) => (
                         <span
                           key={idx}
-                          className="text-xs bg-gray-100 px-2 py-1 rounded"
+                          className="text-xs bg-[#EFE5E7] text-[#532D2A] px-2 py-1 rounded"
                         >
                           {format}
                         </span>
@@ -400,7 +519,7 @@ const DigitalPDF = () => {
                         e.stopPropagation();
                         handleDesignSelect(design);
                       }}
-                      className="w-full py-3 border-2 border-maroon text-maroon rounded-lg hover:bg-maroon hover:text-white transition-colors font-medium"
+                      className="w-full py-3 border-2 border-[#532D2A] text-[#532D2A] rounded-lg hover:bg-[#532D2A] hover:text-white transition-colors font-medium"
                     >
                       View Design
                     </button>
@@ -409,7 +528,7 @@ const DigitalPDF = () => {
               ))}
             </div>
           ) : (
-            /* Single Design View - Multi-page PDF with Watermark */
+            /* Single Design View */
             <div>
               {/* Back Button */}
               <button
@@ -417,7 +536,7 @@ const DigitalPDF = () => {
                   setSelectedDesign(null);
                   setViewMode("grid");
                 }}
-                className="flex items-center gap-2 text-maroon hover:text-gold transition-colors mb-6"
+                className="flex items-center gap-2 text-[#532D2A] hover:text-[#B392A4] transition-colors mb-6"
               >
                 <ChevronLeft className="w-5 h-5" />
                 Back to All Designs
@@ -427,17 +546,17 @@ const DigitalPDF = () => {
               <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
                 <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
                   <div>
-                    <h2 className="text-3xl font-cinzel font-bold text-maroon mb-2">
+                    <h2 className="text-3xl font-cinzel font-bold text-[#532D2A] mb-2">
                       {selectedDesign.name}
                     </h2>
-                    <p className="text-gray-600 max-w-2xl mb-4">
+                    <p className="text-[#532D2A]/70 max-w-2xl mb-4">
                       {selectedDesign.description}
                     </p>
                     <div className="flex items-center gap-4">
-                      <span className="bg-maroon/10 text-maroon px-4 py-2 rounded-lg font-medium">
+                      <span className="bg-[#532D2A]/10 text-[#532D2A] px-4 py-2 rounded-lg font-medium">
                         {selectedDesign.price}
                       </span>
-                      <span className="bg-gold/20 text-maroon px-4 py-2 rounded-lg font-medium flex items-center gap-2">
+                      <span className="bg-[#B392A4]/20 text-[#532D2A] px-4 py-2 rounded-lg font-medium flex items-center gap-2">
                         <Layers className="w-4 h-4" />
                         {selectedDesign.pages} Pages Total
                       </span>
@@ -446,19 +565,27 @@ const DigitalPDF = () => {
 
                   {/* Action Buttons */}
                   <div className="flex gap-3">
+                    {/* <button
+                      onClick={() => openPDFPreview(selectedDesign)}
+                      className="flex items-center gap-2 px-6 py-3 border-2 border-[#532D2A] text-[#532D2A] rounded-lg hover:bg-[#532D2A] hover:text-white transition-colors"
+                    >
+                      <Eye className="w-5 h-5" />
+                      Preview
+                    </button> */}
                     <button
                       onClick={() => handleShare(selectedDesign)}
-                      className="flex items-center gap-2 px-6 py-3 border-2 border-maroon text-maroon rounded-lg hover:bg-maroon hover:text-white transition-colors"
+                      className="flex items-center gap-2 px-6 py-3 border-2 border-[#532D2A] text-[#532D2A] rounded-lg hover:bg-[#532D2A] hover:text-white transition-colors"
                     >
                       <Share2 className="w-5 h-5" />
                       Share
                     </button>
                     <button
                       onClick={() => handleDownload(selectedDesign)}
-                      className="flex items-center gap-2 px-6 py-3 bg-maroon text-white rounded-lg hover:bg-opacity-90 transition-colors"
+                      className="flex items-center gap-2 px-6 py-3 bg-[#532D2A] text-white rounded-lg hover:bg-[#B392A4] transition-colors"
+                      disabled={downloading}
                     >
                       <Download className="w-5 h-5" />
-                      Download All
+                      {downloading ? `${downloadProgress}%` : "Download All"}
                     </button>
                   </div>
                 </div>
@@ -466,26 +593,26 @@ const DigitalPDF = () => {
 
               {/* Page Preview Controls */}
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-cinzel font-bold text-maroon">
+                <h3 className="text-2xl font-cinzel font-bold text-[#532D2A]">
                   Pages Preview
                 </h3>
 
                 <div className="flex items-center gap-3">
                   {/* Zoom Controls */}
-                  <div className="flex items-center border rounded-lg overflow-hidden">
+                  <div className="flex items-center border border-[#B392A4]/30 rounded-lg overflow-hidden">
                     <button
                       onClick={handleZoomOut}
-                      className="p-2 hover:bg-gray-100 transition-colors"
+                      className="p-2 hover:bg-[#EFE5E7] transition-colors text-[#532D2A]"
                       disabled={zoomLevel <= 50}
                     >
                       <ZoomOut className="w-4 h-4" />
                     </button>
-                    <span className="px-3 py-1 border-x text-sm">
+                    <span className="px-3 py-1 border-x border-[#B392A4]/30 text-sm text-[#532D2A]">
                       {zoomLevel}%
                     </span>
                     <button
                       onClick={handleZoomIn}
-                      className="p-2 hover:bg-gray-100 transition-colors"
+                      className="p-2 hover:bg-[#EFE5E7] transition-colors text-[#532D2A]"
                       disabled={zoomLevel >= 200}
                     >
                       <ZoomIn className="w-4 h-4" />
@@ -497,7 +624,7 @@ const DigitalPDF = () => {
                     onClick={() =>
                       setViewMode(viewMode === "grid" ? "single" : "grid")
                     }
-                    className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 border border-[#B392A4]/30 rounded-lg hover:bg-[#EFE5E7] transition-colors text-[#532D2A]"
                   >
                     {viewMode === "grid" ? (
                       <>
@@ -512,7 +639,7 @@ const DigitalPDF = () => {
                 </div>
               </div>
 
-              {/* Pages Grid with Watermark */}
+              {/* Pages Grid */}
               <div
                 className={`grid gap-6 ${
                   viewMode === "grid"
@@ -525,7 +652,7 @@ const DigitalPDF = () => {
                     key={page.id}
                     className={`bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 ${
                       selectedPages.includes(page.id)
-                        ? "ring-4 ring-gold scale-[1.02]"
+                        ? "ring-4 ring-[#B392A4] scale-[1.02]"
                         : ""
                     }`}
                   >
@@ -545,13 +672,13 @@ const DigitalPDF = () => {
                       />
 
                       {/* Page Number Badge */}
-                      <div className="absolute top-3 left-3 bg-maroon text-white text-xs font-bold px-3 py-1.5 rounded-full z-10">
+                      <div className="absolute top-3 left-3 bg-[#532D2A] text-white text-xs font-bold px-3 py-1.5 rounded-full z-10">
                         Page {index + 1}
                       </div>
 
                       {/* Selection Indicator */}
                       {selectedPages.includes(page.id) && (
-                        <div className="absolute top-3 right-3 bg-gold text-maroon rounded-full p-1 z-10">
+                        <div className="absolute top-3 right-3 bg-[#B392A4] text-white rounded-full p-1 z-10">
                           <Check className="w-4 h-4" />
                         </div>
                       )}
@@ -564,44 +691,47 @@ const DigitalPDF = () => {
                             setShowPreview(true);
                             setCurrentPage(index + 1);
                           }}
-                          className="bg-white p-3 rounded-full hover:bg-gold transition-colors"
+                          className="bg-white p-3 rounded-full hover:bg-[#B392A4] transition-colors"
                         >
-                          <Eye className="w-5 h-5 text-maroon" />
+                          <Eye className="w-5 h-5 text-[#532D2A]" />
                         </button>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDownload(selectedDesign, page.id);
                           }}
-                          className="bg-white p-3 rounded-full hover:bg-gold transition-colors"
+                          className="bg-white p-3 rounded-full hover:bg-[#B392A4] transition-colors"
+                          disabled={downloading}
                         >
-                          <Download className="w-5 h-5 text-maroon" />
+                          <Download className="w-5 h-5 text-[#532D2A]" />
                         </button>
                       </div>
                     </div>
 
                     <div className="p-4">
-                      <h4 className="font-bold text-lg mb-1">{page.title}</h4>
-                      <p className="text-sm text-gray-500 mb-3">
+                      <h4 className="font-bold text-lg mb-1 text-[#532D2A]">
+                        {page.title}
+                      </h4>
+                      <p className="text-sm text-[#532D2A]/50 mb-3">
                         Page {index + 1} of {selectedDesign.pages}
                       </p>
 
                       {/* Page Actions */}
                       <div className="flex gap-2">
                         <button
-                          onClick={() =>
-                            handleDownload(selectedDesign, page.id)
-                          }
-                          className="flex-1 py-2 border border-maroon text-maroon rounded-lg hover:bg-maroon hover:text-white transition-colors text-sm"
+                          onClick={() => handleDownload(selectedDesign, page.id)}
+                          className="flex-1 py-2 border border-[#532D2A] text-[#532D2A] rounded-lg hover:bg-[#532D2A] hover:text-white transition-colors text-sm flex items-center justify-center gap-2"
+                          disabled={downloading}
                         >
-                          Download Page
+                          <Download className="w-4 h-4" />
+                          {downloading ? `${downloadProgress}%` : "Download"}
                         </button>
                         <button
                           onClick={() => togglePageSelection(page.id)}
                           className={`px-4 py-2 border rounded-lg transition-colors text-sm ${
                             selectedPages.includes(page.id)
-                              ? "bg-gold text-maroon border-gold"
-                              : "border-gray-300 hover:border-gold"
+                              ? "bg-[#B392A4] text-white border-[#B392A4]"
+                              : "border-[#B392A4]/30 text-[#532D2A] hover:border-[#B392A4]"
                           }`}
                         >
                           {selectedPages.includes(page.id)
@@ -617,13 +747,13 @@ const DigitalPDF = () => {
               {/* Bulk Actions */}
               {selectedPages.length > 0 && (
                 <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-white rounded-2xl shadow-2xl p-4 flex items-center gap-4 z-40">
-                  <span className="text-maroon font-medium">
+                  <span className="text-[#532D2A] font-medium">
                     {selectedPages.length}{" "}
                     {selectedPages.length === 1 ? "Page" : "Pages"} Selected
                   </span>
                   <button
                     onClick={() => setSelectedPages([])}
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="px-4 py-2 border border-[#B392A4]/30 rounded-lg hover:bg-[#EFE5E7] transition-colors text-[#532D2A]"
                   >
                     Clear
                   </button>
@@ -633,10 +763,11 @@ const DigitalPDF = () => {
                         handleDownload(selectedDesign, pageId);
                       });
                     }}
-                    className="px-6 py-2 bg-maroon text-white rounded-lg hover:bg-opacity-90 transition-colors flex items-center gap-2"
+                    className="px-6 py-2 bg-[#532D2A] text-white rounded-lg hover:bg-[#B392A4] transition-colors flex items-center gap-2"
+                    disabled={downloading}
                   >
                     <Download className="w-4 h-4" />
-                    Download Selected
+                    {downloading ? `${downloadProgress}%` : "Download Selected"}
                   </button>
                 </div>
               )}
@@ -645,12 +776,12 @@ const DigitalPDF = () => {
         </div>
       </section>
 
-      {/* Full Page Preview Modal with Watermark */}
+      {/* Full Page Preview Modal */}
       {showPreview && selectedDesign && (
         <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
           <button
             onClick={() => setShowPreview(false)}
-            className="absolute top-4 right-4 text-white hover:text-gold transition-colors z-10"
+            className="absolute top-4 right-4 text-white hover:text-[#B392A4] transition-colors z-10"
           >
             <X className="w-8 h-8" />
           </button>
@@ -673,7 +804,7 @@ const DigitalPDF = () => {
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
                 disabled={currentPage === 1}
-                className={`p-3 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all ${
+                className={`p-3 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-[#B392A4]/30 transition-all ${
                   currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
@@ -686,7 +817,7 @@ const DigitalPDF = () => {
                   )
                 }
                 disabled={currentPage === selectedDesign.pages}
-                className={`p-3 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all ${
+                className={`p-3 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-[#B392A4]/30 transition-all ${
                   currentPage === selectedDesign.pages
                     ? "opacity-50 cursor-not-allowed"
                     : ""

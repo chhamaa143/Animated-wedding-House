@@ -332,12 +332,12 @@ const WeddingHamper = () => {
   };
 
   return (
-    <div className="pt-20 min-h-screen bg-gradient-to-b from-cream to-white">
+    <div className="pt-20 min-h-screen bg-[#EFE5E7]">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-maroon via-maroon/90 to-gold py-16 relative overflow-hidden">
+      <section className="bg-[#532D2A] py-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-40 h-40 bg-[#B392A4] rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#B392A4] rounded-full blur-3xl"></div>
         </div>
 
         <div className="container-custom relative z-10">
@@ -353,7 +353,7 @@ const WeddingHamper = () => {
       </section>
 
       {/* Hampers Grid */}
-      <section className="py-16 bg-cream">
+      <section className="py-16 bg-[#EFE5E7]">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-8">
             {hampers.map((hamper) => (
@@ -382,18 +382,18 @@ const WeddingHamper = () => {
 
                   {/* Popular/Bestseller Badge */}
                   {hamper.bestseller && (
-                    <span className="absolute top-3 right-3 bg-gold text-maroon text-xs font-bold px-2 py-1 rounded-full z-10">
+                    <span className="absolute top-3 right-3 bg-[#B392A4] text-white text-xs font-bold px-2 py-1 rounded-full z-10">
                       BESTSELLER
                     </span>
                   )}
                   {hamper.popular && !hamper.bestseller && (
-                    <span className="absolute top-3 right-3 bg-rose-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
+                    <span className="absolute top-3 right-3 bg-[#532D2A] text-white text-xs font-bold px-2 py-1 rounded-full z-10">
                       POPULAR
                     </span>
                   )}
 
                   <button
-                    className="absolute bottom-3 right-3 p-2 bg-white/90 rounded-full hover:bg-maroon hover:text-white transition-colors z-10"
+                    className="absolute bottom-3 right-3 p-2 bg-white/90 rounded-full hover:bg-[#532D2A] hover:text-white transition-colors z-10"
                     onClick={(e) => {
                       e.stopPropagation();
                       // Add to wishlist functionality
@@ -403,12 +403,12 @@ const WeddingHamper = () => {
                   </button>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-maroon transition-colors">
+                  <h3 className="text-xl font-bold mb-2 text-[#532D2A] group-hover:text-[#B392A4] transition-colors">
                     {hamper.name}
                   </h3>
                   <div className="flex items-center justify-between mb-3">
                     <div>
-                      <span className="text-gold font-bold text-xl">
+                      <span className="text-[#B392A4] font-bold text-xl">
                         {hamper.price}
                       </span>
                       {hamper.originalPrice && (
@@ -423,8 +423,8 @@ const WeddingHamper = () => {
                     </span>
                   </div>
                   <div className="flex items-center mb-4">
-                    <Star className="w-4 h-4 text-gold fill-current" />
-                    <span className="ml-1 text-sm font-medium">
+                    <Star className="w-4 h-4 text-[#B392A4] fill-current" />
+                    <span className="ml-1 text-sm font-medium text-[#532D2A]">
                       {hamper.rating}
                     </span>
                     <span className="text-xs text-gray-500 ml-1">
@@ -436,7 +436,7 @@ const WeddingHamper = () => {
                       e.stopPropagation();
                       openHamperDetails(hamper);
                     }}
-                    className="w-full text-center py-3 bg-maroon text-white rounded-lg hover:bg-opacity-90 transition-all hover:scale-105 font-medium"
+                    className="w-full text-center py-3 bg-[#532D2A] hover:bg-[#B392A4] text-white rounded-lg transition-all hover:scale-105 font-medium"
                   >
                     View Details
                   </button>
@@ -508,7 +508,7 @@ const WeddingHamper = () => {
 
                     {/* Bestseller Badge */}
                     {selectedHamper.bestseller && (
-                      <span className="absolute top-4 right-4 bg-gold text-maroon text-sm font-bold px-3 py-1.5 rounded-full z-10">
+                      <span className="absolute top-4 right-4 bg-[#B392A4] text-white text-sm font-bold px-3 py-1.5 rounded-full z-10">
                         BESTSELLER
                       </span>
                     )}
@@ -523,7 +523,7 @@ const WeddingHamper = () => {
                           onClick={() => setSelectedImage(index)}
                           className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                             selectedImage === index
-                              ? "border-gold scale-105"
+                              ? "border-[#B392A4] scale-105"
                               : "border-transparent hover:border-gray-300"
                           }`}
                         >
@@ -544,19 +544,19 @@ const WeddingHamper = () => {
                   {/* Features */}
                   <div className="mt-6 grid grid-cols-2 gap-3">
                     <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-                      <Truck className="w-5 h-5 text-maroon" />
+                      <Truck className="w-5 h-5 text-[#532D2A]" />
                       <span>Free Shipping</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-                      <Shield className="w-5 h-5 text-maroon" />
+                      <Shield className="w-5 h-5 text-[#532D2A]" />
                       <span>Premium Quality</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-                      <Check className="w-5 h-5 text-maroon" />
+                      <Check className="w-5 h-5 text-[#532D2A]" />
                       <span>Customizable</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-                      <Clock className="w-5 h-5 text-maroon" />
+                      <Clock className="w-5 h-5 text-[#532D2A]" />
                       <span>Fast Delivery</span>
                     </div>
                   </div>
@@ -565,15 +565,15 @@ const WeddingHamper = () => {
                 {/* Right Column - Details */}
                 <div>
                   {/* Title & Category */}
-                  <h2 className="text-3xl lg:text-4xl font-cinzel font-bold text-maroon mb-3">
+                  <h2 className="text-3xl lg:text-4xl font-cinzel font-bold text-[#532D2A] mb-3">
                     {selectedHamper.name}
                   </h2>
 
                   {/* Rating */}
                   <div className="flex items-center gap-4 mb-4">
                     <div className="flex items-center">
-                      <Star className="w-5 h-5 text-gold fill-current" />
-                      <span className="ml-1 font-bold text-lg">
+                      <Star className="w-5 h-5 text-[#B392A4] fill-current" />
+                      <span className="ml-1 font-bold text-lg text-[#532D2A]">
                         {selectedHamper.rating}
                       </span>
                       <span className="text-gray-500 ml-1">
@@ -590,7 +590,7 @@ const WeddingHamper = () => {
                           "_blank",
                         );
                       }}
-                      className="flex items-center gap-1 text-gray-500 hover:text-maroon transition-colors"
+                      className="flex items-center gap-1 text-gray-500 hover:text-[#532D2A] transition-colors"
                     >
                       <Share2 className="w-4 h-4" /> Share
                     </button>
@@ -599,7 +599,7 @@ const WeddingHamper = () => {
                   {/* Price */}
                   <div className="mb-6">
                     <div className="flex items-baseline gap-3">
-                      <span className="text-4xl font-bold text-gold">
+                      <span className="text-4xl font-bold text-[#B392A4]">
                         {selectedHamper.price}
                       </span>
                       {selectedHamper.originalPrice && (
@@ -621,39 +621,39 @@ const WeddingHamper = () => {
                       onClick={() => setActiveTab("description")}
                       className={`pb-2 px-1 font-medium transition-colors relative ${
                         activeTab === "description"
-                          ? "text-maroon"
-                          : "text-gray-500 hover:text-maroon"
+                          ? "text-[#532D2A]"
+                          : "text-gray-500 hover:text-[#532D2A]"
                       }`}
                     >
                       Description
                       {activeTab === "description" && (
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#532D2A]"></div>
                       )}
                     </button>
                     <button
                       onClick={() => setActiveTab("whatsIncluded")}
                       className={`pb-2 px-1 font-medium transition-colors relative ${
                         activeTab === "whatsIncluded"
-                          ? "text-maroon"
-                          : "text-gray-500 hover:text-maroon"
+                          ? "text-[#532D2A]"
+                          : "text-gray-500 hover:text-[#532D2A]"
                       }`}
                     >
                       What's Included
                       {activeTab === "whatsIncluded" && (
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#532D2A]"></div>
                       )}
                     </button>
                     <button
                       onClick={() => setActiveTab("specifications")}
                       className={`pb-2 px-1 font-medium transition-colors relative ${
                         activeTab === "specifications"
-                          ? "text-maroon"
-                          : "text-gray-500 hover:text-maroon"
+                          ? "text-[#532D2A]"
+                          : "text-gray-500 hover:text-[#532D2A]"
                       }`}
                     >
                       Specs
                       {activeTab === "specifications" && (
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#532D2A]"></div>
                       )}
                     </button>
                   </div>
@@ -669,7 +669,7 @@ const WeddingHamper = () => {
                       <div className="space-y-2">
                         {selectedHamper.whatsIncluded.map((item, index) => (
                           <div key={index} className="flex items-center gap-2">
-                            <Check className="w-4 h-4 text-green-500" />
+                            <Check className="w-4 h-4 text-[#B392A4]" />
                             <span className="text-gray-700">{item}</span>
                           </div>
                         ))}
@@ -685,7 +685,9 @@ const WeddingHamper = () => {
                             <span className="text-xs text-gray-500">
                               {spec.label}
                             </span>
-                            <p className="font-medium text-sm">{spec.value}</p>
+                            <p className="font-medium text-sm text-[#532D2A]">
+                              {spec.value}
+                            </p>
                           </div>
                         ))}
                       </div>
@@ -697,7 +699,7 @@ const WeddingHamper = () => {
                     {selectedHamper.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
+                        className="px-3 py-1 bg-[#EFE5E7] text-[#532D2A]/70 text-xs rounded-full"
                       >
                         {tag}
                       </span>
@@ -706,12 +708,12 @@ const WeddingHamper = () => {
 
                   {/* Delivery Info */}
                   <div className="flex items-center gap-4 mb-6 text-sm">
-                    <div className="flex items-center gap-1 text-gray-600">
+                    <div className="flex items-center gap-1 text-[#532D2A]/70">
                       <Clock className="w-4 h-4" />
                       Delivery: {selectedHamper.delivery}
                     </div>
                     {selectedHamper.minOrder && (
-                      <div className="text-gray-600">
+                      <div className="text-[#532D2A]/70">
                         Min. Order: {selectedHamper.minOrder} piece
                       </div>
                     )}
@@ -724,7 +726,7 @@ const WeddingHamper = () => {
                         handleWhatsAppOrder(selectedHamper);
                         closeHamperDetails();
                       }}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-lg font-bold hover:shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2"
+                      className="flex-1 bg-[#B392A4] hover:bg-[#532D2A] text-white py-4 rounded-lg font-bold hover:shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2"
                     >
                       <MessageCircle className="w-5 h-5" />
                       Order on WhatsApp
@@ -734,7 +736,7 @@ const WeddingHamper = () => {
                         // Add to wishlist functionality
                         closeHamperDetails();
                       }}
-                      className="px-6 py-4 border-2 border-maroon text-maroon rounded-lg font-bold hover:bg-maroon hover:text-white transition-all"
+                      className="px-6 py-4 border-2 border-[#532D2A] text-[#532D2A] rounded-lg font-bold hover:bg-[#532D2A] hover:text-white transition-all"
                     >
                       <Heart className="w-5 h-5" />
                     </button>

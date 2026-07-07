@@ -467,7 +467,6 @@ const WeddingCards = () => {
 
   // Filter cards based on selected category and price range
   const filteredCards = allCards.filter((card) => {
-    // Convert both to lowercase slugs for comparison
     const cardCategorySlug = card.category.toLowerCase().replace(/ /g, "-");
     const selectedCategorySlug = selectedCategory.toLowerCase();
 
@@ -623,12 +622,12 @@ const WeddingCards = () => {
   // Product Detail View
   if (viewMode === "detail" && selectedProduct) {
     return (
-      <div className="pt-20 min-h-screen bg-gradient-to-b from-cream to-white">
+      <div className="pt-20 min-h-screen bg-[#EFE5E7]">
         {/* Back Button */}
         <div className="container-custom py-4">
           <button
             onClick={backToGrid}
-            className="flex items-center gap-2 text-maroon hover:text-gold transition-colors"
+            className="flex items-center gap-2 text-[#532D2A] hover:text-[#B392A4] transition-colors"
           >
             <ChevronLeft className="w-5 h-5" />
             Back to All Cards
@@ -641,7 +640,6 @@ const WeddingCards = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
               {/* Left Column - Images */}
               <div>
-                {/* Main Image with Watermark */}
                 <div className="relative aspect-square rounded-xl overflow-hidden mb-4 bg-gray-100">
                   <Watermark
                     src={selectedProduct.images[selectedImage]}
@@ -653,7 +651,6 @@ const WeddingCards = () => {
                     watermarkGap={0}
                   />
 
-                  {/* Navigation Arrows */}
                   <button
                     onClick={prevImage}
                     className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white shadow-lg"
@@ -667,13 +664,11 @@ const WeddingCards = () => {
                     <ChevronRight className="w-5 h-5" />
                   </button>
 
-                  {/* Wishlist Button */}
                   <button className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-rose-50 transition-colors">
                     <Heart className="w-5 h-5 text-rose-500" />
                   </button>
                 </div>
 
-                {/* Thumbnails with Watermark */}
                 <div className="grid grid-cols-4 gap-2">
                   {selectedProduct.images.map((img, index) => (
                     <button
@@ -681,7 +676,7 @@ const WeddingCards = () => {
                       onClick={() => setSelectedImage(index)}
                       className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                         selectedImage === index
-                          ? "border-gold scale-105"
+                          ? "border-[#B392A4] scale-105"
                           : "border-transparent hover:border-gray-300"
                       }`}
                     >
@@ -698,14 +693,13 @@ const WeddingCards = () => {
                   ))}
                 </div>
 
-                {/* Features */}
                 <div className="mt-6 grid grid-cols-2 gap-3">
                   {features.map((feature, index) => (
                     <div
                       key={index}
                       className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 p-2 rounded-lg"
                     >
-                      <span className="text-maroon">{feature.icon}</span>
+                      <span className="text-[#532D2A]">{feature.icon}</span>
                       <span>{feature.text}</span>
                     </div>
                   ))}
@@ -714,15 +708,14 @@ const WeddingCards = () => {
 
               {/* Right Column - Details */}
               <div>
-                {/* Title & Rating */}
-                <h1 className="text-3xl lg:text-4xl font-cinzel font-bold text-maroon mb-2">
+                <h1 className="text-3xl lg:text-4xl font-cinzel font-bold text-[#532D2A] mb-2">
                   {selectedProduct.name}
                 </h1>
 
                 <div className="flex items-center gap-4 mb-4">
                   <div className="flex items-center">
-                    <Star className="w-5 h-5 text-gold fill-current" />
-                    <span className="ml-1 font-bold">
+                    <Star className="w-5 h-5 text-[#B392A4] fill-current" />
+                    <span className="ml-1 font-bold text-[#532D2A]">
                       {selectedProduct.rating}
                     </span>
                     <span className="text-gray-500 ml-1">
@@ -750,15 +743,14 @@ const WeddingCards = () => {
 
                       window.open(`https://wa.me/?text=${shareText}`, "_blank");
                     }}
-                    className="flex items-center gap-1 text-gray-500 hover:text-maroon transition-colors"
+                    className="flex items-center gap-1 text-gray-500 hover:text-[#532D2A] transition-colors"
                   >
                     <Share2 className="w-4 h-4" /> Share
                   </button>
                 </div>
 
-                {/* Price */}
                 <div className="mb-6">
-                  <span className="text-3xl lg:text-4xl font-bold text-gold">
+                  <span className="text-3xl lg:text-4xl font-bold text-[#B392A4]">
                     ₹{getCurrentPrice().toLocaleString()}
                   </span>
                   <span className="text-gray-500 ml-2">
@@ -769,37 +761,35 @@ const WeddingCards = () => {
                   </p>
                 </div>
 
-                {/* Tabs */}
                 <div className="flex gap-4 border-b mb-4">
                   <button
                     onClick={() => setActiveTab("description")}
                     className={`pb-2 px-1 font-medium transition-colors relative ${
                       activeTab === "description"
-                        ? "text-maroon"
-                        : "text-gray-500 hover:text-maroon"
+                        ? "text-[#532D2A]"
+                        : "text-gray-500 hover:text-[#532D2A]"
                     }`}
                   >
                     Description
                     {activeTab === "description" && (
-                      <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                      <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#532D2A]"></div>
                     )}
                   </button>
                   <button
                     onClick={() => setActiveTab("specifications")}
                     className={`pb-2 px-1 font-medium transition-colors relative ${
                       activeTab === "specifications"
-                        ? "text-maroon"
-                        : "text-gray-500 hover:text-maroon"
+                        ? "text-[#532D2A]"
+                        : "text-gray-500 hover:text-[#532D2A]"
                     }`}
                   >
                     Specifications
                     {activeTab === "specifications" && (
-                      <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                      <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#532D2A]"></div>
                     )}
                   </button>
                 </div>
 
-                {/* Tab Content */}
                 <div className="mb-6">
                   {activeTab === "description" ? (
                     <p className="text-gray-600 leading-relaxed">
@@ -819,15 +809,14 @@ const WeddingCards = () => {
                   )}
                 </div>
 
-                {/* Slab Rates Table */}
                 <div className="mb-6">
-                  <h3 className="font-bold text-lg mb-3">
+                  <h3 className="font-bold text-lg mb-3 text-[#532D2A]">
                     BUY MORE, SAVE MORE
                   </h3>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="bg-maroon text-white">
+                        <tr className="bg-[#532D2A] text-white">
                           <th className="p-3 text-left rounded-tl-lg">
                             Quantity
                           </th>
@@ -848,17 +837,19 @@ const WeddingCards = () => {
                             }
                             className={`border-b cursor-pointer transition-colors ${
                               selectedSet === slab.quantity.toString()
-                                ? "bg-gold/20 border-gold"
+                                ? "bg-[#B392A4]/20 border-[#B392A4]"
                                 : "hover:bg-gray-50"
                             }`}
                           >
-                            <td className="p-3 font-medium">
+                            <td className="p-3 font-medium text-[#532D2A]">
                               {slab.quantity} pieces
                             </td>
-                            <td className="p-3">
+                            <td className="p-3 text-[#532D2A]">
                               ₹{slab.price.toLocaleString()} INR
                             </td>
-                            <td className="p-3">₹{slab.perPiece} per pc</td>
+                            <td className="p-3 text-[#532D2A]">
+                              ₹{slab.perPiece} per pc
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -870,9 +861,10 @@ const WeddingCards = () => {
                   </p>
                 </div>
 
-                {/* Quantity Selector */}
                 <div className="mb-6">
-                  <h3 className="font-bold text-lg mb-3">Quantity:</h3>
+                  <h3 className="font-bold text-lg mb-3 text-[#532D2A]">
+                    Quantity:
+                  </h3>
                   <div className="flex flex-wrap gap-2">
                     {selectedProduct.slabRates.map((slab) => (
                       <button
@@ -880,8 +872,8 @@ const WeddingCards = () => {
                         onClick={() => setSelectedSet(slab.quantity.toString())}
                         className={`px-4 py-2 rounded-full border transition-colors ${
                           selectedSet === slab.quantity.toString()
-                            ? "bg-maroon text-white border-maroon"
-                            : "border-gray-300 hover:border-gold"
+                            ? "bg-[#532D2A] text-white border-[#532D2A]"
+                            : "border-gray-300 hover:border-[#B392A4] text-[#532D2A]"
                         }`}
                       >
                         Set of {slab.quantity}
@@ -889,7 +881,6 @@ const WeddingCards = () => {
                     ))}
                   </div>
 
-                  {/* Custom Quantity Selector */}
                   <div className="flex items-center gap-4 mt-4">
                     <span className="text-gray-600">
                       Or select custom quantity:
@@ -901,7 +892,7 @@ const WeddingCards = () => {
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="w-16 text-center font-medium">
+                      <span className="w-16 text-center font-medium text-[#532D2A]">
                         {quantity}
                       </span>
                       <button
@@ -915,18 +906,16 @@ const WeddingCards = () => {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex gap-4">
                   <button
                     onClick={handleWhatsAppOrder}
-                    className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-lg font-bold text-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center gap-2"
+                    className="flex-1 bg-[#B392A4] hover:bg-[#532D2A] text-white py-4 rounded-lg font-bold text-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center gap-2"
                   >
                     <MessageCircle className="w-6 h-6" />
                     Order on WhatsApp
                   </button>
                 </div>
 
-                {/* Additional Info */}
                 <div className="mt-6 text-sm text-gray-500 border-t pt-4">
                   <p>✓ Free shipping on orders above ₹5000</p>
                   <p>✓ Estimated delivery: 5-7 business days</p>
@@ -936,9 +925,8 @@ const WeddingCards = () => {
             </div>
           </div>
 
-          {/* Related Products with Watermark */}
           <div className="mt-12">
-            <h2 className="text-2xl font-cinzel font-bold text-maroon mb-6">
+            <h2 className="text-2xl font-cinzel font-bold text-[#532D2A] mb-6">
               You May Also Like
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -967,10 +955,10 @@ const WeddingCards = () => {
                       />
                     </div>
                     <div className="p-3">
-                      <h3 className="font-medium text-sm mb-1 line-clamp-1">
+                      <h3 className="font-medium text-sm mb-1 line-clamp-1 text-[#532D2A]">
                         {product.name}
                       </h3>
-                      <p className="text-gold font-bold">
+                      <p className="text-[#B392A4] font-bold">
                         {formatPrice(product.price)}
                       </p>
                     </div>
@@ -985,12 +973,12 @@ const WeddingCards = () => {
 
   // Grid View (original)
   return (
-    <div className="pt-20 min-h-screen bg-gradient-to-b from-cream to-white">
+    <div className="pt-20 min-h-screen bg-[#EFE5E7]">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-maroon via-maroon/90 to-gold py-16 relative overflow-hidden">
+      <section className="bg-[#532D2A] py-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-40 h-40 bg-[#B392A4] rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#B392A4] rounded-full blur-3xl"></div>
         </div>
 
         <div className="container-custom relative z-10">
@@ -1012,28 +1000,28 @@ const WeddingCards = () => {
           onClick={() => setShowFilters(!showFilters)}
           className="w-full flex items-center justify-between bg-white p-4 rounded-lg shadow-md"
         >
-          <span className="font-medium">Filter & Sort</span>
-          <Filter className="w-5 h-5 text-maroon" />
+          <span className="font-medium text-[#532D2A]">Filter & Sort</span>
+          <Filter className="w-5 h-5 text-[#532D2A]" />
         </button>
       </div>
 
       {/* Main Content */}
       <div className="container-custom py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar - Desktop & Mobile */}
+          {/* Filters Sidebar */}
           <div
             className={`lg:w-1/4 ${showFilters ? "block" : "hidden lg:block"}`}
           >
             <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-bold text-maroon">Filters</h3>
+                <h3 className="text-lg font-bold text-[#532D2A]">Filters</h3>
                 {(selectedCategory !== "all" ||
                   sortBy !== "popular" ||
                   priceRange.min > 0 ||
                   priceRange.max < 10000) && (
                   <button
                     onClick={clearFilters}
-                    className="text-sm text-gold hover:text-maroon flex items-center gap-1"
+                    className="text-sm text-[#B392A4] hover:text-[#532D2A] flex items-center gap-1"
                   >
                     <X className="w-4 h-4" /> Clear All
                   </button>
@@ -1042,7 +1030,7 @@ const WeddingCards = () => {
 
               {/* Categories */}
               <div className="mb-6">
-                <h4 className="font-medium mb-3 flex items-center gap-2">
+                <h4 className="font-medium mb-3 text-[#532D2A] flex items-center gap-2">
                   <ChevronDown className="w-4 h-4" /> Categories
                 </h4>
                 <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
@@ -1050,8 +1038,8 @@ const WeddingCards = () => {
                     onClick={() => handleCategoryClick("all")}
                     className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                       selectedCategory === "all"
-                        ? "bg-maroon text-white"
-                        : "hover:bg-gray-100"
+                        ? "bg-[#532D2A] text-white"
+                        : "hover:bg-gray-100 text-[#532D2A]"
                     }`}
                   >
                     All Categories
@@ -1064,8 +1052,8 @@ const WeddingCards = () => {
                         onClick={() => handleCategoryClick(cat)}
                         className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                           selectedCategory === categorySlug
-                            ? "bg-maroon text-white"
-                            : "hover:bg-gray-100"
+                            ? "bg-[#532D2A] text-white"
+                            : "hover:bg-gray-100 text-[#532D2A]"
                         }`}
                       >
                         {cat}
@@ -1077,7 +1065,7 @@ const WeddingCards = () => {
 
               {/* Price Range */}
               <div className="mb-6">
-                <h4 className="font-medium mb-3">Price Range</h4>
+                <h4 className="font-medium mb-3 text-[#532D2A]">Price Range</h4>
                 <div className="space-y-3">
                   <input
                     type="range"
@@ -1091,9 +1079,9 @@ const WeddingCards = () => {
                         max: parseInt(e.target.value),
                       })
                     }
-                    className="w-full accent-maroon"
+                    className="w-full accent-[#532D2A]"
                   />
-                  <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center justify-between text-sm text-[#532D2A]">
                     <span>{formatPrice(priceRange.min)}</span>
                     <span>{formatPrice(priceRange.max)}</span>
                   </div>
@@ -1102,11 +1090,11 @@ const WeddingCards = () => {
 
               {/* Sort By */}
               <div>
-                <h4 className="font-medium mb-3">Sort By</h4>
+                <h4 className="font-medium mb-3 text-[#532D2A]">Sort By</h4>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full p-2 border border-gray-200 rounded-lg focus:outline-none focus:border-gold"
+                  className="w-full p-2 border border-gray-200 rounded-lg focus:outline-none focus:border-[#B392A4] text-[#532D2A]"
                 >
                   <option value="popular">Most Popular</option>
                   <option value="rating">Highest Rated</option>
@@ -1115,10 +1103,9 @@ const WeddingCards = () => {
                 </select>
               </div>
 
-              {/* Close button for mobile */}
               <button
                 onClick={() => setShowFilters(false)}
-                className="lg:hidden w-full mt-6 bg-maroon text-white py-2 rounded-lg"
+                className="lg:hidden w-full mt-6 bg-[#532D2A] text-white py-2 rounded-lg"
               >
                 Apply Filters
               </button>
@@ -1134,8 +1121,8 @@ const WeddingCards = () => {
                   onClick={() => handleCategoryClick("all")}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     selectedCategory === "all"
-                      ? "bg-maroon text-white"
-                      : "bg-white border border-gray-200 hover:border-gold"
+                      ? "bg-[#532D2A] text-white"
+                      : "bg-white border border-gray-200 hover:border-[#B392A4] text-[#532D2A]"
                   }`}
                 >
                   All
@@ -1148,8 +1135,8 @@ const WeddingCards = () => {
                       onClick={() => handleCategoryClick(cat)}
                       className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
                         selectedCategory === categorySlug
-                          ? "bg-maroon text-white"
-                          : "bg-white border border-gray-200 hover:border-gold"
+                          ? "bg-[#532D2A] text-white"
+                          : "bg-white border border-gray-200 hover:border-[#B392A4] text-[#532D2A]"
                       }`}
                     >
                       {cat}
@@ -1163,7 +1150,7 @@ const WeddingCards = () => {
             <div className="flex items-center justify-between mb-6">
               <p className="text-gray-600">
                 Showing{" "}
-                <span className="font-bold text-maroon">
+                <span className="font-bold text-[#532D2A]">
                   {sortedCards.length}
                 </span>{" "}
                 results
@@ -1171,7 +1158,7 @@ const WeddingCards = () => {
                   <>
                     {" "}
                     for{" "}
-                    <span className="font-bold text-gold">
+                    <span className="font-bold text-[#B392A4]">
                       {selectedCategory.replace(/-/g, " ")}
                     </span>
                   </>
@@ -1179,7 +1166,7 @@ const WeddingCards = () => {
               </p>
             </div>
 
-            {/* Cards Grid with Watermark */}
+            {/* Cards Grid */}
             {sortedCards.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                 {sortedCards.map((card) => (
@@ -1198,10 +1185,9 @@ const WeddingCards = () => {
                         watermarkGap={0}
                       />
 
-                      {/* Badges */}
                       <div className="absolute top-3 left-3 flex gap-2 z-10">
                         {card.popular && (
-                          <span className="bg-gold text-maroon text-xs font-bold px-2 py-1 rounded-full">
+                          <span className="bg-[#B392A4] text-white text-xs font-bold px-2 py-1 rounded-full">
                             Popular
                           </span>
                         )}
@@ -1212,12 +1198,10 @@ const WeddingCards = () => {
                         )}
                       </div>
 
-                      {/* Category Badge */}
-                      <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-maroon text-xs font-bold px-3 py-1 rounded-full z-10">
+                      <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-[#532D2A] text-xs font-bold px-3 py-1 rounded-full z-10">
                         {card.category}
                       </span>
 
-                      {/* Overlay with Quick View */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 z-20">
                         <button
                           onClick={(e) => {
@@ -1225,7 +1209,7 @@ const WeddingCards = () => {
                             e.stopPropagation();
                             openQuickView(card);
                           }}
-                          className="bg-gold text-maroon px-4 py-2 rounded-lg text-sm font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+                          className="bg-[#B392A4] text-white px-4 py-2 rounded-lg text-sm font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 hover:bg-[#532D2A]"
                         >
                           Quick View
                         </button>
@@ -1233,28 +1217,28 @@ const WeddingCards = () => {
                     </div>
 
                     <div className="p-4">
-                      <h3 className="font-bold text-lg mb-2 line-clamp-1 group-hover:text-maroon transition-colors">
+                      <h3 className="font-bold text-lg mb-2 line-clamp-1 text-[#532D2A] group-hover:text-[#B392A4] transition-colors">
                         {card.name}
                       </h3>
 
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center">
-                          <Star className="w-4 h-4 text-gold fill-current" />
-                          <span className="ml-1 text-sm font-medium">
+                          <Star className="w-4 h-4 text-[#B392A4] fill-current" />
+                          <span className="ml-1 text-sm font-medium text-[#532D2A]">
                             {card.rating}
                           </span>
                           <span className="text-xs text-gray-500 ml-1">
                             ({card.reviews})
                           </span>
                         </div>
-                        <span className="text-gold font-bold text-xl">
+                        <span className="text-[#B392A4] font-bold text-xl">
                           {formatPrice(card.price)}
                         </span>
                       </div>
 
                       <button
                         onClick={() => showProductDetails(card)}
-                        className="w-full text-center py-2 px-4 border-2 border-maroon text-maroon rounded-lg hover:bg-maroon hover:text-white transition-colors duration-300 font-medium text-sm"
+                        className="w-full text-center py-2 px-4 border-2 border-[#532D2A] text-[#532D2A] rounded-lg hover:bg-[#532D2A] hover:text-white transition-colors duration-300 font-medium text-sm"
                       >
                         View Details
                       </button>
@@ -1265,7 +1249,7 @@ const WeddingCards = () => {
             ) : (
               <div className="text-center py-16">
                 <div className="text-6xl mb-4">😢</div>
-                <h3 className="text-2xl font-bold text-maroon mb-2">
+                <h3 className="text-2xl font-bold text-[#532D2A] mb-2">
                   No Cards Found
                 </h3>
                 <p className="text-gray-600 mb-6">
@@ -1273,7 +1257,7 @@ const WeddingCards = () => {
                 </p>
                 <button
                   onClick={clearFilters}
-                  className="bg-maroon text-white px-6 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors"
+                  className="bg-[#532D2A] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#B392A4] transition-colors"
                 >
                   Clear Filters
                 </button>
@@ -1283,11 +1267,10 @@ const WeddingCards = () => {
         </div>
       </div>
 
-      {/* Quick View Modal with Watermark */}
+      {/* Quick View Modal */}
       {quickViewProduct && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div className="relative bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-            {/* Close Button */}
             <button
               onClick={closeQuickView}
               className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-lg"
@@ -1297,9 +1280,7 @@ const WeddingCards = () => {
 
             <div className="p-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Left Column - Images */}
                 <div>
-                  {/* Main Image with Watermark */}
                   <div className="relative aspect-square rounded-xl overflow-hidden mb-4 bg-gray-100">
                     <Watermark
                       src={quickViewProduct.images[selectedImage]}
@@ -1311,7 +1292,6 @@ const WeddingCards = () => {
                       watermarkGap={0}
                     />
 
-                    {/* Navigation Arrows */}
                     <button
                       onClick={prevImage}
                       className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white shadow-lg"
@@ -1326,7 +1306,6 @@ const WeddingCards = () => {
                     </button>
                   </div>
 
-                  {/* Thumbnails with Watermark */}
                   <div className="grid grid-cols-4 gap-2">
                     {quickViewProduct.images.map((img, index) => (
                       <button
@@ -1334,7 +1313,7 @@ const WeddingCards = () => {
                         onClick={() => setSelectedImage(index)}
                         className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                           selectedImage === index
-                            ? "border-gold scale-105"
+                            ? "border-[#B392A4] scale-105"
                             : "border-transparent hover:border-gray-300"
                         }`}
                       >
@@ -1351,45 +1330,41 @@ const WeddingCards = () => {
                     ))}
                   </div>
 
-                  {/* Features */}
                   <div className="mt-6 grid grid-cols-2 gap-3">
                     {features.map((feature, index) => (
                       <div
                         key={index}
                         className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 p-2 rounded-lg"
                       >
-                        <span className="text-maroon">{feature.icon}</span>
+                        <span className="text-[#532D2A]">{feature.icon}</span>
                         <span>{feature.text}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Right Column - Details */}
                 <div>
-                  {/* Title & Rating */}
-                  <h1 className="text-3xl font-cinzel font-bold text-maroon mb-2">
+                  <h1 className="text-3xl font-cinzel font-bold text-[#532D2A] mb-2">
                     {quickViewProduct.name}
                   </h1>
 
                   <div className="flex items-center gap-4 mb-4">
                     <div className="flex items-center">
-                      <Star className="w-5 h-5 text-gold fill-current" />
-                      <span className="ml-1 font-bold">
+                      <Star className="w-5 h-5 text-[#B392A4] fill-current" />
+                      <span className="ml-1 font-bold text-[#532D2A]">
                         {quickViewProduct.rating}
                       </span>
                       <span className="text-gray-500 ml-1">
                         ({quickViewProduct.reviews} reviews)
                       </span>
                     </div>
-                    <button className="flex items-center gap-1 text-gray-500 hover:text-maroon">
+                    <button className="flex items-center gap-1 text-gray-500 hover:text-[#532D2A]">
                       <Share2 className="w-4 h-4" /> Share
                     </button>
                   </div>
 
-                  {/* Price */}
                   <div className="mb-6">
-                    <span className="text-3xl font-bold text-gold">
+                    <span className="text-3xl font-bold text-[#B392A4]">
                       ₹{getCurrentPrice().toLocaleString()}
                     </span>
                     <span className="text-gray-500 ml-2">
@@ -1400,37 +1375,35 @@ const WeddingCards = () => {
                     </p>
                   </div>
 
-                  {/* Tabs */}
                   <div className="flex gap-4 border-b mb-4">
                     <button
                       onClick={() => setActiveTab("description")}
                       className={`pb-2 px-1 font-medium transition-colors relative ${
                         activeTab === "description"
-                          ? "text-maroon"
-                          : "text-gray-500 hover:text-maroon"
+                          ? "text-[#532D2A]"
+                          : "text-gray-500 hover:text-[#532D2A]"
                       }`}
                     >
                       Description
                       {activeTab === "description" && (
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#532D2A]"></div>
                       )}
                     </button>
                     <button
                       onClick={() => setActiveTab("specifications")}
                       className={`pb-2 px-1 font-medium transition-colors relative ${
                         activeTab === "specifications"
-                          ? "text-maroon"
-                          : "text-gray-500 hover:text-maroon"
+                          ? "text-[#532D2A]"
+                          : "text-gray-500 hover:text-[#532D2A]"
                       }`}
                     >
                       Specifications
                       {activeTab === "specifications" && (
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-maroon"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#532D2A]"></div>
                       )}
                     </button>
                   </div>
 
-                  {/* Tab Content */}
                   <div className="mb-6">
                     {activeTab === "description" ? (
                       <p className="text-gray-600 leading-relaxed">
@@ -1446,22 +1419,23 @@ const WeddingCards = () => {
                             <span className="text-xs text-gray-500">
                               {spec.label}
                             </span>
-                            <p className="font-medium text-sm">{spec.value}</p>
+                            <p className="font-medium text-sm text-[#532D2A]">
+                              {spec.value}
+                            </p>
                           </div>
                         ))}
                       </div>
                     )}
                   </div>
 
-                  {/* Slab Rates Table */}
                   <div className="mb-6">
-                    <h3 className="font-bold text-lg mb-3">
+                    <h3 className="font-bold text-lg mb-3 text-[#532D2A]">
                       BUY MORE, SAVE MORE
                     </h3>
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm">
                         <thead>
-                          <tr className="bg-maroon text-white">
+                          <tr className="bg-[#532D2A] text-white">
                             <th className="p-3 text-left rounded-tl-lg">
                               Quantity
                             </th>
@@ -1482,17 +1456,19 @@ const WeddingCards = () => {
                               }
                               className={`border-b cursor-pointer transition-colors ${
                                 selectedSet === slab.quantity.toString()
-                                  ? "bg-gold/20 border-gold"
+                                  ? "bg-[#B392A4]/20 border-[#B392A4]"
                                   : "hover:bg-gray-50"
                               }`}
                             >
-                              <td className="p-3 font-medium">
+                              <td className="p-3 font-medium text-[#532D2A]">
                                 {slab.quantity} pieces
                               </td>
-                              <td className="p-3">
+                              <td className="p-3 text-[#532D2A]">
                                 ₹{slab.price.toLocaleString()} INR
                               </td>
-                              <td className="p-3">₹{slab.perPiece} per pc</td>
+                              <td className="p-3 text-[#532D2A]">
+                                ₹{slab.perPiece} per pc
+                              </td>
                             </tr>
                           ))}
                         </tbody>
@@ -1504,9 +1480,10 @@ const WeddingCards = () => {
                     </p>
                   </div>
 
-                  {/* Quantity Selector */}
                   <div className="mb-6">
-                    <h3 className="font-bold text-lg mb-3">Quantity:</h3>
+                    <h3 className="font-bold text-lg mb-3 text-[#532D2A]">
+                      Quantity:
+                    </h3>
                     <div className="flex flex-wrap gap-2">
                       {quickViewProduct.slabRates.map((slab) => (
                         <button
@@ -1516,8 +1493,8 @@ const WeddingCards = () => {
                           }
                           className={`px-4 py-2 rounded-full border transition-colors ${
                             selectedSet === slab.quantity.toString()
-                              ? "bg-maroon text-white border-maroon"
-                              : "border-gray-300 hover:border-gold"
+                              ? "bg-[#532D2A] text-white border-[#532D2A]"
+                              : "border-gray-300 hover:border-[#B392A4] text-[#532D2A]"
                           }`}
                         >
                           Set of {slab.quantity}
@@ -1525,7 +1502,6 @@ const WeddingCards = () => {
                       ))}
                     </div>
 
-                    {/* Custom Quantity Selector */}
                     <div className="flex items-center gap-4 mt-4">
                       <span className="text-gray-600">
                         Or select custom quantity:
@@ -1537,7 +1513,7 @@ const WeddingCards = () => {
                         >
                           <Minus className="w-4 h-4" />
                         </button>
-                        <span className="w-16 text-center font-medium">
+                        <span className="w-16 text-center font-medium text-[#532D2A]">
                           {quantity}
                         </span>
                         <button
@@ -1551,32 +1527,29 @@ const WeddingCards = () => {
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
                   <div className="flex gap-4">
                     <button
                       onClick={handleWhatsAppOrder}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-lg font-bold text-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center gap-2"
+                      className="flex-1 bg-[#B392A4] hover:bg-[#532D2A] text-white py-4 rounded-lg font-bold text-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center gap-2"
                     >
                       <MessageCircle className="w-6 h-6" />
                       Order on WhatsApp
                     </button>
                   </div>
 
-                  {/* Additional Info */}
                   <div className="mt-6 text-sm text-gray-500 border-t pt-4">
                     <p>✓ Free shipping on orders above ₹5000</p>
                     <p>✓ Estimated delivery: 5-7 business days</p>
                     <p>✓ 100% satisfaction guarantee</p>
                   </div>
 
-                  {/* View Full Details Button */}
                   <div className="mt-4">
                     <button
                       onClick={() => {
                         closeQuickView();
                         showProductDetails(quickViewProduct);
                       }}
-                      className="w-full text-center text-gold hover:text-maroon font-medium transition-colors"
+                      className="w-full text-center text-[#B392A4] hover:text-[#532D2A] font-medium transition-colors"
                     >
                       View Full Details →
                     </button>

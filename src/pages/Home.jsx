@@ -30,8 +30,140 @@ import {
   Pause,
   Eye,
   ArrowRight,
+  Calendar,
 } from "lucide-react";
 import Watermark from "../components/Watermark";
+
+// Preloader Component
+const Preloader = ({ onComplete }) => {
+  const [progress, setProgress] = useState(0);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            setFadeOut(true);
+            setTimeout(onComplete, 600);
+          }, 500);
+          return 100;
+        }
+        return prev + 1;
+      });
+    }, 20);
+
+    return () => clearInterval(interval);
+  }, [onComplete]);
+
+  return (
+    <div
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#EFE5E7] transition-all duration-700 ${
+        fadeOut ? "opacity-0 scale-110" : "opacity-100 scale-100"
+      }`}
+    >
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#B392A4]/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#B392A4]/10 rounded-full blur-3xl animate-pulse-slow delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#532D2A]/5 rounded-full blur-3xl animate-pulse-slow delay-2000"></div>
+        
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-[#532D2A]/10 rounded-full animate-float-particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${3 + Math.random() * 4}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10 text-center px-4">
+        <div 
+          className="mb-8"
+          style={{
+            animation: 'zoomLogo 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards'
+          }}
+        >
+          <img
+            src="/images/gallery/logo.png"
+            alt="Wedding House"
+            className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-contain mx-auto"
+          />
+        </div>
+
+        <div className="mt-8 w-48 sm:w-56 md:w-64 mx-auto">
+          <div className="relative h-1 bg-[#B392A4]/20 rounded-full overflow-hidden">
+            <div
+              className="absolute top-0 left-0 h-full bg-[#B392A4] rounded-full transition-all duration-300 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <p className="text-[#532D2A]/60 text-xs mt-2 font-mono">
+            {progress}%
+          </p>
+        </div>
+
+        <div className="mt-4 flex items-center justify-center gap-1">
+          <span className="w-2 h-2 bg-[#B392A4] rounded-full animate-bounce-dot" style={{ animationDelay: '0s' }} />
+          <span className="w-2 h-2 bg-[#B392A4] rounded-full animate-bounce-dot" style={{ animationDelay: '0.5s' }} />
+          <span className="w-2 h-2 bg-[#B392A4] rounded-full animate-bounce-dot" style={{ animationDelay: '0.4s' }} />
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes zoomLogo {
+          0% { transform: scale(0.5) rotate(-8deg); opacity: 0; }
+          20% { transform: scale(1.3) rotate(4deg); opacity: 1; }
+          40% { transform: scale(0.85) rotate(-2deg); opacity: 1; }
+          60% { transform: scale(1.15) rotate(2deg); opacity: 1; }
+          80% { transform: scale(0.95) rotate(-1deg); opacity: 1; }
+          100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes bounce-dot {
+          0%, 100% { transform: scale(1); opacity: 0.4; }
+          50% { transform: scale(1.5); opacity: 1; }
+        }
+
+        @keyframes float-particle {
+          0% { transform: translateY(0) scale(0); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.1; transform: scale(1); }
+          50% { opacity: 0.2; transform: scale(1.1); }
+        }
+
+        .animate-bounce-dot {
+          animation: bounce-dot 1s ease-in-out infinite;
+        }
+
+        .animate-float-particle {
+          animation: float-particle linear infinite;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+
+        .delay-1000 {
+          animation-delay: 1s;
+        }
+
+        .delay-2000 {
+          animation-delay: 2s;
+        }
+      `}</style>
+    </div>
+  );
+};
 
 const Home = () => {
   const navigate = useNavigate();
@@ -39,9 +171,9 @@ const Home = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [hoveredProduct, setHoveredProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
   const videoRefs = useRef([]);
 
-  // Check mobile view
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -51,49 +183,25 @@ const Home = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Slides data
+  // Slides Data - Only banner images
   const slides = [
     {
       id: 1,
-     type: "video",
-      src: "/videos/slide1 (5).mp4",
-      poster: "/images/gallery/banner5.jpeg",
-      title: "Luxury Hampers",
-      subtitle: "Premium Gift Boxes for Your Guests",
-      cta: "Discover Luxury",
-      overlay: "from-rose-600/30 via-pink-400/20 to-red-300/30",
+      type: "image",
+      src: "/images/gallery/ban (1).png",
+      cta: "Explore Collection",
     },
     {
       id: 2,
-      type: "video",
-      src: "/videos/slide1 (2).mp4",
-      mobileSrc: "/videos/slide1 (2).mp4",
-      title: "Elegant Stationery",
-      subtitle: "Designing the First Impression of Your Wedding",
+      type: "image",
+      src: "/images/gallery/ban (2).png",
       cta: "View Designs",
-      overlay: "from-blue-600/30 via-purple-400/20 to-pink-600/30",
     },
     {
       id: 3,
-      type: "video",
-      src: "/videos/slide1 (4).mp4",
-      mobileSrc: "/videos/slide1 (4).mp4",
-      title: "Wedding Hampers",
-      subtitle: "Elegance Printed. Memories Delivered.",
+      type: "image",
+      src: "/images/gallery/ban (3).png",
       cta: "Shop Now",
-      overlay: "from-emerald-600/30 via-teal-400/20 to-cyan-600/20",
-    },
-    {
-      id: 4,
-       type: "video",
-      src: "/videos/slide1 (1).mp4",
-      mobileSrc: "/videos/slide1 (1).mp4",
-      poster: "/images/gallery/banner2-poster.jpg",
-      title: "Royal Wedding Cards",
-      subtitle: "Announce Your Big Day in Royal Style",
-      cta: "Explore Collection",
-      overlay: "from-amber-600/30 via-maroon/20 to-rose-600/30",
-      
     },
   ];
 
@@ -107,7 +215,6 @@ const Home = () => {
       link: "/weddingcards",
       description: "Exquisite wedding invitations",
       count: 150,
-      color: "from-rose-500 to-amber-500",
     },
     {
       id: 2,
@@ -117,7 +224,6 @@ const Home = () => {
       link: "/weddingstationery",
       description: "Complete your wedding ensemble",
       count: 85,
-      color: "from-purple-500 to-pink-500",
     },
     {
       id: 3,
@@ -127,7 +233,6 @@ const Home = () => {
       link: "/e-invite",
       description: "Modern & instant",
       count: 45,
-      color: "from-blue-500 to-cyan-500",
     },
     {
       id: 4,
@@ -137,7 +242,6 @@ const Home = () => {
       link: "/hamper",
       description: "Luxury gift boxes",
       count: 30,
-      color: "from-green-500 to-emerald-500",
     },
     {
       id: 5,
@@ -147,7 +251,6 @@ const Home = () => {
       link: "/shagunenvelopes",
       description: "Luxury envelopes",
       count: 25,
-      color: "from-orange-500 to-red-500",
     },
   ];
 
@@ -164,7 +267,6 @@ const Home = () => {
       reviews: 124,
       category: "Premium",
       badge: "Best Seller",
-      badgeColor: "bg-gradient-to-r from-amber-500 to-orange-500",
     },
     {
       id: 2,
@@ -177,7 +279,6 @@ const Home = () => {
       reviews: 98,
       category: "Luxury",
       badge: "Trending",
-      badgeColor: "bg-gradient-to-r from-purple-500 to-pink-500",
     },
     {
       id: 3,
@@ -190,7 +291,6 @@ const Home = () => {
       reviews: 76,
       category: "Premium",
       badge: "New Arrival",
-      badgeColor: "bg-gradient-to-r from-blue-500 to-cyan-500",
     },
     {
       id: 4,
@@ -214,7 +314,6 @@ const Home = () => {
       reviews: 67,
       category: "Premium",
       badge: "Limited Edition",
-      badgeColor: "bg-gradient-to-r from-red-500 to-rose-500",
     },
     {
       id: 6,
@@ -233,7 +332,7 @@ const Home = () => {
   const testimonials = [
     {
       name: "Priya & Raj",
-      quote: "The cards were absolutely stunning! Everyone appreciated the gold foil work. The quality exceeded our expectations.",
+      quote: "The cards were absolutely stunning! Everyone appreciated the gold foil work.",
       rating: 5,
       location: "Indore",
       date: "March 2024",
@@ -241,7 +340,7 @@ const Home = () => {
     },
     {
       name: "Ananya & Vikram",
-      quote: "Beautiful designs and excellent service! The team was very helpful throughout the process and delivered on time.",
+      quote: "Beautiful designs and excellent service! The team was very helpful.",
       rating: 5,
       location: "Delhi",
       date: "February 2024",
@@ -249,7 +348,7 @@ const Home = () => {
     },
     {
       name: "Neha & Arjun",
-      quote: "The hamper packaging was luxurious! Our guests loved the attention to detail and the premium quality.",
+      quote: "The hamper packaging was luxurious! Our guests loved the attention to detail.",
       rating: 5,
       location: "Bangalore",
       date: "January 2024",
@@ -287,7 +386,6 @@ const Home = () => {
     setTimeout(() => setIsAutoPlaying(true), 10000);
   };
 
-  // Get image source based on device
   const getImageSrc = (item) => {
     if (isMobile && item.mobileImage) {
       return item.mobileImage;
@@ -295,16 +393,23 @@ const Home = () => {
     return item.image;
   };
 
-  // Handle navigation
   const handleNavigate = (path) => {
     navigate(path);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // If loading, show only preloader - NO header/footer visible
+  if (loading) {
+    return <Preloader onComplete={() => setLoading(false)} />;
+  }
+
+  // When loading is complete, show full home page
   return (
-    <div className="w-full overflow-x-hidden bg-gradient-to-b from-white via-cream/20 to-white">
+    <div className="w-full overflow-x-hidden bg-[#EFE5E7]">
       
-      {/* Hero Section with Carousel */}
+      {/* ============================================
+          HERO SECTION - ONLY BANNER, NO TEXT
+          ============================================ */}
       <section className="relative h-[60vh] sm:h-[70vh] md:h-[85vh] lg:h-screen w-full overflow-hidden">
         {slides.map((slide, index) => (
           <div
@@ -315,91 +420,41 @@ const Home = () => {
                 : "opacity-0 scale-110 pointer-events-none"
             }`}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster={slide.poster}
+            {/* Background Image */}
+            <img
+              src={slide.src}
+              alt="Wedding Banner"
               className="absolute inset-0 w-full h-full object-cover"
-              ref={(el) => (videoRefs.current[index] = el)}
-            >
-              <source
-                src={isMobile && slide.mobileSrc ? slide.mobileSrc : slide.src}
-                type="video/mp4"
-              />
-            </video>
+            />
+            
+            {/* Solid dark overlay for readability */}
+            <div className="absolute inset-0 w-full h-full bg-[#532D2A]/40"></div>
 
-            <div className={`absolute inset-0 w-full h-full bg-gradient-to-r ${slide.overlay}`} />
-
-            {/* Animated particles */}
-            <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-              {[...Array(isMobile ? 10 : 30)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute w-0.5 h-0.5 md:w-1 md:h-1 bg-white/40 rounded-full animate-particle"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    animationDelay: `${Math.random() * 5}s`,
-                    animationDuration: `${3 + Math.random() * 5}s`,
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Content */}
-            <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6">
+            {/* Buttons - Bottom Aligned */}
+            <div className="absolute bottom-8 sm:bottom-12 md:bottom-16 left-0 right-0 z-20 flex justify-center px-4 sm:px-6">
               <div
-                className={`w-full max-w-5xl mx-auto text-center text-white transform transition-all duration-1000 ${
+                className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center transform transition-all duration-1000 ${
                   index === currentSlide
                     ? "translate-y-0 opacity-100"
                     : "translate-y-10 opacity-0"
                 }`}
               >
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-cinzel font-bold mb-3 md:mb-4 animate-title px-2">
-                  {slide.title.split("").map((char, i) => (
-                    <span
-                      key={i}
-                      className="inline-block hover:scale-110 hover:text-gold transition-all duration-300"
-                      style={{ animationDelay: `${i * 0.03}s` }}
-                    >
-                      {char === " " ? "\u00A0" : char}
-                    </span>
-                  ))}
-                </h1>
+                <button
+                  onClick={() => handleNavigate("/weddingcards")}
+                  className="group bg-[#B392A4] hover:bg-[#EFE5E7] hover:text-[#532D2A] text-white px-8 sm:px-10 py-3 sm:py-3.5 rounded-full font-medium transition-all duration-300 hover:scale-105 text-sm sm:text-base shadow-lg tracking-wider min-w-[160px]"
+                >
+                  {slide.cta || "Shop Now"}
+                </button>
 
-                <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 md:mb-6 bg-gradient-to-r from-gold to-white bg-clip-text text-transparent font-semibold px-2">
-                  {slide.subtitle}
-                </p>
-
-                <div className="flex justify-center mb-4 md:mb-6">
-                  <div className="w-16 md:w-24 h-0.5 bg-gradient-to-r from-gold via-white to-gold animate-width" />
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-2">
-                  <button
-                    onClick={() => handleNavigate("/weddingcards")}
-                    className="group relative overflow-hidden bg-gradient-to-r from-maroon to-gold text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl text-sm sm:text-base w-full sm:w-auto shadow-lg"
-                  >
-                    <span className="relative z-10 flex items-center justify-center">
-                      <Gift className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
-                      {slide.cta || "Explore Collection"}
-                    </span>
-                  </button>
-
-                  <a
-                    href="https://wa.me/918435111188"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative overflow-hidden bg-gradient-to-r from-green-500 to-green-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl text-sm sm:text-base w-full sm:w-auto shadow-lg"
-                  >
-                    <span className="relative z-10 flex items-center justify-center">
-                      <MessageCircle className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
-                      Book Consultation
-                    </span>
-                  </a>
-                </div>
+                <a
+                  href="https://wa.me/918435111188"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group border-2 border-[#B392A4] hover:bg-[#B392A4] text-white hover:text-white px-8 sm:px-10 py-3 sm:py-3.5 rounded-full font-medium transition-all duration-300 hover:scale-105 text-sm sm:text-base tracking-wider min-w-[160px] flex items-center justify-center gap-2"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Book Consultation
+                </a>
               </div>
             </div>
           </div>
@@ -408,20 +463,20 @@ const Home = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 backdrop-blur-md text-white p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-20 group"
+          className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-30 group border border-white/20"
         >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:-translate-x-1 transition-transform" />
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         <button
           onClick={nextSlide}
-          className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 backdrop-blur-md text-white p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-20 group"
+          className="absolute right-2 sm:right-6 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-30 group border border-white/20"
         >
-          <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+          <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         {/* Slide Indicators */}
-        <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+        <div className="absolute bottom-28 sm:bottom-32 md:bottom-36 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -430,10 +485,10 @@ const Home = () => {
                 setCurrentSlide(index);
                 setTimeout(() => setIsAutoPlaying(true), 10000);
               }}
-              className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
+              className={`h-1 rounded-full transition-all duration-300 ${
                 index === currentSlide
-                  ? "w-8 sm:w-10 bg-gold"
-                  : "w-2 bg-white/50 hover:bg-white/80"
+                  ? "w-10 bg-[#B392A4]"
+                  : "w-4 bg-white/30 hover:bg-white/50"
               }`}
             />
           ))}
@@ -446,10 +501,10 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6">
             {stats.map((stat, index) => (
               <div key={index} className="text-center group">
-                <div className="text-gold mb-2 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
+                <div className="text-[#B392A4] mb-2 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
                   {stat.icon}
                 </div>
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-maroon">
+                <div className="text-lg sm:text-xl md:text-2xl font-bold text-[#532D2A]">
                   {stat.value}
                 </div>
                 <div className="text-xs sm:text-sm text-gray-600">
@@ -465,15 +520,15 @@ const Home = () => {
       <section className="py-12 sm:py-16 md:py-20">
         <div className="container-custom px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <div className="inline-block px-4 py-1 bg-gold/10 rounded-full mb-3">
-              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">
+            <div className="inline-block px-4 py-1 bg-[#B392A4]/10 rounded-full mb-3">
+              <span className="text-[#B392A4] font-semibold text-xs sm:text-sm uppercase tracking-wider">
                 Our Collections
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-cinzel font-bold text-maroon mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-3">
               Explore Premium Collections
             </h2>
-            <div className="w-20 h-0.5 bg-gradient-to-r from-gold to-maroon mx-auto mb-4"></div>
+            <div className="w-20 h-0.5 bg-[#B392A4] mx-auto mb-4"></div>
             <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
               Discover our meticulously crafted wedding invitations and stationery
             </p>
@@ -497,20 +552,20 @@ const Home = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
-                  <div className="absolute top-2 right-2 bg-gold/20 backdrop-blur-sm rounded-full px-2 py-1">
-                    <span className="text-gold text-xs font-bold">
+                  <div className="absolute top-2 right-2 bg-[#B392A4]/20 backdrop-blur-sm rounded-full px-2 py-1">
+                    <span className="text-[#B392A4] text-xs font-bold">
                       {category.count}+
                     </span>
                   </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-base sm:text-lg font-cinzel font-bold mb-1">
+                    <h3 className="text-base sm:text-lg font-serif font-bold mb-1">
                       {category.name}
                     </h3>
                     <p className="text-xs text-white/80 mb-2">
                       {category.description}
                     </p>
-                    <div className="flex items-center text-gold opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <div className="flex items-center text-[#B392A4] opacity-0 group-hover:opacity-100 transition-all duration-300">
                       <span className="text-xs font-medium">Explore Now</span>
                       <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -523,18 +578,18 @@ const Home = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-cream/30 to-white">
+      <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="container-custom px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <div className="inline-block px-4 py-1 bg-gold/10 rounded-full mb-3">
-              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">
+            <div className="inline-block px-4 py-1 bg-[#B392A4]/10 rounded-full mb-3">
+              <span className="text-[#B392A4] font-semibold text-xs sm:text-sm uppercase tracking-wider">
                 Best Sellers
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-cinzel font-bold text-maroon mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-3">
               Featured Wedding Cards
             </h2>
-            <div className="w-20 h-0.5 bg-gradient-to-r from-gold to-maroon mx-auto mb-4"></div>
+            <div className="w-20 h-0.5 bg-[#B392A4] mx-auto mb-4"></div>
             <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
               Our most popular designs, loved by couples across India
             </p>
@@ -544,7 +599,7 @@ const Home = () => {
             {featuredProducts.map((product) => (
               <div
                 key={product.id}
-                className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 cursor-pointer"
+                className="group bg-[#EFE5E7] rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 cursor-pointer"
                 onMouseEnter={() => setHoveredProduct(product.id)}
                 onMouseLeave={() => setHoveredProduct(null)}
                 onClick={() => handleNavigate("/weddingcards")}
@@ -561,18 +616,18 @@ const Home = () => {
 
                   {product.badge && (
                     <span
-                      className={`absolute top-2 left-2 ${product.badgeColor} text-white text-xs font-bold px-2 py-1 rounded-lg z-10 shadow-md`}
+                      className={`absolute top-2 left-2 bg-[#B392A4] text-white text-xs font-bold px-2 py-1 rounded-lg z-10 shadow-md`}
                     >
                       {product.badge}
                     </span>
                   )}
 
-                  <span className="absolute top-2 right-2 bg-maroon/90 text-white text-xs font-bold px-2 py-1 rounded-lg z-10">
+                  <span className="absolute top-2 right-2 bg-[#532D2A]/90 text-white text-xs font-bold px-2 py-1 rounded-lg z-10">
                     {product.category}
                   </span>
 
                   <button
-                    className="absolute bottom-2 right-2 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-maroon hover:text-white transition-all duration-300 transform hover:scale-110 z-10 opacity-0 group-hover:opacity-100"
+                    className="absolute bottom-2 right-2 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-[#B392A4] hover:text-white transition-all duration-300 transform hover:scale-110 z-10 opacity-0 group-hover:opacity-100"
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
@@ -582,7 +637,7 @@ const Home = () => {
 
                   {hoveredProduct === product.id && (
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button className="bg-white text-maroon px-4 py-2 rounded-full text-sm font-semibold hover:bg-maroon hover:text-white transition-all duration-300 transform hover:scale-105">
+                      <button className="bg-white text-[#532D2A] px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#B392A4] hover:text-white transition-all duration-300 transform hover:scale-105">
                         Quick View
                       </button>
                     </div>
@@ -590,7 +645,7 @@ const Home = () => {
                 </div>
 
                 <div className="p-3 sm:p-4">
-                  <h3 className="font-bold text-sm sm:text-base mb-1 line-clamp-1 group-hover:text-maroon transition-colors">
+                  <h3 className="font-bold text-sm sm:text-base mb-1 line-clamp-1 group-hover:text-[#B392A4] transition-colors">
                     {product.name}
                   </h3>
 
@@ -602,7 +657,7 @@ const Home = () => {
                             key={i}
                             className={`w-3 h-3 sm:w-4 sm:h-4 ${
                               i < Math.floor(product.rating)
-                                ? "text-gold fill-current"
+                                ? "text-[#B392A4] fill-current"
                                 : "text-gray-300"
                             }`}
                           />
@@ -613,7 +668,7 @@ const Home = () => {
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="text-gold font-bold text-sm sm:text-base">
+                      <span className="text-[#B392A4] font-bold text-sm sm:text-base">
                         {product.price}
                       </span>
                       {product.originalPrice && (
@@ -624,7 +679,7 @@ const Home = () => {
                     </div>
                   </div>
 
-                  <button className="w-full text-center py-2 px-3 bg-gradient-to-r from-maroon to-gold text-white rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-xs sm:text-sm">
+                  <button className="w-full text-center py-2 px-3 bg-[#532D2A] hover:bg-[#B392A4] text-white rounded-lg transition-all duration-300 font-medium text-xs sm:text-sm">
                     View Details
                   </button>
                 </div>
@@ -635,7 +690,7 @@ const Home = () => {
           <div className="text-center mt-10 sm:mt-12">
             <button
               onClick={() => handleNavigate("/weddingcards")}
-              className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 border-2 border-maroon text-maroon rounded-full hover:bg-maroon hover:text-white transition-all duration-300 font-semibold"
+              className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 border-2 border-[#532D2A] text-[#532D2A] rounded-full hover:bg-[#532D2A] hover:text-white transition-all duration-300 font-semibold"
             >
               View All Products
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -645,18 +700,18 @@ const Home = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-maroon/5 to-gold/5">
+      <section className="py-12 sm:py-16 md:py-20 bg-[#EFE5E7]">
         <div className="container-custom px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <div className="inline-block px-4 py-1 bg-gold/10 rounded-full mb-3">
-              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">
+            <div className="inline-block px-4 py-1 bg-[#B392A4]/10 rounded-full mb-3">
+              <span className="text-[#B392A4] font-semibold text-xs sm:text-sm uppercase tracking-wider">
                 Our Promise
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-cinzel font-bold text-maroon mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-3">
               Why Choose Wedding House
             </h2>
-            <div className="w-20 h-0.5 bg-gradient-to-r from-gold to-maroon mx-auto mb-4"></div>
+            <div className="w-20 h-0.5 bg-[#B392A4] mx-auto mb-4"></div>
             <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
               Experience the perfect blend of tradition, luxury, and exceptional service
             </p>
@@ -668,39 +723,35 @@ const Home = () => {
                 icon: <Award className="w-8 h-8 sm:w-10 sm:h-10" />,
                 title: "Premium Paper",
                 desc: "Highest quality imported paper stocks",
-                color: "from-amber-500 to-orange-500",
               },
               {
                 icon: <Shield className="w-8 h-8 sm:w-10 sm:h-10" />,
                 title: "Custom Design",
                 desc: "Personalized designs just for you",
-                color: "from-blue-500 to-cyan-500",
               },
               {
                 icon: <Truck className="w-8 h-8 sm:w-10 sm:h-10" />,
                 title: "Fast Delivery",
                 desc: "Pan India shipping with tracking",
-                color: "from-green-500 to-emerald-500",
               },
               {
                 icon: <Star className="w-8 h-8 sm:w-10 sm:h-10" />,
                 title: "Quality Guarantee",
                 desc: "100% satisfaction guaranteed",
-                color: "from-purple-500 to-pink-500",
               },
             ].map((feature, index) => (
               <div
                 key={index}
                 className="group relative bg-white p-5 sm:p-6 md:p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden text-center"
               >
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-[#B392A4] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
                 <div className="relative z-10">
                   <div
-                    className={`inline-block p-3 sm:p-4 bg-gradient-to-br ${feature.color} bg-opacity-10 rounded-2xl text-maroon mb-4 group-hover:scale-110 transition-transform duration-300`}
+                    className="inline-block p-3 sm:p-4 bg-[#B392A4]/10 rounded-2xl text-[#532D2A] mb-4 group-hover:scale-110 transition-transform duration-300"
                   >
-                    <div className="text-gold">{feature.icon}</div>
+                    <div className="text-[#B392A4]">{feature.icon}</div>
                   </div>
-                  <h3 className="font-bold text-base sm:text-lg mb-2 group-hover:text-maroon transition-colors">
+                  <h3 className="font-bold text-base sm:text-lg mb-2 group-hover:text-[#B392A4] transition-colors">
                     {feature.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
@@ -717,15 +768,15 @@ const Home = () => {
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="container-custom px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <div className="inline-block px-4 py-1 bg-gold/10 rounded-full mb-3">
-              <span className="text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider">
+            <div className="inline-block px-4 py-1 bg-[#B392A4]/10 rounded-full mb-3">
+              <span className="text-[#B392A4] font-semibold text-xs sm:text-sm uppercase tracking-wider">
                 Testimonials
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-cinzel font-bold text-maroon mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-3">
               What Couples Say
             </h2>
-            <div className="w-20 h-0.5 bg-gradient-to-r from-gold to-maroon mx-auto mb-4"></div>
+            <div className="w-20 h-0.5 bg-[#B392A4] mx-auto mb-4"></div>
             <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
               Real stories from happy couples who trusted us with their special day
             </p>
@@ -735,9 +786,9 @@ const Home = () => {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="group bg-gradient-to-br from-cream to-white p-6 sm:p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden"
+                className="group bg-[#EFE5E7] p-6 sm:p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden"
               >
-                <div className="absolute top-4 right-4 text-5xl sm:text-6xl font-serif text-gold/20 group-hover:text-gold/30 transition-colors duration-300">
+                <div className="absolute top-4 right-4 text-5xl sm:text-6xl font-serif text-[#B392A4]/20 group-hover:text-[#B392A4]/30 transition-colors duration-300">
                   "
                 </div>
 
@@ -746,7 +797,7 @@ const Home = () => {
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-4 h-4 sm:w-5 sm:h-5 text-gold fill-current"
+                        className="w-4 h-4 sm:w-5 sm:h-5 text-[#B392A4] fill-current"
                       />
                     ))}
                   </div>
@@ -756,18 +807,18 @@ const Home = () => {
                   </p>
 
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-gold to-maroon flex items-center justify-center text-white font-bold text-lg">
+                    <div className="w-12 h-12 rounded-full bg-[#B392A4] flex items-center justify-center text-white font-bold text-lg">
                       {testimonial.name.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="font-bold text-base text-maroon">
+                      <h4 className="font-bold text-base text-[#532D2A]">
                         {testimonial.name}
                       </h4>
                       <p className="text-xs text-gray-500">
                         {testimonial.location}
                       </p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-gold font-semibold">
+                        <span className="text-xs text-[#B392A4] font-semibold">
                           {testimonial.event}
                         </span>
                         <span className="text-xs text-gray-400">•</span>
@@ -785,14 +836,14 @@ const Home = () => {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-r from-maroon to-gold relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-20 bg-[#532D2A] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+          <div className="absolute top-0 left-0 w-64 h-64 bg-[#B392A4] rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#EFE5E7] rounded-full blur-3xl" />
         </div>
 
         <div className="container-custom px-4 sm:px-6 text-center relative z-10">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-cinzel font-bold text-white mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3">
             Ready to Make Your Wedding Memorable?
           </h2>
           <p className="text-base sm:text-lg text-white/90 mb-6 max-w-2xl mx-auto">
@@ -801,7 +852,7 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => handleNavigate("/weddingcards")}
-              className="px-6 sm:px-8 py-3 bg-white text-maroon rounded-full font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              className="px-6 sm:px-8 py-3 bg-[#B392A4] hover:bg-[#EFE5E7] hover:text-[#532D2A] text-white rounded-full font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
               Explore Collections
             </button>
@@ -809,7 +860,7 @@ const Home = () => {
               href="https://wa.me/918435111188"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 sm:px-8 py-3 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-maroon transition-all duration-300"
+              className="px-6 sm:px-8 py-3 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-[#532D2A] transition-all duration-300"
             >
               Contact Us
             </a>
@@ -864,6 +915,14 @@ const Home = () => {
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
+        }
+
+        .delay-1000 {
+          animation-delay: 1s;
+        }
+
+        .delay-2000 {
+          animation-delay: 2s;
         }
       `}</style>
     </div>
