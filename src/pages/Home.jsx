@@ -174,6 +174,233 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const videoRefs = useRef([]);
 
+  // Search State - Connected to Navbar
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // ============================================
+  // BUTTERFLY CURSOR - FOLLOWS CURSOR + ON CLICK
+  // ============================================
+  useEffect(() => {
+    let butterflyTimeout = null;
+    let butterflyElement = null;
+    let isFlying = false;
+    let flutterInterval = null;
+    let mouseX = 0;
+    let mouseY = 0;
+    let butterflyX = 0;
+    let butterflyY = 0;
+    let animFrameId = null;
+
+    const createButterfly = (x, y) => {
+      // Remove existing butterfly
+      if (butterflyElement) {
+        butterflyElement.remove();
+        butterflyElement = null;
+      }
+      if (butterflyTimeout) {
+        clearTimeout(butterflyTimeout);
+        butterflyTimeout = null;
+      }
+      if (flutterInterval) {
+        clearInterval(flutterInterval);
+        flutterInterval = null;
+      }
+
+      // More visible colors
+      const colors = ['#B392A4', '#D4AF37', '#E8A87C', '#D4A5A5', '#C49B6C', '#E8D5B7', '#F5E6D3'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      const size = 20 + Math.random() * 16;
+
+      butterflyElement = document.createElement('div');
+      butterflyElement.innerHTML = `
+        <svg width="${size}" height="${size}" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 14 C9 4, 2 6, 2 14 C2 22, 9 24, 14 14Z" 
+            fill="${randomColor}" opacity="0.8" stroke="${randomColor}" stroke-width="1.2"/>
+          <path d="M14 14 C19 4, 26 6, 26 14 C26 22, 19 24, 14 14Z" 
+            fill="${randomColor}" opacity="0.8" stroke="${randomColor}" stroke-width="1.2"/>
+          <path d="M14 14 C10 7, 4 9, 4 14 C4 19, 10 21, 14 14Z" 
+            fill="${randomColor}" opacity="0.5" stroke="${randomColor}" stroke-width="0.6"/>
+          <path d="M14 14 C18 7, 24 9, 24 14 C24 19, 18 21, 14 14Z" 
+            fill="${randomColor}" opacity="0.5" stroke="${randomColor}" stroke-width="0.6"/>
+          <ellipse cx="14" cy="14" rx="2.5" ry="7" fill="#532D2A" opacity="0.7"/>
+          <path d="M14 7 C12.5 4.5, 10.5 3, 9 2.5" stroke="#532D2A" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>
+          <path d="M14 7 C15.5 4.5, 17.5 3, 19 2.5" stroke="#532D2A" stroke-width="1.2" opacity="0.6" stroke-linecap="round"/>
+          <circle cx="5" cy="9" r="1.2" fill="#D4AF37" opacity="0.5"/>
+          <circle cx="23" cy="9" r="1.2" fill="#D4AF37" opacity="0.5"/>
+          <circle cx="6" cy="19" r="1" fill="#D4AF37" opacity="0.4"/>
+          <circle cx="22" cy="19" r="1" fill="#D4AF37" opacity="0.4"/>
+        </svg>
+      `;
+      
+      butterflyX = x - size/2;
+      butterflyY = y - size/2;
+      
+      butterflyElement.style.cssText = `
+        position: fixed;
+        left: ${butterflyX}px;
+        top: ${butterflyY}px;
+        pointer-events: none;
+        z-index: 9999;
+        user-select: none;
+        filter: drop-shadow(0 4px 15px rgba(179, 146, 164, 0.3));
+        transition: all 0.05s ease;
+      `;
+      document.body.appendChild(butterflyElement);
+
+      // Wing flutter
+      flutterInterval = setInterval(() => {
+        if (!butterflyElement) {
+          clearInterval(flutterInterval);
+          flutterInterval = null;
+          return;
+        }
+        const wings = butterflyElement.querySelectorAll('path');
+        wings.forEach((wing, index) => {
+          if (index < 2) {
+            const scaleY = 0.3 + Math.sin(Date.now() / 120 + index * 0.7) * 0.5;
+            wing.setAttribute('transform', `scale(1, ${scaleY})`);
+          }
+        });
+      }, 25);
+
+      // Animation loop for smooth following
+      const followCursor = () => {
+        if (!butterflyElement) {
+          if (animFrameId) cancelAnimationFrame(animFrameId);
+          return;
+        }
+        
+        // Smooth follow with easing
+        const dx = mouseX - butterflyX - size/2;
+        const dy = mouseY - butterflyY - size/2;
+        const speed = 0.15;
+        
+        butterflyX += dx * speed;
+        butterflyY += dy * speed;
+        
+        butterflyElement.style.left = butterflyX + 'px';
+        butterflyElement.style.top = butterflyY + 'px';
+        
+        animFrameId = requestAnimationFrame(followCursor);
+      };
+
+      followCursor();
+
+      // Auto remove after 3 seconds of no movement
+      let idleTimeout = setTimeout(() => {
+        if (butterflyElement) {
+          butterflyElement.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          butterflyElement.style.opacity = '0';
+          butterflyElement.style.transform = 'scale(0.3) rotate(20deg)';
+          setTimeout(() => {
+            if (butterflyElement) {
+              butterflyElement.remove();
+              butterflyElement = null;
+            }
+            if (flutterInterval) {
+              clearInterval(flutterInterval);
+              flutterInterval = null;
+            }
+            if (animFrameId) {
+              cancelAnimationFrame(animFrameId);
+              animFrameId = null;
+            }
+          }, 500);
+        }
+      }, 3000);
+
+      butterflyTimeout = setTimeout(() => {
+        // Reset idle timeout on movement
+        clearTimeout(idleTimeout);
+        butterflyTimeout = null;
+      }, 100);
+
+      // Store timeout reference
+      butterflyElement._idleTimeout = idleTimeout;
+      butterflyElement._followFrame = animFrameId;
+
+      isFlying = true;
+    };
+
+    // Update mouse position
+    const handleMouseMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Create butterfly if not flying
+      if (!isFlying) {
+        if (Math.random() < 0.035) {
+          createButterfly(e.clientX, e.clientY);
+        }
+      } else {
+        // Reset idle timeout on movement
+        if (butterflyElement && butterflyElement._idleTimeout) {
+          clearTimeout(butterflyElement._idleTimeout);
+          butterflyElement._idleTimeout = setTimeout(() => {
+            if (butterflyElement) {
+              butterflyElement.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+              butterflyElement.style.opacity = '0';
+              butterflyElement.style.transform = 'scale(0.3) rotate(20deg)';
+              setTimeout(() => {
+                if (butterflyElement) {
+                  butterflyElement.remove();
+                  butterflyElement = null;
+                }
+                if (flutterInterval) {
+                  clearInterval(flutterInterval);
+                  flutterInterval = null;
+                }
+                if (animFrameId) {
+                  cancelAnimationFrame(animFrameId);
+                  animFrameId = null;
+                }
+                isFlying = false;
+              }, 500);
+            }
+          }, 3000);
+        }
+      }
+    };
+
+    const handleClick = (e) => {
+      // Create burst of butterflies on click
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          createButterfly(
+            e.clientX + (Math.random() - 0.5) * 100,
+            e.clientY + (Math.random() - 0.5) * 100
+          );
+        }, i * 120);
+      }
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('click', handleClick);
+      if (butterflyElement) {
+        butterflyElement.remove();
+        butterflyElement = null;
+      }
+      if (butterflyTimeout) {
+        clearTimeout(butterflyTimeout);
+        butterflyTimeout = null;
+      }
+      if (flutterInterval) {
+        clearInterval(flutterInterval);
+        flutterInterval = null;
+      }
+      if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -364,6 +591,42 @@ const Home = () => {
     { value: "24/7", label: "Support", icon: <MessageCircle className="w-6 h-6" /> },
   ];
 
+  // Search Functionality
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query.length > 0) {
+      const results = featuredProducts.filter(
+        (product) =>
+          product.name.toLowerCase().includes(query.toLowerCase()) ||
+          product.category.toLowerCase().includes(query.toLowerCase()) ||
+          product.badge?.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(results);
+      setIsSearchOpen(true);
+    } else {
+      setSearchResults([]);
+      setIsSearchOpen(false);
+    }
+  };
+
+  const handleSearchSelect = (path) => {
+    setSearchQuery("");
+    setSearchResults([]);
+    setIsSearchOpen(false);
+    handleNavigate(path);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.search-container')) {
+        setIsSearchOpen(false);
+        setSearchResults([]);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
   useEffect(() => {
     let interval;
     if (isAutoPlaying) {
@@ -398,18 +661,14 @@ const Home = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // If loading, show only preloader - NO header/footer visible
   if (loading) {
     return <Preloader onComplete={() => setLoading(false)} />;
   }
 
-  // When loading is complete, show full home page
   return (
     <div className="w-full overflow-x-hidden bg-[#EFE5E7]">
       
-      {/* ============================================
-          HERO SECTION - ONLY BANNER, NO TEXT
-          ============================================ */}
+      {/* Hero Section */}
       <section className="relative h-[60vh] sm:h-[70vh] md:h-[85vh] lg:h-screen w-full overflow-hidden">
         {slides.map((slide, index) => (
           <div
@@ -420,17 +679,14 @@ const Home = () => {
                 : "opacity-0 scale-110 pointer-events-none"
             }`}
           >
-            {/* Background Image */}
             <img
               src={slide.src}
               alt="Wedding Banner"
               className="absolute inset-0 w-full h-full object-cover"
             />
             
-            {/* Solid dark overlay for readability */}
             <div className="absolute inset-0 w-full h-full bg-[#532D2A]/40"></div>
 
-            {/* Buttons - Bottom Aligned */}
             <div className="absolute bottom-8 sm:bottom-12 md:bottom-16 left-0 right-0 z-20 flex justify-center px-4 sm:px-6">
               <div
                 className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center transform transition-all duration-1000 ${
@@ -460,7 +716,6 @@ const Home = () => {
           </div>
         ))}
 
-        {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
           className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-30 group border border-white/20"
@@ -475,7 +730,6 @@ const Home = () => {
           <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
-        {/* Slide Indicators */}
         <div className="absolute bottom-28 sm:bottom-32 md:bottom-36 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
           {slides.map((_, index) => (
             <button
@@ -599,7 +853,7 @@ const Home = () => {
             {featuredProducts.map((product) => (
               <div
                 key={product.id}
-                className="group bg-[#EFE5E7] rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 cursor-pointer"
+                className="group bg-[#EFE5E7] rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
                 onMouseEnter={() => setHoveredProduct(product.id)}
                 onMouseLeave={() => setHoveredProduct(null)}
                 onClick={() => handleNavigate("/weddingcards")}

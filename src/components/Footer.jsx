@@ -16,62 +16,133 @@ import {
 const Footer = () => {
   const cursorRef = useRef(null);
 
-  // Heart Bubble Cursor Effect
+  // ============================================
+  // BUTTERFLY CURSOR EFFECT - NO HEARTS
+  // ============================================
   useEffect(() => {
-    const createHeartBubble = (x, y) => {
-      const heart = document.createElement('div');
-      heart.innerHTML = '❤️';
-      heart.style.cssText = `
+    let butterflyTimeout = null;
+    let butterflyElement = null;
+    let isFlying = false;
+    let flutterInterval = null;
+
+    const createButterfly = (x, y) => {
+      // Remove existing butterfly
+      if (butterflyElement) {
+        butterflyElement.remove();
+        butterflyElement = null;
+      }
+      if (butterflyTimeout) {
+        clearTimeout(butterflyTimeout);
+        butterflyTimeout = null;
+      }
+      if (flutterInterval) {
+        clearInterval(flutterInterval);
+        flutterInterval = null;
+      }
+
+      // Butterfly colors
+      const colors = ['#B392A4', '#D4AF37', '#E8D5B7', '#C49B6C', '#F5E6D3', '#E8A87C', '#D4A5A5'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      const size = 14 + Math.random() * 12;
+
+      butterflyElement = document.createElement('div');
+      butterflyElement.innerHTML = `
+        <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12 C8 4, 2 6, 2 12 C2 18, 8 20, 12 12Z" 
+            fill="${randomColor}" opacity="0.65" stroke="${randomColor}" stroke-width="0.5"/>
+          <path d="M12 12 C16 4, 22 6, 22 12 C22 18, 16 20, 12 12Z" 
+            fill="${randomColor}" opacity="0.65" stroke="${randomColor}" stroke-width="0.5"/>
+          <path d="M12 12 C9 6, 4 8, 4 12 C4 16, 9 18, 12 12Z" 
+            fill="${randomColor}" opacity="0.4" stroke="${randomColor}" stroke-width="0.3"/>
+          <path d="M12 12 C15 6, 20 8, 20 12 C20 16, 15 18, 12 12Z" 
+            fill="${randomColor}" opacity="0.4" stroke="${randomColor}" stroke-width="0.3"/>
+          <ellipse cx="12" cy="12" rx="1.8" ry="5.5" fill="#532D2A" opacity="0.5"/>
+          <path d="M12 6.5 C11 4.5, 9.5 3.5, 8.5 3" stroke="#532D2A" stroke-width="0.7" opacity="0.4" stroke-linecap="round"/>
+          <path d="M12 6.5 C13 4.5, 14.5 3.5, 15.5 3" stroke="#532D2A" stroke-width="0.7" opacity="0.4" stroke-linecap="round"/>
+          <circle cx="6" cy="8" r="0.8" fill="#D4AF37" opacity="0.3"/>
+          <circle cx="18" cy="8" r="0.8" fill="#D4AF37" opacity="0.3"/>
+          <circle cx="7" cy="16" r="0.6" fill="#D4AF37" opacity="0.2"/>
+          <circle cx="17" cy="16" r="0.6" fill="#D4AF37" opacity="0.2"/>
+        </svg>
+      `;
+      
+      butterflyElement.style.cssText = `
         position: fixed;
-        left: ${x}px;
-        top: ${y}px;
-        font-size: ${20 + Math.random() * 30}px;
+        left: ${x - size/2}px;
+        top: ${y - size/2}px;
         pointer-events: none;
         z-index: 9999;
-        animation: heartBubble 1.5s ease-out forwards;
+        animation: butterflyFloat 1.8s ease-out forwards;
         user-select: none;
+        filter: drop-shadow(0 2px 10px rgba(179, 146, 164, 0.15));
       `;
-      document.body.appendChild(heart);
+      document.body.appendChild(butterflyElement);
 
-      // Remove heart after animation
-      setTimeout(() => {
-        heart.remove();
-      }, 1500);
+      // Wing flutter
+      flutterInterval = setInterval(() => {
+        if (!butterflyElement) {
+          clearInterval(flutterInterval);
+          flutterInterval = null;
+          return;
+        }
+        const wings = butterflyElement.querySelectorAll('path');
+        wings.forEach((wing, index) => {
+          if (index < 2) {
+            const scaleY = 0.4 + Math.sin(Date.now() / 150 + index * 0.8) * 0.4;
+            wing.setAttribute('transform', `scale(1, ${scaleY})`);
+          }
+        });
+      }, 30);
+
+      butterflyTimeout = setTimeout(() => {
+        if (butterflyElement) {
+          butterflyElement.remove();
+          butterflyElement = null;
+        }
+        if (flutterInterval) {
+          clearInterval(flutterInterval);
+          flutterInterval = null;
+        }
+        butterflyTimeout = null;
+        isFlying = false;
+      }, 1800);
     };
 
-    // Add keyframe animation
+    // Add butterfly animation
     const style = document.createElement('style');
     style.textContent = `
-      @keyframes heartBubble {
-        0% {
-          transform: translate(0, 0) scale(1) rotate(0deg);
-          opacity: 1;
-        }
-        100% {
-          transform: translate(${-50 + Math.random() * 100}px, -150px) scale(1.5) rotate(20deg);
-          opacity: 0;
-        }
+      @keyframes butterflyFloat {
+        0% { transform: translate(0, 0) scale(0.2) rotate(-15deg); opacity: 0.2; }
+        15% { opacity: 0.7; }
+        30% { transform: translate(${-15 + Math.random() * 30}px, -25px) scale(0.7) rotate(8deg); opacity: 0.9; }
+        55% { transform: translate(${-8 + Math.random() * 16}px, -45px) scale(0.5) rotate(-12deg); opacity: 0.8; }
+        80% { transform: translate(${-5 + Math.random() * 10}px, -60px) scale(0.4) rotate(6deg); opacity: 0.5; }
+        100% { transform: translate(${-10 + Math.random() * 20}px, -80px) scale(0.2) rotate(15deg); opacity: 0; }
       }
     `;
     document.head.appendChild(style);
 
-    // Mouse move handler
+    let lastTime = 0;
     const handleMouseMove = (e) => {
-      // Random chance to create heart (20% chance)
-      if (Math.random() < 0.2) {
-        createHeartBubble(e.clientX, e.clientY);
+      const now = Date.now();
+      if (now - lastTime > 500 && !isFlying) {
+        lastTime = now;
+        if (Math.random() < 0.025) {
+          isFlying = true;
+          createButterfly(e.clientX, e.clientY);
+          setTimeout(() => { isFlying = false; }, 1800);
+        }
       }
     };
 
-    // Mouse click handler - creates multiple hearts
     const handleClick = (e) => {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 4; i++) {
         setTimeout(() => {
-          createHeartBubble(
-            e.clientX + (Math.random() - 0.5) * 60,
-            e.clientY + (Math.random() - 0.5) * 60
+          createButterfly(
+            e.clientX + (Math.random() - 0.5) * 80,
+            e.clientY + (Math.random() - 0.5) * 80
           );
-        }, i * 100);
+        }, i * 150);
       }
     };
 
@@ -82,6 +153,18 @@ const Footer = () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('click', handleClick);
       document.head.removeChild(style);
+      if (butterflyElement) {
+        butterflyElement.remove();
+        butterflyElement = null;
+      }
+      if (butterflyTimeout) {
+        clearTimeout(butterflyTimeout);
+        butterflyTimeout = null;
+      }
+      if (flutterInterval) {
+        clearInterval(flutterInterval);
+        flutterInterval = null;
+      }
     };
   }, []);
 
@@ -285,10 +368,10 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Divider with heart */}
+        {/* Divider with heart - Keep as static icon, no animation */}
         <div className="relative flex items-center justify-center my-8">
           <div className="flex-1 border-t border-[#B392A4]/20"></div>
-          <Heart className="w-6 h-6 text-[#B392A4] mx-4 fill-[#B392A4]/20 animate-pulse" />
+          <Heart className="w-6 h-6 text-[#B392A4] mx-4 fill-[#B392A4]/20" />
           <div className="flex-1 border-t border-[#B392A4]/20"></div>
         </div>
 
@@ -320,36 +403,24 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Cursor Animation Styles */}
+      {/* Cursor Animation Styles - No hearts */}
       <style>{`
-        @keyframes heartBubble {
-          0% {
-            transform: translate(0, 0) scale(1) rotate(0deg);
-            opacity: 1;
-          }
-          100% {
-            transform: translate(var(--tx), -150px) scale(1.5) rotate(20deg);
-            opacity: 0;
-          }
+        @keyframes butterflyFloat {
+          0% { transform: translate(0, 0) scale(0.2) rotate(-15deg); opacity: 0.2; }
+          15% { opacity: 0.7; }
+          30% { transform: translate(-15px, -25px) scale(0.7) rotate(8deg); opacity: 0.9; }
+          55% { transform: translate(-8px, -45px) scale(0.5) rotate(-12deg); opacity: 0.8; }
+          80% { transform: translate(-5px, -60px) scale(0.4) rotate(6deg); opacity: 0.5; }
+          100% { transform: translate(-10px, -80px) scale(0.2) rotate(15deg); opacity: 0; }
         }
 
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.1); }
+        /* Remove any heart cursor elements */
+        [style*="heart"] {
+          display: none !important;
         }
 
-        .animate-pulse {
-          animation: pulse 2s ease-in-out infinite;
-        }
-
-        /* Custom cursor for the footer */
         footer {
           cursor: default;
-        }
-
-        /* Heart trail effect on hover over links */
-        footer a:hover {
-          position: relative;
         }
       `}</style>
     </footer>
