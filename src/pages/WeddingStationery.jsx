@@ -335,7 +335,7 @@ const WeddingStationery = () => {
     // Update URL with category parameter
     navigate(`/weddingstationery?category=${categoryId}`, { replace: true });
   };
-
+  
   return (
     <div className="min-h-screen bg-[#EFE5E7] pt-20">
       {/* Hero Section - New Theme */}

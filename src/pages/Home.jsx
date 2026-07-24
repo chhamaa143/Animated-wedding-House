@@ -160,7 +160,7 @@ const Preloader = ({ onComplete }) => {
         .delay-2000 {
           animation-delay: 2s;
         }
-      `}</style>
+      `}</style> 
     </div>
   );
 };
@@ -174,7 +174,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const videoRefs = useRef([]);
 
-  // Search State - Connected to Navbar
+  // Search State
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -194,7 +194,6 @@ const Home = () => {
     let animFrameId = null;
 
     const createButterfly = (x, y) => {
-      // Remove existing butterfly
       if (butterflyElement) {
         butterflyElement.remove();
         butterflyElement = null;
@@ -208,14 +207,16 @@ const Home = () => {
         flutterInterval = null;
       }
 
-      // More visible colors
       const colors = ['#B392A4', '#D4AF37', '#E8A87C', '#D4A5A5', '#C49B6C', '#E8D5B7', '#F5E6D3'];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
       const size = 20 + Math.random() * 16;
 
       butterflyElement = document.createElement('div');
       butterflyElement.innerHTML = `
-        <svg width="${size}" height="${size}" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="${size}" height="${size}" viewBox="0 0 28 28" fill="none" xmlns="http:// 
+        
+        
+        www.w3.org/2000/svg">
           <path d="M14 14 C9 4, 2 6, 2 14 C2 22, 9 24, 14 14Z" 
             fill="${randomColor}" opacity="0.8" stroke="${randomColor}" stroke-width="1.2"/>
           <path d="M14 14 C19 4, 26 6, 26 14 C26 22, 19 24, 14 14Z" 
@@ -249,7 +250,6 @@ const Home = () => {
       `;
       document.body.appendChild(butterflyElement);
 
-      // Wing flutter
       flutterInterval = setInterval(() => {
         if (!butterflyElement) {
           clearInterval(flutterInterval);
@@ -265,14 +265,12 @@ const Home = () => {
         });
       }, 25);
 
-      // Animation loop for smooth following
       const followCursor = () => {
         if (!butterflyElement) {
           if (animFrameId) cancelAnimationFrame(animFrameId);
           return;
         }
         
-        // Smooth follow with easing
         const dx = mouseX - butterflyX - size/2;
         const dy = mouseY - butterflyY - size/2;
         const speed = 0.15;
@@ -288,7 +286,6 @@ const Home = () => {
 
       followCursor();
 
-      // Auto remove after 3 seconds of no movement
       let idleTimeout = setTimeout(() => {
         if (butterflyElement) {
           butterflyElement.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
@@ -307,35 +304,31 @@ const Home = () => {
               cancelAnimationFrame(animFrameId);
               animFrameId = null;
             }
+            isFlying = false;
           }, 500);
         }
       }, 3000);
 
       butterflyTimeout = setTimeout(() => {
-        // Reset idle timeout on movement
         clearTimeout(idleTimeout);
         butterflyTimeout = null;
       }, 100);
 
-      // Store timeout reference
       butterflyElement._idleTimeout = idleTimeout;
       butterflyElement._followFrame = animFrameId;
 
       isFlying = true;
     };
 
-    // Update mouse position
     const handleMouseMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       
-      // Create butterfly if not flying
       if (!isFlying) {
         if (Math.random() < 0.035) {
           createButterfly(e.clientX, e.clientY);
         }
       } else {
-        // Reset idle timeout on movement
         if (butterflyElement && butterflyElement._idleTimeout) {
           clearTimeout(butterflyElement._idleTimeout);
           butterflyElement._idleTimeout = setTimeout(() => {
@@ -365,7 +358,6 @@ const Home = () => {
     };
 
     const handleClick = (e) => {
-      // Create burst of butterflies on click
       for (let i = 0; i < 5; i++) {
         setTimeout(() => {
           createButterfly(
@@ -410,7 +402,7 @@ const Home = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Slides Data - Only banner images
+  // Slides Data
   const slides = [
     {
       id: 1,
@@ -668,8 +660,10 @@ const Home = () => {
   return (
     <div className="w-full overflow-x-hidden bg-[#EFE5E7]">
       
-      {/* Hero Section */}
-      <section className="relative h-[60vh] sm:h-[70vh] md:h-[85vh] lg:h-screen w-full overflow-hidden">
+      {/* ============================================
+          HERO SECTION - FIXED MOBILE VIEW
+          ============================================ */}
+      <section className="relative h-[40vh] sm:h-[50vh] md:h-[70vh] lg:h-[85vh] xl:h-screen w-full overflow-hidden">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
@@ -682,14 +676,15 @@ const Home = () => {
             <img
               src={slide.src}
               alt="Wedding Banner"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover object-center"
             />
             
             <div className="absolute inset-0 w-full h-full bg-[#532D2A]/40"></div>
 
-            <div className="absolute bottom-8 sm:bottom-12 md:bottom-16 left-0 right-0 z-20 flex justify-center px-4 sm:px-6">
+            {/* Buttons - Bottom Aligned - Responsive */}
+            <div className="absolute bottom-4 sm:bottom-8 md:bottom-12 lg:bottom-16 left-0 right-0 z-20 flex justify-center px-4 sm:px-6">
               <div
-                className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center transform transition-all duration-1000 ${
+                className={`flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 justify-center items-center transform transition-all duration-1000 ${
                   index === currentSlide
                     ? "translate-y-0 opacity-100"
                     : "translate-y-10 opacity-0"
@@ -697,7 +692,7 @@ const Home = () => {
               >
                 <button
                   onClick={() => handleNavigate("/weddingcards")}
-                  className="group bg-[#B392A4] hover:bg-[#EFE5E7] hover:text-[#532D2A] text-white px-8 sm:px-10 py-3 sm:py-3.5 rounded-full font-medium transition-all duration-300 hover:scale-105 text-sm sm:text-base shadow-lg tracking-wider min-w-[160px]"
+                  className="group bg-[#B392A4] hover:bg-[#EFE5E7] hover:text-[#532D2A] text-white px-5 sm:px-8 md:px-10 py-2 sm:py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 text-xs sm:text-sm md:text-base shadow-lg tracking-wider min-w-[120px] sm:min-w-[140px] md:min-w-[160px]"
                 >
                   {slide.cta || "Shop Now"}
                 </button>
@@ -706,31 +701,34 @@ const Home = () => {
                   href="https://wa.me/918435111188"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group border-2 border-[#B392A4] hover:bg-[#B392A4] text-white hover:text-white px-8 sm:px-10 py-3 sm:py-3.5 rounded-full font-medium transition-all duration-300 hover:scale-105 text-sm sm:text-base tracking-wider min-w-[160px] flex items-center justify-center gap-2"
+                  className="group border-2 border-[#B392A4] hover:bg-[#B392A4] text-white hover:text-white px-5 sm:px-8 md:px-10 py-2 sm:py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 text-xs sm:text-sm md:text-base tracking-wider min-w-[120px] sm:min-w-[140px] md:min-w-[160px] flex items-center justify-center gap-2"
                 >
-                  <MessageCircle className="w-4 h-4" />
-                  Book Consultation
+                  <MessageCircle className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden xs:inline">Book Consultation</span>
+                  <span className="xs:hidden">Consult</span>
                 </a>
               </div>
             </div>
           </div>
         ))}
 
+        {/* Navigation Arrows - Hidden on very small screens */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-30 group border border-white/20"
+          className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-1.5 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-30 group border border-white/20"
         >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
         </button>
 
         <button
           onClick={nextSlide}
-          className="absolute right-2 sm:right-6 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-30 group border border-white/20"
+          className="absolute right-2 sm:right-6 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-1.5 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-30 group border border-white/20"
         >
-          <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ChevronRightIcon className="w-4 h-4 sm:w-6 sm:h-6" />
         </button>
 
-        <div className="absolute bottom-28 sm:bottom-32 md:bottom-36 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
+        {/* Slide Indicators */}
+        <div className="absolute bottom-16 sm:bottom-24 md:bottom-28 lg:bottom-32 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-3 z-30">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -741,8 +739,8 @@ const Home = () => {
               }}
               className={`h-1 rounded-full transition-all duration-300 ${
                 index === currentSlide
-                  ? "w-10 bg-[#B392A4]"
-                  : "w-4 bg-white/30 hover:bg-white/50"
+                  ? "w-6 sm:w-10 bg-[#B392A4]"
+                  : "w-2 sm:w-4 bg-white/30 hover:bg-white/50"
               }`}
             />
           ))}
@@ -750,18 +748,18 @@ const Home = () => {
       </section>
 
       {/* Stats Section */}
-      <div className="relative -mt-8 sm:-mt-12 z-10 px-4">
+      <div className="relative -mt-4 sm:-mt-8 md:-mt-12 z-10 px-4">
         <div className="container-custom mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-6">
             {stats.map((stat, index) => (
               <div key={index} className="text-center group">
-                <div className="text-[#B392A4] mb-2 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
+                <div className="text-[#B392A4] mb-1 sm:mb-2 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
                   {stat.icon}
                 </div>
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-[#532D2A]">
+                <div className="text-base sm:text-xl md:text-2xl font-bold text-[#532D2A]">
                   {stat.value}
                 </div>
-                <div className="text-xs sm:text-sm text-gray-600">
+                <div className="text-[10px] sm:text-sm text-gray-600">
                   {stat.label}
                 </div>
               </div>
@@ -771,24 +769,24 @@ const Home = () => {
       </div>
 
       {/* Category Showcase */}
-      <section className="py-12 sm:py-16 md:py-20">
+      <section className="py-10 sm:py-16 md:py-20">
         <div className="container-custom px-4 sm:px-6">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <div className="inline-block px-4 py-1 bg-[#B392A4]/10 rounded-full mb-3">
-              <span className="text-[#B392A4] font-semibold text-xs sm:text-sm uppercase tracking-wider">
+          <div className="text-center mb-6 sm:mb-12 md:mb-16">
+            <div className="inline-block px-3 py-1 sm:px-4 sm:py-1 bg-[#B392A4]/10 rounded-full mb-2 sm:mb-3">
+              <span className="text-[#B392A4] font-semibold text-[10px] sm:text-sm uppercase tracking-wider">
                 Our Collections
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-3">
+            <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-2 sm:mb-3">
               Explore Premium Collections
             </h2>
-            <div className="w-20 h-0.5 bg-[#B392A4] mx-auto mb-4"></div>
-            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
+            <div className="w-16 sm:w-20 h-0.5 bg-[#B392A4] mx-auto mb-3 sm:mb-4"></div>
+            <p className="text-xs sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
               Discover our meticulously crafted wedding invitations and stationery
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-5 md:gap-6">
             {categories.map((category) => (
               <Link
                 key={category.id}
@@ -800,28 +798,28 @@ const Home = () => {
                     src={getImageSrc(category)}
                     alt={category.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    watermarkSize={isMobile ? 100 : 120}
+                    watermarkSize={isMobile ? 80 : 120}
                     watermarkOpacity={0.4}
                     watermarkPosition="center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
-                  <div className="absolute top-2 right-2 bg-[#B392A4]/20 backdrop-blur-sm rounded-full px-2 py-1">
-                    <span className="text-[#B392A4] text-xs font-bold">
+                  <div className="absolute top-2 right-2 bg-[#B392A4]/20 backdrop-blur-sm rounded-full px-1.5 py-0.5 sm:px-2 sm:py-1">
+                    <span className="text-[#B392A4] text-[10px] sm:text-xs font-bold">
                       {category.count}+
                     </span>
                   </div>
 
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-base sm:text-lg font-serif font-bold mb-1">
+                  <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="text-sm sm:text-lg font-serif font-bold mb-0.5 sm:mb-1">
                       {category.name}
                     </h3>
-                    <p className="text-xs text-white/80 mb-2">
+                    <p className="text-[8px] sm:text-xs text-white/80 mb-1 sm:mb-2">
                       {category.description}
                     </p>
                     <div className="flex items-center text-[#B392A4] opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <span className="text-xs font-medium">Explore Now</span>
-                      <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
+                      <span className="text-[8px] sm:text-xs font-medium">Explore Now</span>
+                      <ArrowRight className="w-2 h-2 sm:w-3 sm:h-3 ml-1 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </div>
@@ -832,24 +830,24 @@ const Home = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-12 sm:py-16 md:py-20 bg-white">
+      <section className="py-10 sm:py-16 md:py-20 bg-white">
         <div className="container-custom px-4 sm:px-6">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <div className="inline-block px-4 py-1 bg-[#B392A4]/10 rounded-full mb-3">
-              <span className="text-[#B392A4] font-semibold text-xs sm:text-sm uppercase tracking-wider">
+          <div className="text-center mb-6 sm:mb-12 md:mb-16">
+            <div className="inline-block px-3 py-1 sm:px-4 sm:py-1 bg-[#B392A4]/10 rounded-full mb-2 sm:mb-3">
+              <span className="text-[#B392A4] font-semibold text-[10px] sm:text-sm uppercase tracking-wider">
                 Best Sellers
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-3">
+            <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-2 sm:mb-3">
               Featured Wedding Cards
             </h2>
-            <div className="w-20 h-0.5 bg-[#B392A4] mx-auto mb-4"></div>
-            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
+            <div className="w-16 sm:w-20 h-0.5 bg-[#B392A4] mx-auto mb-3 sm:mb-4"></div>
+            <p className="text-xs sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
               Our most popular designs, loved by couples across India
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-5 md:gap-6">
             {featuredProducts.map((product) => (
               <div
                 key={product.id}
@@ -863,53 +861,53 @@ const Home = () => {
                     src={getImageSrc(product)}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    watermarkSize={100}
+                    watermarkSize={80}
                     watermarkOpacity={0.4}
                     watermarkPosition="center"
                   />
 
                   {product.badge && (
                     <span
-                      className={`absolute top-2 left-2 bg-[#B392A4] text-white text-xs font-bold px-2 py-1 rounded-lg z-10 shadow-md`}
+                      className={`absolute top-1 left-1 sm:top-2 sm:left-2 bg-[#B392A4] text-white text-[8px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-lg z-10 shadow-md`}
                     >
                       {product.badge}
                     </span>
                   )}
 
-                  <span className="absolute top-2 right-2 bg-[#532D2A]/90 text-white text-xs font-bold px-2 py-1 rounded-lg z-10">
+                  <span className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-[#532D2A]/90 text-white text-[8px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-lg z-10">
                     {product.category}
                   </span>
 
                   <button
-                    className="absolute bottom-2 right-2 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-[#B392A4] hover:text-white transition-all duration-300 transform hover:scale-110 z-10 opacity-0 group-hover:opacity-100"
+                    className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 p-1 sm:p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-[#B392A4] hover:text-white transition-all duration-300 transform hover:scale-110 z-10 opacity-0 group-hover:opacity-100"
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
                   >
-                    <Heart className="w-4 h-4" />
+                    <Heart className="w-3 h-3 sm:w-4 sm:h-4" />
                   </button>
 
                   {hoveredProduct === product.id && (
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button className="bg-white text-[#532D2A] px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#B392A4] hover:text-white transition-all duration-300 transform hover:scale-105">
+                      <button className="bg-white text-[#532D2A] px-2 py-1 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-sm font-semibold hover:bg-[#B392A4] hover:text-white transition-all duration-300 transform hover:scale-105">
                         Quick View
                       </button>
                     </div>
                   )}
                 </div>
 
-                <div className="p-3 sm:p-4">
-                  <h3 className="font-bold text-sm sm:text-base mb-1 line-clamp-1 group-hover:text-[#B392A4] transition-colors">
+                <div className="p-2 sm:p-4">
+                  <h3 className="font-bold text-xs sm:text-base mb-0.5 sm:mb-1 line-clamp-1 group-hover:text-[#B392A4] transition-colors">
                     {product.name}
                   </h3>
 
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center justify-between mb-1 sm:mb-2">
                     <div className="flex items-center">
                       <div className="flex">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
-                            className={`w-3 h-3 sm:w-4 sm:h-4 ${
+                            className={`w-2 h-2 sm:w-4 sm:h-4 ${
                               i < Math.floor(product.rating)
                                 ? "text-[#B392A4] fill-current"
                                 : "text-gray-300"
@@ -917,23 +915,23 @@ const Home = () => {
                           />
                         ))}
                       </div>
-                      <span className="ml-1 text-xs text-gray-500">
+                      <span className="ml-0.5 sm:ml-1 text-[8px] sm:text-xs text-gray-500">
                         ({product.reviews})
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="text-[#B392A4] font-bold text-sm sm:text-base">
+                      <span className="text-[#B392A4] font-bold text-xs sm:text-base">
                         {product.price}
                       </span>
                       {product.originalPrice && (
-                        <span className="text-gray-400 text-xs line-through ml-1">
+                        <span className="text-gray-400 text-[8px] sm:text-xs line-through ml-0.5 sm:ml-1">
                           {product.originalPrice}
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <button className="w-full text-center py-2 px-3 bg-[#532D2A] hover:bg-[#B392A4] text-white rounded-lg transition-all duration-300 font-medium text-xs sm:text-sm">
+                  <button className="w-full text-center py-1 sm:py-2 px-2 sm:px-3 bg-[#532D2A] hover:bg-[#B392A4] text-white rounded-lg transition-all duration-300 font-medium text-[10px] sm:text-sm">
                     View Details
                   </button>
                 </div>
@@ -941,74 +939,74 @@ const Home = () => {
             ))}
           </div>
 
-          <div className="text-center mt-10 sm:mt-12">
+          <div className="text-center mt-8 sm:mt-12">
             <button
               onClick={() => handleNavigate("/weddingcards")}
-              className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 border-2 border-[#532D2A] text-[#532D2A] rounded-full hover:bg-[#532D2A] hover:text-white transition-all duration-300 font-semibold"
+              className="group inline-flex items-center gap-2 px-4 sm:px-8 py-2 sm:py-3 border-2 border-[#532D2A] text-[#532D2A] rounded-full hover:bg-[#532D2A] hover:text-white transition-all duration-300 font-semibold text-sm sm:text-base"
             >
               View All Products
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-12 sm:py-16 md:py-20 bg-[#EFE5E7]">
+      <section className="py-10 sm:py-16 md:py-20 bg-[#EFE5E7]">
         <div className="container-custom px-4 sm:px-6">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <div className="inline-block px-4 py-1 bg-[#B392A4]/10 rounded-full mb-3">
-              <span className="text-[#B392A4] font-semibold text-xs sm:text-sm uppercase tracking-wider">
+          <div className="text-center mb-6 sm:mb-12 md:mb-16">
+            <div className="inline-block px-3 py-1 sm:px-4 sm:py-1 bg-[#B392A4]/10 rounded-full mb-2 sm:mb-3">
+              <span className="text-[#B392A4] font-semibold text-[10px] sm:text-sm uppercase tracking-wider">
                 Our Promise
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-3">
+            <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-2 sm:mb-3">
               Why Choose Wedding House
             </h2>
-            <div className="w-20 h-0.5 bg-[#B392A4] mx-auto mb-4"></div>
-            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
+            <div className="w-16 sm:w-20 h-0.5 bg-[#B392A4] mx-auto mb-3 sm:mb-4"></div>
+            <p className="text-xs sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
               Experience the perfect blend of tradition, luxury, and exceptional service
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
             {[
               {
-                icon: <Award className="w-8 h-8 sm:w-10 sm:h-10" />,
+                icon: <Award className="w-6 h-6 sm:w-10 sm:h-10" />,
                 title: "Premium Paper",
                 desc: "Highest quality imported paper stocks",
               },
               {
-                icon: <Shield className="w-8 h-8 sm:w-10 sm:h-10" />,
+                icon: <Shield className="w-6 h-6 sm:w-10 sm:h-10" />,
                 title: "Custom Design",
                 desc: "Personalized designs just for you",
               },
               {
-                icon: <Truck className="w-8 h-8 sm:w-10 sm:h-10" />,
+                icon: <Truck className="w-6 h-6 sm:w-10 sm:h-10" />,
                 title: "Fast Delivery",
                 desc: "Pan India shipping with tracking",
               },
               {
-                icon: <Star className="w-8 h-8 sm:w-10 sm:h-10" />,
+                icon: <Star className="w-6 h-6 sm:w-10 sm:h-10" />,
                 title: "Quality Guarantee",
                 desc: "100% satisfaction guaranteed",
               },
             ].map((feature, index) => (
               <div
                 key={index}
-                className="group relative bg-white p-5 sm:p-6 md:p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden text-center"
+                className="group relative bg-white p-3 sm:p-6 md:p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden text-center"
               >
                 <div className="absolute top-0 left-0 w-full h-1 bg-[#B392A4] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
                 <div className="relative z-10">
                   <div
-                    className="inline-block p-3 sm:p-4 bg-[#B392A4]/10 rounded-2xl text-[#532D2A] mb-4 group-hover:scale-110 transition-transform duration-300"
+                    className="inline-block p-2 sm:p-4 bg-[#B392A4]/10 rounded-2xl text-[#532D2A] mb-2 sm:mb-4 group-hover:scale-110 transition-transform duration-300"
                   >
                     <div className="text-[#B392A4]">{feature.icon}</div>
                   </div>
-                  <h3 className="font-bold text-base sm:text-lg mb-2 group-hover:text-[#B392A4] transition-colors">
+                  <h3 className="font-bold text-sm sm:text-lg mb-1 sm:mb-2 group-hover:text-[#B392A4] transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  <p className="text-[10px] sm:text-sm text-gray-600 leading-relaxed">
                     {feature.desc}
                   </p>
                 </div>
@@ -1019,64 +1017,64 @@ const Home = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-12 sm:py-16 md:py-20 bg-white">
+      <section className="py-10 sm:py-16 md:py-20 bg-white">
         <div className="container-custom px-4 sm:px-6">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <div className="inline-block px-4 py-1 bg-[#B392A4]/10 rounded-full mb-3">
-              <span className="text-[#B392A4] font-semibold text-xs sm:text-sm uppercase tracking-wider">
+          <div className="text-center mb-6 sm:mb-12 md:mb-16">
+            <div className="inline-block px-3 py-1 sm:px-4 sm:py-1 bg-[#B392A4]/10 rounded-full mb-2 sm:mb-3">
+              <span className="text-[#B392A4] font-semibold text-[10px] sm:text-sm uppercase tracking-wider">
                 Testimonials
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-3">
+            <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-2 sm:mb-3">
               What Couples Say
             </h2>
-            <div className="w-20 h-0.5 bg-[#B392A4] mx-auto mb-4"></div>
-            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
+            <div className="w-16 sm:w-20 h-0.5 bg-[#B392A4] mx-auto mb-3 sm:mb-4"></div>
+            <p className="text-xs sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
               Real stories from happy couples who trusted us with their special day
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="group bg-[#EFE5E7] p-6 sm:p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden"
+                className="group bg-[#EFE5E7] p-4 sm:p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden"
               >
-                <div className="absolute top-4 right-4 text-5xl sm:text-6xl font-serif text-[#B392A4]/20 group-hover:text-[#B392A4]/30 transition-colors duration-300">
+                <div className="absolute top-2 right-2 sm:top-4 sm:right-4 text-3xl sm:text-6xl font-serif text-[#B392A4]/20 group-hover:text-[#B392A4]/30 transition-colors duration-300">
                   "
                 </div>
 
                 <div className="relative z-10">
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-2 sm:mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-4 h-4 sm:w-5 sm:h-5 text-[#B392A4] fill-current"
+                        className="w-3 h-3 sm:w-5 sm:h-5 text-[#B392A4] fill-current"
                       />
                     ))}
                   </div>
 
-                  <p className="text-sm sm:text-base text-gray-700 italic mb-4 leading-relaxed line-clamp-3">
+                  <p className="text-xs sm:text-base text-gray-700 italic mb-3 sm:mb-4 leading-relaxed line-clamp-3">
                     "{testimonial.quote}"
                   </p>
 
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-[#B392A4] flex items-center justify-center text-white font-bold text-lg">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[#B392A4] flex items-center justify-center text-white font-bold text-sm sm:text-lg">
                       {testimonial.name.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="font-bold text-base text-[#532D2A]">
+                      <h4 className="font-bold text-sm sm:text-base text-[#532D2A]">
                         {testimonial.name}
                       </h4>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-[10px] sm:text-xs text-gray-500">
                         {testimonial.location}
                       </p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-[#B392A4] font-semibold">
+                      <div className="flex items-center gap-1 sm:gap-2 mt-0.5 sm:mt-1">
+                        <span className="text-[8px] sm:text-xs text-[#B392A4] font-semibold">
                           {testimonial.event}
                         </span>
-                        <span className="text-xs text-gray-400">•</span>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-[8px] sm:text-xs text-gray-400">•</span>
+                        <span className="text-[8px] sm:text-xs text-gray-400">
                           {testimonial.date}
                         </span>
                       </div>
@@ -1090,23 +1088,23 @@ const Home = () => {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-12 sm:py-16 md:py-20 bg-[#532D2A] relative overflow-hidden">
+      <section className="py-8 sm:py-16 md:py-20 bg-[#532D2A] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-64 h-64 bg-[#B392A4] rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#EFE5E7] rounded-full blur-3xl" />
+          <div className="absolute top-0 left-0 w-32 h-32 sm:w-64 sm:h-64 bg-[#B392A4] rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-96 sm:h-96 bg-[#EFE5E7] rounded-full blur-3xl" />
         </div>
 
         <div className="container-custom px-4 sm:px-6 text-center relative z-10">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3">
+          <h2 className="text-lg sm:text-3xl md:text-4xl font-serif font-bold text-white mb-2 sm:mb-3">
             Ready to Make Your Wedding Memorable?
           </h2>
-          <p className="text-base sm:text-lg text-white/90 mb-6 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-lg text-white/90 mb-4 sm:mb-6 max-w-2xl mx-auto">
             Let us help you create the perfect first impression with our exquisite wedding invitations
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <button
               onClick={() => handleNavigate("/weddingcards")}
-              className="px-6 sm:px-8 py-3 bg-[#B392A4] hover:bg-[#EFE5E7] hover:text-[#532D2A] text-white rounded-full font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              className="px-4 sm:px-8 py-2 sm:py-3 bg-[#B392A4] hover:bg-[#EFE5E7] hover:text-[#532D2A] text-white rounded-full font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
             >
               Explore Collections
             </button>
@@ -1114,7 +1112,7 @@ const Home = () => {
               href="https://wa.me/918435111188"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 sm:px-8 py-3 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-[#532D2A] transition-all duration-300"
+              className="px-4 sm:px-8 py-2 sm:py-3 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-[#532D2A] transition-all duration-300 text-sm sm:text-base"
             >
               Contact Us
             </a>

@@ -53,6 +53,7 @@
 
 .animate-width {
   animation: widthGrow 1s ease-out forwards;
+  
 }
 
 .animate-buttons {
