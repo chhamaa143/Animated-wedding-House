@@ -67,7 +67,7 @@ const Preloader = ({ onComplete }) => {
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#B392A4]/10 rounded-full blur-3xl animate-pulse-slow"></div>
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#B392A4]/10 rounded-full blur-3xl animate-pulse-slow delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#532D2A]/5 rounded-full blur-3xl animate-pulse-slow delay-2000"></div>
-        
+
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
@@ -83,10 +83,11 @@ const Preloader = ({ onComplete }) => {
       </div>
 
       <div className="relative z-10 text-center px-4">
-        <div 
+        <div
           className="mb-8"
           style={{
-            animation: 'zoomLogo 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards'
+            animation:
+              "zoomLogo 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
           }}
         >
           <img
@@ -109,9 +110,18 @@ const Preloader = ({ onComplete }) => {
         </div>
 
         <div className="mt-4 flex items-center justify-center gap-1">
-          <span className="w-2 h-2 bg-[#B392A4] rounded-full animate-bounce-dot" style={{ animationDelay: '0s' }} />
-          <span className="w-2 h-2 bg-[#B392A4] rounded-full animate-bounce-dot" style={{ animationDelay: '0.5s' }} />
-          <span className="w-2 h-2 bg-[#B392A4] rounded-full animate-bounce-dot" style={{ animationDelay: '0.4s' }} />
+          <span
+            className="w-2 h-2 bg-[#B392A4] rounded-full animate-bounce-dot"
+            style={{ animationDelay: "0s" }}
+          />
+          <span
+            className="w-2 h-2 bg-[#B392A4] rounded-full animate-bounce-dot"
+            style={{ animationDelay: "0.5s" }}
+          />
+          <span
+            className="w-2 h-2 bg-[#B392A4] rounded-full animate-bounce-dot"
+            style={{ animationDelay: "0.4s" }}
+          />
         </div>
       </div>
 
@@ -160,7 +170,7 @@ const Preloader = ({ onComplete }) => {
         .delay-2000 {
           animation-delay: 2s;
         }
-      `}</style> 
+      `}</style>
     </div>
   );
 };
@@ -207,11 +217,19 @@ const Home = () => {
         flutterInterval = null;
       }
 
-      const colors = ['#B392A4', '#D4AF37', '#E8A87C', '#D4A5A5', '#C49B6C', '#E8D5B7', '#F5E6D3'];
+      const colors = [
+        "#B392A4",
+        "#D4AF37",
+        "#E8A87C",
+        "#D4A5A5",
+        "#C49B6C",
+        "#E8D5B7",
+        "#F5E6D3",
+      ];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
       const size = 20 + Math.random() * 16;
 
-      butterflyElement = document.createElement('div');
+      butterflyElement = document.createElement("div");
       butterflyElement.innerHTML = `
         <svg width="${size}" height="${size}" viewBox="0 0 28 28" fill="none" xmlns="http:// 
         
@@ -234,10 +252,10 @@ const Home = () => {
           <circle cx="22" cy="19" r="1" fill="#D4AF37" opacity="0.4"/>
         </svg>
       `;
-      
-      butterflyX = x - size/2;
-      butterflyY = y - size/2;
-      
+
+      butterflyX = x - size / 2;
+      butterflyY = y - size / 2;
+
       butterflyElement.style.cssText = `
         position: fixed;
         left: ${butterflyX}px;
@@ -256,11 +274,11 @@ const Home = () => {
           flutterInterval = null;
           return;
         }
-        const wings = butterflyElement.querySelectorAll('path');
+        const wings = butterflyElement.querySelectorAll("path");
         wings.forEach((wing, index) => {
           if (index < 2) {
             const scaleY = 0.3 + Math.sin(Date.now() / 120 + index * 0.7) * 0.5;
-            wing.setAttribute('transform', `scale(1, ${scaleY})`);
+            wing.setAttribute("transform", `scale(1, ${scaleY})`);
           }
         });
       }, 25);
@@ -270,17 +288,17 @@ const Home = () => {
           if (animFrameId) cancelAnimationFrame(animFrameId);
           return;
         }
-        
-        const dx = mouseX - butterflyX - size/2;
-        const dy = mouseY - butterflyY - size/2;
+
+        const dx = mouseX - butterflyX - size / 2;
+        const dy = mouseY - butterflyY - size / 2;
         const speed = 0.15;
-        
+
         butterflyX += dx * speed;
         butterflyY += dy * speed;
-        
-        butterflyElement.style.left = butterflyX + 'px';
-        butterflyElement.style.top = butterflyY + 'px';
-        
+
+        butterflyElement.style.left = butterflyX + "px";
+        butterflyElement.style.top = butterflyY + "px";
+
         animFrameId = requestAnimationFrame(followCursor);
       };
 
@@ -288,9 +306,10 @@ const Home = () => {
 
       let idleTimeout = setTimeout(() => {
         if (butterflyElement) {
-          butterflyElement.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-          butterflyElement.style.opacity = '0';
-          butterflyElement.style.transform = 'scale(0.3) rotate(20deg)';
+          butterflyElement.style.transition =
+            "opacity 0.5s ease, transform 0.5s ease";
+          butterflyElement.style.opacity = "0";
+          butterflyElement.style.transform = "scale(0.3) rotate(20deg)";
           setTimeout(() => {
             if (butterflyElement) {
               butterflyElement.remove();
@@ -323,7 +342,7 @@ const Home = () => {
     const handleMouseMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      
+
       if (!isFlying) {
         if (Math.random() < 0.035) {
           createButterfly(e.clientX, e.clientY);
@@ -333,9 +352,10 @@ const Home = () => {
           clearTimeout(butterflyElement._idleTimeout);
           butterflyElement._idleTimeout = setTimeout(() => {
             if (butterflyElement) {
-              butterflyElement.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-              butterflyElement.style.opacity = '0';
-              butterflyElement.style.transform = 'scale(0.3) rotate(20deg)';
+              butterflyElement.style.transition =
+                "opacity 0.5s ease, transform 0.5s ease";
+              butterflyElement.style.opacity = "0";
+              butterflyElement.style.transform = "scale(0.3) rotate(20deg)";
               setTimeout(() => {
                 if (butterflyElement) {
                   butterflyElement.remove();
@@ -362,18 +382,18 @@ const Home = () => {
         setTimeout(() => {
           createButterfly(
             e.clientX + (Math.random() - 0.5) * 100,
-            e.clientY + (Math.random() - 0.5) * 100
+            e.clientY + (Math.random() - 0.5) * 100,
           );
         }, i * 120);
       }
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('click', handleClick);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("click", handleClick);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('click', handleClick);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("click", handleClick);
       if (butterflyElement) {
         butterflyElement.remove();
         butterflyElement = null;
@@ -551,7 +571,8 @@ const Home = () => {
   const testimonials = [
     {
       name: "Priya & Raj",
-      quote: "The cards were absolutely stunning! Everyone appreciated the gold foil work.",
+      quote:
+        "The cards were absolutely stunning! Everyone appreciated the gold foil work.",
       rating: 5,
       location: "Indore",
       date: "March 2024",
@@ -559,7 +580,8 @@ const Home = () => {
     },
     {
       name: "Ananya & Vikram",
-      quote: "Beautiful designs and excellent service! The team was very helpful.",
+      quote:
+        "Beautiful designs and excellent service! The team was very helpful.",
       rating: 5,
       location: "Delhi",
       date: "February 2024",
@@ -567,7 +589,8 @@ const Home = () => {
     },
     {
       name: "Neha & Arjun",
-      quote: "The hamper packaging was luxurious! Our guests loved the attention to detail.",
+      quote:
+        "The hamper packaging was luxurious! Our guests loved the attention to detail.",
       rating: 5,
       location: "Bangalore",
       date: "January 2024",
@@ -577,10 +600,18 @@ const Home = () => {
 
   // Stats
   const stats = [
-    { value: "10K+", label: "Happy Couples", icon: <Heart className="w-6 h-6" /> },
+    {
+      value: "10K+",
+      label: "Happy Couples",
+      icon: <Heart className="w-6 h-6" />,
+    },
     { value: "500+", label: "Designs", icon: <Sparkles className="w-6 h-6" /> },
     { value: "50+", label: "Cities", icon: <MapPin className="w-6 h-6" /> },
-    { value: "24/7", label: "Support", icon: <MessageCircle className="w-6 h-6" /> },
+    {
+      value: "24/7",
+      label: "Support",
+      icon: <MessageCircle className="w-6 h-6" />,
+    },
   ];
 
   // Search Functionality
@@ -591,7 +622,7 @@ const Home = () => {
         (product) =>
           product.name.toLowerCase().includes(query.toLowerCase()) ||
           product.category.toLowerCase().includes(query.toLowerCase()) ||
-          product.badge?.toLowerCase().includes(query.toLowerCase())
+          product.badge?.toLowerCase().includes(query.toLowerCase()),
       );
       setSearchResults(results);
       setIsSearchOpen(true);
@@ -610,13 +641,13 @@ const Home = () => {
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (!e.target.closest('.search-container')) {
+      if (!e.target.closest(".search-container")) {
         setIsSearchOpen(false);
         setSearchResults([]);
       }
     };
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -659,7 +690,6 @@ const Home = () => {
 
   return (
     <div className="w-full overflow-x-hidden bg-[#EFE5E7]">
-      
       {/* ============================================
           HERO SECTION - FIXED MOBILE VIEW
           ============================================ */}
@@ -678,7 +708,7 @@ const Home = () => {
               alt="Wedding Banner"
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
-            
+
             <div className="absolute inset-0 w-full h-full bg-[#532D2A]/40"></div>
 
             {/* Buttons - Bottom Aligned - Responsive */}
@@ -777,12 +807,13 @@ const Home = () => {
                 Our Collections
               </span>
             </div>
-            <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-2 sm:mb-3">
+            <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#532D2A] mb-2 sm:mb-3">
               Explore Premium Collections
-            </h2>
+            </h1>
             <div className="w-16 sm:w-20 h-0.5 bg-[#B392A4] mx-auto mb-3 sm:mb-4"></div>
             <p className="text-xs sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
-              Discover our meticulously crafted wedding invitations and stationery
+              Discover our meticulously crafted wedding invitations and
+              stationery
             </p>
           </div>
 
@@ -818,7 +849,9 @@ const Home = () => {
                       {category.description}
                     </p>
                     <div className="flex items-center text-[#B392A4] opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <span className="text-[8px] sm:text-xs font-medium">Explore Now</span>
+                      <span className="text-[8px] sm:text-xs font-medium">
+                        Explore Now
+                      </span>
                       <ArrowRight className="w-2 h-2 sm:w-3 sm:h-3 ml-1 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -965,7 +998,8 @@ const Home = () => {
             </h2>
             <div className="w-16 sm:w-20 h-0.5 bg-[#B392A4] mx-auto mb-3 sm:mb-4"></div>
             <p className="text-xs sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
-              Experience the perfect blend of tradition, luxury, and exceptional service
+              Experience the perfect blend of tradition, luxury, and exceptional
+              service
             </p>
           </div>
 
@@ -998,9 +1032,7 @@ const Home = () => {
               >
                 <div className="absolute top-0 left-0 w-full h-1 bg-[#B392A4] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
                 <div className="relative z-10">
-                  <div
-                    className="inline-block p-2 sm:p-4 bg-[#B392A4]/10 rounded-2xl text-[#532D2A] mb-2 sm:mb-4 group-hover:scale-110 transition-transform duration-300"
-                  >
+                  <div className="inline-block p-2 sm:p-4 bg-[#B392A4]/10 rounded-2xl text-[#532D2A] mb-2 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
                     <div className="text-[#B392A4]">{feature.icon}</div>
                   </div>
                   <h3 className="font-bold text-sm sm:text-lg mb-1 sm:mb-2 group-hover:text-[#B392A4] transition-colors">
@@ -1030,7 +1062,8 @@ const Home = () => {
             </h2>
             <div className="w-16 sm:w-20 h-0.5 bg-[#B392A4] mx-auto mb-3 sm:mb-4"></div>
             <p className="text-xs sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
-              Real stories from happy couples who trusted us with their special day
+              Real stories from happy couples who trusted us with their special
+              day
             </p>
           </div>
 
@@ -1073,7 +1106,9 @@ const Home = () => {
                         <span className="text-[8px] sm:text-xs text-[#B392A4] font-semibold">
                           {testimonial.event}
                         </span>
-                        <span className="text-[8px] sm:text-xs text-gray-400">•</span>
+                        <span className="text-[8px] sm:text-xs text-gray-400">
+                          •
+                        </span>
                         <span className="text-[8px] sm:text-xs text-gray-400">
                           {testimonial.date}
                         </span>
@@ -1099,7 +1134,8 @@ const Home = () => {
             Ready to Make Your Wedding Memorable?
           </h2>
           <p className="text-sm sm:text-lg text-white/90 mb-4 sm:mb-6 max-w-2xl mx-auto">
-            Let us help you create the perfect first impression with our exquisite wedding invitations
+            Let us help you create the perfect first impression with our
+            exquisite wedding invitations
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <button
